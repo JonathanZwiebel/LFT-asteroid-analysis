@@ -1,25 +1,30 @@
 package main;
 
+import java.io.IOException;
+
+import nom.tam.fits.Fits;
+import nom.tam.fits.FitsException;
+
 public class SimpleSubtractive {
 	// index from 1 to match fits file
-	public static final int BASE-IMAGE-INDEX = 1;
-	public static final int TOP-IMAGE-INDEX = 11; 
-	public static final String FILESYSTEM-LOC = "C:\\Users\\user\\Desktop"
-	public static final String FILENAME = "ktwo200000905-c00_lpd-targ.fits"
+	public static final int BASE_IMAGE_INDEX = 1;
+	public static final int TOP_IMAGE_INDEX = 11; 
+	public static final String FILESYSTEM_LOC = "C:\\Users\\user\\Desktop";
+	public static final String FILENAME = "ktwo200000905_c00_lpd-targ.fits";
 
 	public static void main(String[] args) {
 		try {
-			Fits fits = readFile(FILESYSTEM-LOC + "\\" + FILENAME);
-			float[][][] fits-data-cube-mat = extractDataCube(fits);
+			Fits fits = readFile(FILESYSTEM_LOC + "\\" + FILENAME);
+			float[][][] fits_data_cube_mat = extractDataCube(fits);
 
-			float[][] base-image-mat = extractDataSliceFromFmat(fits-data-cube-fmat, BASE-IMAGE-INDEX);
-			float[][] top-image-mat = extractDataSliceFromFmat(fits-data-cube-fmat, TOP-IMAGE-INDEX);
+			float[][] base_image_mat = extractDataSliceFromFmat(fits_data_cube_mat, BASE_IMAGE_INDEX);
+			float[][] top_image_mat = extractDataSliceFromFmat(fits_data_cube_mat, TOP_IMAGE_INDEX);
 
-			float[][] subtracted-image-mat = subtractImages(top-image-mat, base-image-mat);
+			float[][] subtracted_image_mat = subtractImages(top_image_mat, base_image_mat);
 
-			System.out.println(base-image-mat[10][20]);
-			System.out.println(top-image-mat[10][20]);
-			System.out.println(subtracted-image-mat[10][20]);
+			System.out.println(base_image_mat[10][20]);
+			System.out.println(top_image_mat[10][20]);
+			System.out.println(subtracted_image_mat[10][20]);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -27,32 +32,32 @@ public class SimpleSubtractive {
 	}
 
 	// converts from string filename to fits object
-	public static Fits readFile(String filename) {
+	public static Fits readFile(String filename) throws FitsException {
 		return new Fits(filename);
 	}
 
 	// converts from fits object to 3d float matrix
-	public static float[][][] extractDataCube(Fits fits) {
-		return (float[][][]) fits.getHDU(1).getData().getKernel()
+	public static float[][][] extractDataCube(Fits fits) throws FitsException, IOException {
+		return (float[][][]) fits.getHDU(1).getData().getKernel();
 	}
 
 	// extracts a 2d float matrix from a 3d one (represets a slice in time)
-	public static float[][] extractDataSliceFromFmat(float[][][] data-cube-mat, int image-index) {
-		return cube[image-index - 1];
+	public static float[][] extractDataSliceFromFmat(float[][][] data_cube_mat, int image_index) {
+		return data_cube_mat[image_index - 1];
 	}
 
 	// subtracts two 2d slices from eacther top-base and outputs result
-	public static float[][] subtractImages(float[][] top-image-mat, float[][] base-image-mat) {
-		int row-count = top-image-mat.length;
-		int column-count = top-image-mat[0].length;
-		float[][] subtracted-image-mat = new float[row-count][column-count];
+	public static float[][] subtractImages(float[][] top_image_mat, float[][] base_image_mat) {
+		int row_count = top_image_mat.length;
+		int column_count = top_image_mat[0].length;
+		float[][] subtracted_image_mat = new float[row_count][column_count];
 
-		for(int row = 0; row < row-count; row++) {
-			for(int column = 0; column-count; column++) {
-				subtracted-image-mat[row][column] = top-image-mat[row][column] - base-image-mat[row][column];
+		for(int row = 0; row < row_count; row++) {
+			for(int column = 0; column < column_count; column++) {
+				subtracted_image_mat[row][column] = top_image_mat[row][column] - base_image_mat[row][column];
 			}
 		}
 
-		return subtracted-image-mat;
+		return subtracted_image_mat;
 	}
 }
