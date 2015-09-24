@@ -12,7 +12,7 @@ import nom.tam.util.BufferedFile;
 public class SimpleSubtractive {
 	// index from 1 to match fits file
 	public static final int BASE_IMAGE_INDEX = 1;
-	public static final int TOP_IMAGE_INDEX = 11; 
+	public static final int TOP_IMAGE_INDEX = 101; 
 	public static final String COLUMN = "FLUX";
 	public static final String INPUT_FILENAME = "C:\\Users\\user\\Desktop\\ktwo200000905-c00_lpd-targ.fits";
 	public static final String OUTPUT_FILENAME = "C:\\Users\\user\\Desktop\\subtractive-output.fits";
@@ -28,18 +28,8 @@ public class SimpleSubtractive {
 			float[][] top_image_mat = extractDataSlice(data_cube_mat, TOP_IMAGE_INDEX);
 
 			float[][] subtracted_image_mat = subtractImages(top_image_mat, base_image_mat);
-
-			Fits subtracted_fits = new Fits();
-			subtracted_fits.addHDU(FitsFactory.hduFactory(subtracted_image_mat));
-			File output_file = new File(OUTPUT_FILENAME);
-			BufferedFile bf = new BufferedFile(output_file, "rw");
-			subtracted_fits.write(bf);
-			bf.close();
-			subtracted_fits.close();
 			
-			System.out.println(base_image_mat[10][20]);
-			System.out.println(top_image_mat[10][20]);
-			System.out.println(subtracted_image_mat[10][20]);
+			writeImage(subtracted_image_mat, OUTPUT_FILENAME);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -74,5 +64,15 @@ public class SimpleSubtractive {
 		}
 
 		return subtracted_image_mat;
+	}
+
+	public static void writeImage(float[][] image, String filename) throws FitsException, IOException {
+			Fits subtracted_fits = new Fits();
+			subtracted_fits.addHDU(FitsFactory.hduFactory(image));
+			File output_file = new File(filename);
+			BufferedFile bf = new BufferedFile(output_file, "rw");
+			subtracted_fits.write(bf);
+			bf.close();
+			subtracted_fits.close();
 	}
 }
