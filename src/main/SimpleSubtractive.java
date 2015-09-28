@@ -14,8 +14,8 @@ public class SimpleSubtractive {
 	public static final int BASE_IMAGE_INDEX = 1;
 	public static final int TOP_IMAGE_INDEX = 101; 
 	public static final String COLUMN = "FLUX";
-	public static final String INPUT_FILENAME = "C:\\Users\\user\\Desktop\\ktwo200000905-c00_lpd-targ.fits";
-	public static final String OUTPUT_FILENAME = "C:\\Users\\user\\Desktop\\subtractive-output.fits";
+	public static final String INPUT_FILENAME = "C:\\Users\\user\\Desktop\\K2\\raw\\ktwo200000905-c00_lpd-targ.fits";
+	public static final String OUTPUT_FILENAME = "C:\\Users\\user\\Desktop\\K2\\subtractive\\simple\\subtractive-output.fits";
 
 	public static void main(String[] args) {
 		try {
