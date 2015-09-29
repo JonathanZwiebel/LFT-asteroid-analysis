@@ -1,3 +1,5 @@
+package main;
+
 public class FitsHelper {
 	// converts from string filename to fits object
 	public static Fits readFile(String filename) throws FitsException {
