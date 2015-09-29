@@ -15,4 +15,45 @@ public class SubtractiveHelper {
 
 		return subtracted_image_mat;
 	}
+
+	public static float[][] absolulteValue(float[][] in_float_mat) {
+		float[][] out_float_mat = new float[in_float_mat.length][in_float_mat[0].length];
+		for(int i = 0; i < in_float_mat.length; i++) {
+			for(int j = 0; j < in_float_mat[0].length; j++) {
+				out_float_mat[i][j] = Math.abs(in_float_mat[i][j]);
+			}
+		}
+		return out_float_mat;
+	}
+
+	public static float[][] limitTruncate(float[][] in_float_mat, float truncation_limit) {
+		float[][] truncated_float_mat = new float[in_float_mat.length][in_float_mat[0].length];
+		for(int i = 0; i < in_float_mat.length; i++) {
+			for(int j = 0; j < in_float_mat[0].length; j++) {
+				if(in_float_mat[i][j] >= truncation_limit) {
+					out_float_mat[i][j] = in_float_mat[i][j];
+				}
+				else {
+					out_float_mat[i][j] = 0;
+				}
+			}
+		}
+		return out_float_mat;
+	}
+
+	public static float[][] meanImage(float[][] ... float_mats) {
+		int count = float_mats.length;
+		float[][] mean_float_mat = new float_mats[0][in_float_mat.length][in_float_mat[0].length];
+		for(int i = 0; i < in_float_mat.length; i++) {
+			for(int j = 0; j < in_float_mat[0].length; j++) {
+				float sum = 0;
+				for(float[][] float_mat : float_mats) {
+					sum += float_mat[i][j];
+				}
+				mean_float_mat[i][j] = sum / count;
+			}
+		}
+
+		return mean_float_mat;
+	}
 }
