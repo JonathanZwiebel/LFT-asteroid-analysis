@@ -21,7 +21,6 @@ public class SimpleSubtractive {
 		try {
 			Fits fits = FitsHelper.readFile(INPUT_FILENAME);
 			TableHDU<?> thdu = FitsHelper.extractTable(fits, 1);
-			
 			float[][][] data_cube_mat = (float[][][]) thdu.getColumn(COLUMN);
 			
 			float[][] base_image_mat = FitsHelper.extractDataSlice(data_cube_mat, BASE_IMAGE_INDEX);

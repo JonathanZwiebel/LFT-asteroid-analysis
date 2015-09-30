@@ -11,7 +11,7 @@ public class FitsHelper {
 		return (TableHDU<?>) fits.getHDU(HDU_index);
 	}
 
-	// extracts a 2d float matrix from a 3d one (represents a slice in time)
+	// extracts a 2d float matrix from a 3d one (represents a slice in time) by timestamp
 	public static float[][] extractDataSlice(float[][][] data_cube_mat, int index) {
 		return data_cube_mat[index - 1];
 	}
