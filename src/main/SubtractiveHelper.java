@@ -31,21 +31,21 @@ public class SubtractiveHelper {
 		for(int i = 0; i < in_float_mat.length; i++) {
 			for(int j = 0; j < in_float_mat[0].length; j++) {
 				if(in_float_mat[i][j] >= truncation_limit) {
-					out_float_mat[i][j] = in_float_mat[i][j];
+					truncated_float_mat[i][j] = in_float_mat[i][j];
 				}
 				else {
-					out_float_mat[i][j] = 0;
+					truncated_float_mat[i][j] = 0;
 				}
 			}
 		}
-		return out_float_mat;
+		return truncated_float_mat;
 	}
 
 	public static float[][] meanImage(float[][] ... float_mats) {
 		int count = float_mats.length;
-		float[][] mean_float_mat = new float_mats[0][in_float_mat.length][in_float_mat[0].length];
-		for(int i = 0; i < in_float_mat.length; i++) {
-			for(int j = 0; j < in_float_mat[0].length; j++) {
+		float[][] mean_float_mat = new float[float_mats.length][float_mats[0].length];
+		for(int i = 0; i < float_mats.length; i++) {
+			for(int j = 0; j < float_mats[0].length; j++) {
 				float sum = 0;
 				for(float[][] float_mat : float_mats) {
 					sum += float_mat[i][j];

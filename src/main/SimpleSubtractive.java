@@ -1,13 +1,6 @@
 package main;
 
-import java.io.File;
-import java.io.IOException;
-
-import nom.tam.fits.Fits;
-import nom.tam.fits.FitsException;
-import nom.tam.fits.FitsFactory;
-import nom.tam.fits.TableHDU;
-import nom.tam.util.BufferedFile;
+import nom.tam.fits.*;
 
 public class SimpleSubtractive {
 	// index from 1 to match fits file
@@ -28,7 +21,7 @@ public class SimpleSubtractive {
 
 			float[][] subtracted_image_mat = SubtractiveHelper.subtractImages(top_image_mat, base_image_mat);
 			
-			FitsHelper.writeImage(subtracted_image_mat, OUTPUT_FILENAME);
+			FitsHelper.write2DImage(subtracted_image_mat, OUTPUT_FILENAME);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

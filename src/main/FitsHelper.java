@@ -1,5 +1,9 @@
 package main;
 
+import nom.tam.fits.*;
+import java.io.*;
+import nom.tam.util.*;
+
 public class FitsHelper {
 	// converts from string filename to fits object
 	public static Fits readFile(String filename) throws FitsException {
