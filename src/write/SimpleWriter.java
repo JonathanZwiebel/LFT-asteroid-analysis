@@ -18,13 +18,13 @@ public class SimpleWriter {
         TableHDU<?> table = (TableHDU<?>) fits.getHDU(1);
         float[][][] unfiltered_data = (float[][][]) table.getColumn(column_name);
 
-        ArrayList<Boolean> valid_indexes = new ArrayList<>(unfiltered_data.length);
-        int hits = K2ValidificationHelper.validify(fits, valid_indexes);
+        ArrayList<Boolean> valid_indices = new ArrayList<>(unfiltered_data.length);
+        int hits = K2ValidificationHelper.validify(fits, valid_indices);
         float[][][] data = new float[hits][][];
 
         int current_data_index = 0;
         for(int i = 0; i < unfiltered_data.length; i++) {
-            if (valid_indexes.get(i)) {
+            if (valid_indices.get(i)) {
                 data[current_data_index] = unfiltered_data[i].clone();
                 current_data_index++;
             }
