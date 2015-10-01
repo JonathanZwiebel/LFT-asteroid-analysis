@@ -40,7 +40,8 @@ public class MeanSubtractive {
                     float[][] delta = SubtractiveHelper.subtractImages(top, base);
                     String output_filename = OUTPUT_FOLDERNAME + "\\delta" + i + "to" + (i + DELTA_TIME) + ".fits";
                     float[][] mean = SubtractiveHelper.meanImage(base, top);
-                    FitsHelper.write2DImage(delta, output_filename);
+                    float[][] divided = SubtractiveHelper.divideImage(delta, mean);
+                    FitsHelper.write2DImage(divided, output_filename);
                 }
             }
         }
