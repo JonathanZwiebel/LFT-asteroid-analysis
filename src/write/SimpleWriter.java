@@ -22,20 +22,9 @@ public class SimpleWriter {
         int hits = K2ValidificationHelper.validify(fits, valid_indexes);
         float[][][] data = new float[hits][][];
 
-        System.out.println(valid_indexes.get(89));
-        System.out.println(valid_indexes.get(90));
-        System.out.println(valid_indexes.get(91));
-        System.out.println(valid_indexes.get(92));
-        System.out.println(valid_indexes.get(93));
-        System.out.println(valid_indexes.get(94));
-        System.out.println(valid_indexes.get(95));
-
         int current_data_index = 0;
         for(int i = 0; i < unfiltered_data.length; i++) {
             if (valid_indexes.get(i)) {
-                if(i < 100) {
-                    System.out.println("Setting" + current_data_index + " to data at " + i);
-                }
                 data[current_data_index] = unfiltered_data[i].clone();
                 current_data_index++;
             }
