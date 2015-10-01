@@ -25,10 +25,19 @@ public class Subtractive {
             ArrayList<Boolean> valid_indices = new ArrayList<>();
             K2ValidificationHelper.validify(fits, valid_indices);
             for(int i = INITIAL_BASE; i + DELTA_TIME <= valid_indices.size(); i += TIME_SPACING) {
-                if(valid_indices.get(i) && valid_indices.get(i + DELTA_TIME)) {
+                boolean valid = true;
+
+                for(int j = i; j <= i + DELTA_TIME; j++) {
+                    if(!valid_indices.get(j)) {
+                        valid = false;
+                        break;
+                    }
+                }
+
+                if(valid) {
                     float[][] base = FitsHelper.extractDataSlice(raw_data, i);
                     float[][] top = FitsHelper.extractDataSlice(raw_data, i + DELTA_TIME);
-                    float[][] delta = SubtractiveHelper.subtractImages(base, top);
+                    float[][] delta = SubtractiveHelper.subtractImages(top, base);
                     String output_filename = OUTPUT_FOLDERNAME + "\\delta" + i + "to" + (i + DELTA_TIME) + ".fits";
                     FitsHelper.write2DImage(delta, output_filename);
                 }
@@ -38,4 +47,5 @@ public class Subtractive {
             e.printStackTrace();
         }
 	}
+
 }
