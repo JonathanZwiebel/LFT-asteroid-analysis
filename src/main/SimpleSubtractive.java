@@ -1,5 +1,7 @@
 package main;
 
+import helper.FitsHelper;
+import helper.SubtractiveHelper;
 import nom.tam.fits.*;
 
 public class SimpleSubtractive {

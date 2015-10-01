@@ -1,9 +1,12 @@
-package main;
+package helper;
 
 import nom.tam.fits.*;
 import java.io.*;
 import nom.tam.util.*;
 
+/**
+ * A helper class used for general purpose FITS data extraction
+ */
 public class FitsHelper {
 	// converts from string filename to fits object
 	public static Fits readFile(String filename) throws FitsException {

@@ -1,5 +1,8 @@
-package main;
+package helper;
 
+/**
+ * A helper class used for general purpose subtractive imaging
+ */
 public class SubtractiveHelper {
 	// subtracts two 2d slices from eacother top-base and outputs result
 	public static float[][] subtractImages(float[][] top_image_mat, float[][] base_image_mat) {
