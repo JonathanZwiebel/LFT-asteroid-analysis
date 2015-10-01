@@ -33,4 +33,14 @@ public class FitsHelper {
 		bf.close();
 		subtracted_fits.close();
 	}
+
+	public static void writeDataCube(float[][][] image, String filename) throws FitsException, IOException {
+		Fits subtracted_fits = new Fits();
+		subtracted_fits.addHDU(FitsFactory.hduFactory(image));
+		File output_file = new File(filename);
+		BufferedFile bf = new BufferedFile(output_file, "rw");
+		subtracted_fits.write(bf);
+		bf.close();
+		subtracted_fits.close();
+	}
 }
