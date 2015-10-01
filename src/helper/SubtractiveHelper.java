@@ -47,8 +47,8 @@ public class SubtractiveHelper {
 	public static float[][] meanImage(float[][] ... float_mats) {
 		int count = float_mats.length;
 		float[][] mean_float_mat = new float[float_mats.length][float_mats[0].length];
-		for(int i = 0; i < float_mats.length; i++) {
-			for(int j = 0; j < float_mats[0].length; j++) {
+		for(int i = 0; i < float_mats[0].length; i++) {
+			for(int j = 0; j < float_mats[0][0].length; j++) {
 				float sum = 0;
 				for(float[][] float_mat : float_mats) {
 					sum += float_mat[i][j];
@@ -59,4 +59,14 @@ public class SubtractiveHelper {
 
 		return mean_float_mat;
 	}
+
+    public static float[][] divideImage(float[][] base, float[][] divisor) {
+        float[][] output = new float[base.length][base[0].length];
+        for(int i = 0; i < base.length; i++) {
+            for(int j = 0; j < base[0].length; j++) {
+                output[i][j] = (base[i][j] + divisor[i][j]) / 2;
+            }
+        }
+        return output;
+    }
 }
