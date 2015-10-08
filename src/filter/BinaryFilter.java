@@ -18,4 +18,12 @@ public class BinaryFilter {
         }
         return return_binary_image;
     }
+
+    public static float[][][] filter(float[][][] cube, double threshold) {
+        float[][][] output_cube = new float[cube.length][cube[0].length][cube[0][0].length];
+        for(int i = 0; i < cube.length; i++) {
+            output_cube[i] = filter(cube[i], threshold);
+        }
+        return output_cube;
+    }
 }

@@ -2,6 +2,8 @@ package helper;
 
 import nom.tam.fits.*;
 import java.io.*;
+import java.util.ArrayList;
+
 import nom.tam.util.*;
 
 /**
@@ -42,5 +44,23 @@ public class FitsHelper {
 		subtracted_fits.write(bf);
 		bf.close();
 		subtracted_fits.close();
+	}
+
+	public static float[][][] extractFilteredColumn(Fits f, String column_name) throws FitsException, IOException{
+		TableHDU<?> table = (TableHDU<?>) f.getHDU(1);
+		ArrayList<Boolean> valid_indices = new ArrayList();
+		int valid_index_count = K2ValidificationHelper.validify(f, valid_indices);
+
+		float[][][] unfiltered_column = (float[][][]) table.getColumn(column_name);
+		float[][][] filtered_column = new float[valid_index_count][unfiltered_column[0].length][unfiltered_column[0][0].length];
+
+		int insertion_index = 0;
+		for(int index = 0; insertion_index < valid_index_count; index++) {
+			if(valid_indices.get(index)) {
+				filtered_column[insertion_index] = unfiltered_column[index];
+				insertion_index++;
+			}
+		}
+		return filtered_column;
 	}
 }
