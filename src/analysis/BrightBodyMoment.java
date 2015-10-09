@@ -3,7 +3,7 @@ package analysis;
 import stars.Coordinate;
 import stars.PixelPoint;
 
-public class StarMoment {
+public class BrightBodyMoment {
 
     /**
      * Finds the M_ij of the star

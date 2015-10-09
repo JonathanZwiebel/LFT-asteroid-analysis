@@ -9,7 +9,7 @@ import write.SimpleWriter;
  */
 public class AnimationGenerator {
     public static final String INPUT_FILENAME = "C:\\Users\\user\\Desktop\\K2\\raw\\ktwo200000905-c00_lpd-targ.fits";
-    public static final String OUTPUT_FILENAME = "C:\\Users\\user\\Desktop\\K2\\animations\\animation.fits";
+    public static final String OUTPUT_FILENAME = "C:\\Users\\user\\Desktop\\K2\\animations\\animation-ktwo200000905-c00.fits";
 
 
     public static void main(String[] args) {

@@ -15,20 +15,7 @@ import java.util.ArrayList;
  */
 public class SimpleWriter {
     public static void write(Fits fits, String output_filename, String column_name) throws IOException, FitsException {
-        TableHDU<?> table = (TableHDU<?>) fits.getHDU(1);
-        float[][][] unfiltered_data = (float[][][]) table.getColumn(column_name);
-
-        ArrayList<Boolean> valid_indices = new ArrayList<>(unfiltered_data.length);
-        int hits = K2ValidificationHelper.validify(fits, valid_indices);
-        float[][][] data = new float[hits][][];
-
-        int current_data_index = 0;
-        for(int i = 0; i < unfiltered_data.length; i++) {
-            if (valid_indices.get(i)) {
-                data[current_data_index] = unfiltered_data[i].clone();
-                current_data_index++;
-            }
-        }
-        FitsHelper.writeDataCube(data, output_filename);
+        float[][][] column = FitsHelper.extractFilteredColumn(fits, column_name);
+        FitsHelper.writeDataCube(column, output_filename);
     }
 }
