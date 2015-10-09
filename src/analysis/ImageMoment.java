@@ -10,8 +10,8 @@ public class ImageMoment {
      * @param i x-weight
      * @param j j-weight
      */
-    public static double moment(float[][] image, int i, int j) {
-        double moment = 0;
+    public static float moment(float[][] image, int i, int j) {
+        float moment = 0;
         for(int x = 0; x < image.length; x++) {
             for(int y = 0; y < image[0].length; y++) {
                 moment += image[x][y] * Math.pow(x, i) * Math.pow(y, j);
@@ -25,15 +25,15 @@ public class ImageMoment {
      * @param image the image as a floating point array
      * @return the area
      */
-    public static double area(float[][] image) {
+    public static float area(float[][] image) {
         return moment(image, 0, 0);
     }
 
-    public static double centroid_x(float[][] image) {
+    public static float centroid_x(float[][] image) {
         return moment(image, 1, 0) / moment(image, 0, 0);
     }
 
-    public static double centroid_y(float[][] image) {
+    public static float centroid_y(float[][] image) {
         return moment(image, 0, 1) / moment(image, 0, 0);
     }
 }
