@@ -16,8 +16,8 @@ public class StarFilter {
     public static final String OUTPUT_HEAD = "C:\\Users\\user\\Desktop\\K2\\filtered\\ktwo200000908-c00";
     public static final String COLUMN = "FLUX";
 
-    public static final int BINARY_THRESHOLD = 3500;
-    public static final int BLUR_SIZE = 1;
+    public static final int BINARY_THRESHOLD = 1000;
+    public static final int BLUR_SIZE = 2;
 
     public static final String BINARY_EXTENSION = "-binfil" + BINARY_THRESHOLD;
     public static final String BLUR_EXTENSION = "-blurfill" + BLUR_SIZE;
@@ -27,7 +27,7 @@ public class StarFilter {
             Fits f = FitsHelper.readFile(INPUT_FILENAME);
             float[][][] column = FitsHelper.extractFilteredColumn(f, COLUMN);
             int[][][] binary_filtered = BinaryFilter.filter(column, BINARY_THRESHOLD);
-            int[][][] blur_filtered = BlurFilter.filter(binary_filtered, BLUR_SIZE);
+            int[][][] blur_filtered = BlurFilter.filter(binary_filtered, BLUR_SIZE, BlurFilter.Blur_Filter_Type.NEGATIVE);
 
             FitsHelper.writeDataCube(binary_filtered, OUTPUT_HEAD + BINARY_EXTENSION + ".fits");
             FitsHelper.writeDataCube(blur_filtered, OUTPUT_HEAD + BINARY_EXTENSION + BLUR_EXTENSION + ".fits");

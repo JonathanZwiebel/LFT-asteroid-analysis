@@ -4,26 +4,42 @@ package filter;
  * This class filters an image by checking the pixels around it and setting the value to their median
  */
 public class BlurFilter {
-    public static int[][] filter(int[][] image, int filter_size) {
+    public enum Blur_Filter_Type {
+        STANDARD,
+        POSITIVE,
+        NEGATIVE
+    }
+
+    public static int[][] filter(int[][] image, int filter_size, Blur_Filter_Type filter_type) {
         int[][] filtered_image = new int[image.length][image[0].length];
-        for(int i = 0; i < image[0].length; i++) {
-            for(int j = 0; j < image.length; j++) {
-                filtered_image[i][j] = pointFilter(image, filter_size, i, j);
+        for (int i = 0; i < image[0].length; i++) {
+            for (int j = 0; j < image.length; j++) {
+                switch (filter_type) {
+                    case STANDARD:
+                        filtered_image[i][j] = stdFilter(image, filter_size, i, j);
+                        break;
+                    case POSITIVE:
+                        filtered_image[i][j] = image[i][j] == 1 ? 1 : stdFilter(image, filter_size, i, j);
+                        break;
+                    default:
+                        filtered_image[i][j] = image[i][j] == 0 ? 0 : stdFilter(image, filter_size, i, j);
+                        break;
+                }
             }
         }
         return filtered_image;
     }
 
-    public static int[][][] filter(int[][][] image, int filter_size) {
+    public static int[][][] filter(int[][][] image, int filter_size, Blur_Filter_Type filter_type) {
         int[][][] filtered_image = new int[image.length][image[0].length][image[0][0].length];
         for(int i = 0; i < image.length; i++) {
-            filtered_image[i] = filter(image[i], filter_size);
+            filtered_image[i] = filter(image[i], filter_size, filter_type);
         }
         return filtered_image;
     }
 
 
-    private static int pointFilter(int[][] image, int filter_size, int x, int y) {
+    private static int stdFilter(int[][] image, int filter_size, int x, int y) {
         int hits = 0, points = 0;
         for(int i = x - filter_size; i <= x + filter_size; i++) {
             for(int j = y - filter_size; j <= y + filter_size; j++) {
