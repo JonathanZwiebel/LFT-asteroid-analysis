@@ -17,16 +17,16 @@ public class StarFilter {
     public static final String COLUMN = "FLUX";
 
     public static final int BINARY_THRESHOLD = 1000;
-    public static final int BLUR_SIZE = 2;
+    public static final int BLUR_SIZE = 1;
 
-    public static final String BINARY_EXTENSION = "-binfil" + BINARY_THRESHOLD;
+    public static final String BINARY_EXTENSION = "-binfilmean";
     public static final String BLUR_EXTENSION = "-blurfill" + BLUR_SIZE;
 
     public static void main(String[] args) {
         try {
             Fits f = FitsHelper.readFile(INPUT_FILENAME);
             float[][][] column = FitsHelper.extractFilteredColumn(f, COLUMN);
-            int[][][] binary_filtered = BinaryFilter.filter(column, BINARY_THRESHOLD);
+            int[][][] binary_filtered = BinaryFilter.meanFilter(column);
             int[][][] blur_filtered = BlurFilter.filter(binary_filtered, BLUR_SIZE, BlurFilter.Blur_Filter_Type.NEGATIVE);
 
             FitsHelper.writeDataCube(binary_filtered, OUTPUT_HEAD + BINARY_EXTENSION + ".fits");
