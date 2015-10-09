@@ -1,12 +1,8 @@
 package filter;
 
 import helper.FitsHelper;
-import helper.K2ValidificationHelper;
 import nom.tam.fits.Fits;
-import nom.tam.fits.TableHDU;
-import write.SimpleWriter;
 
-import java.util.ArrayList;
 
 /**
  * This class filters a FITS image into just the stars
