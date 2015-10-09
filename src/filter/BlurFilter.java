@@ -35,7 +35,7 @@ public class BlurFilter {
                 }
             }
         }
-        return 2 * hits / points;
+        return (2 * hits - 1) / points;
     }
 
     private static boolean isPointValid(int x, int y, int length, int width) {

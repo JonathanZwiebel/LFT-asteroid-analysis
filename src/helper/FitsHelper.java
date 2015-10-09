@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 import nom.tam.util.*;
+import sun.net.www.content.text.Generic;
 
 /**
  * A helper class used for general purpose FITS data extraction
@@ -44,6 +45,14 @@ public class FitsHelper {
 		subtracted_fits.write(bf);
 		bf.close();
 		subtracted_fits.close();
+	}
+
+	public static void write2DImage(int[][] image, String filename) throws FitsException, IOException{
+		write2DImage(ArrayHelper.intToFloat(image), filename);
+	}
+
+	public static void writeDataCube(int[][][] image, String filename) throws FitsException, IOException{
+		writeDataCube(ArrayHelper.intToFloat(image), filename);
 	}
 
 	public static float[][][] extractFilteredColumn(Fits f, String column_name) throws FitsException, IOException{
