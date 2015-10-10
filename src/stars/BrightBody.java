@@ -15,8 +15,18 @@ public class BrightBody {
 
         centroid = BrightBodyMoment.centroid(image, body.clone());
         area = BrightBodyMoment.area(image, body.clone());
+    }
 
-        System.out.println("Area: " + area);
-        System.out.println("Centroid: " + "(" + centroid.x + " , " + centroid.y + ")");
+    public boolean contains(PixelPoint point) {
+        for(PixelPoint p : pre_filter_body) {
+            if(point.x == p.x && point.y == p.y) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public String toString() {
+        return("Area: " + area + " | Centroid: " + "(" + centroid.x + " , " + centroid.y + ")");
     }
 }
