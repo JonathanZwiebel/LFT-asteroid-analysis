@@ -11,7 +11,7 @@ public class BrightBody {
 
     public BrightBody(float[][] image, PixelPoint[] pre_filter_body) {
         this.pre_filter_body = pre_filter_body;
-        body = pre_filter_body.clone(); // fow now
+        body = pre_filter_body.clone(); // for now
 
         centroid = BrightBodyMoment.centroid(image, body.clone());
         area = BrightBodyMoment.area(image, body.clone());
@@ -22,8 +22,8 @@ public class BrightBody {
             if(point.x == p.x && point.y == p.y) {
                 return true;
             }
-            return false;
         }
+        return false;
     }
 
     public String toString() {
