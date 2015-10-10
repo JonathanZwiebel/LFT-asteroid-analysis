@@ -2,15 +2,17 @@ package stars;
 
 import java.util.ArrayList;
 
-public class TrackerInstance {
+public class BinaryTrackerInstance {
     public int index;
     public float[][] image;
+    public int[][] binary_image;
     ArrayList<BrightBody> bright_bodies;
 
-    public TrackerInstance(float[][][] cube, int index) {
+    public BinaryTrackerInstance(float[][][] original_cube, int[][][] binary_cube, int index) {
         this.index = index;
-        image = cube[index];
-        bright_bodies = BrightBodyLocator.testLocate(image);
+        image = original_cube[index];
+        binary_image = binary_cube[index];
+        bright_bodies = BrightBodyLocator.binaryLocate(image, binary_image);
     }
 
     public void print() {

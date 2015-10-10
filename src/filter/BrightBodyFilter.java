@@ -13,7 +13,7 @@ public class BrightBodyFilter {
     public static final String COLUMN = "FLUX";
 
     public static final int BINARY_THRESHOLD = 1000;
-    public static final int BLUR_SIZE = 1;
+    public static final int BLUR_SIZE = 0;
 
     public static final String BINARY_EXTENSION = "-binfilmean";
     public static final String BLUR_EXTENSION = "-blurfill" + BLUR_SIZE;
@@ -31,5 +31,24 @@ public class BrightBodyFilter {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // for now instead of writing out to a fits and then having the tracker pick it up
+    // this method will pass the data to the tracker
+    // CHANGE THIS
+    // TODO: CHANGE THIS
+    public static int[][][] getFilteredCube() {
+        try {
+            Fits f = FitsHelper.readFile(INPUT_FILENAME);
+            float[][][] column = FitsHelper.extractFilteredColumn(f, COLUMN);
+            int[][][] binary_filtered = BinaryFilter.meanFilter(column);
+            int[][][] blur_filtered = BlurFilter.filter(binary_filtered, BLUR_SIZE, BlurFilter.Blur_Filter_Type.NEGATIVE);
+
+            return blur_filtered;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
