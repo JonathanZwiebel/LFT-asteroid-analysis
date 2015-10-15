@@ -8,10 +8,14 @@ public class BrightBodyLocator {
         int[][] blob_labels = extractBlobLabels(binary_image);
         int blob_count = getMaxValue(blob_labels);
         ArrayList<PixelPoint>[] bright_bodies = new ArrayList[blob_count];
+        for(int i = 0; i < bright_bodies.length; i++) {
+            bright_bodies[i] = new ArrayList();
+        }
         for(int i = 0; i < original_image.length; i++) {
-            for(int j = 0; i < original_image[0].length; i++) {
+            for(int j = 0; j < original_image[0].length; j++) {
                 if(blob_labels[i][j] != -1) {
-                    bright_bodies[blob_labels[i][j]].add(new PixelPoint(i, j));
+                    System.out.println("Adding, value of blob_labels[" + i + "][" + j + "] is: " + blob_labels[i][j]);
+                    bright_bodies[blob_labels[i][j] - 1].add(new PixelPoint(i, j));
                 }
             }
         }
@@ -22,23 +26,23 @@ public class BrightBodyLocator {
     }
 
     public static int[][] extractBlobLabels(int[][] binary_image) {
-        int[][] label_array = new int[binary_image.length][binary_image[0].length];
-        for(int i = 0; i < label_array.length; i++) {
-            for(int j = 0; j < label_array[0].length; j++) {
-                label_array[i][j] = 0;
+        int[][] label_matrix = new int[binary_image.length][binary_image[0].length];
+        for(int i = 0; i < label_matrix.length; i++) {
+            for(int j = 0; j < label_matrix[0].length; j++) {
+                label_matrix[i][j] = 0;
             }
         }
         // label_array definitions:
         // -1: Dark
         //  0: Not searched
         // +n: Label n
-        int blobs = 0;
+        int blobs = 1;
         for(int i = 0; i < binary_image.length; i++) {
             for(int j = 0; j < binary_image[0].length; j++) {
-                if(addToLabelSet(-1, i, j, label_array, binary_image, blobs)) blobs++;
+                if(addToLabelSet(-1, i, j, label_matrix, binary_image, blobs)) blobs++;
             }
         }
-        return label_array;
+        return label_matrix;
     }
 
     private static boolean addToLabelSet(int attached_label, int i, int j, int[][] label_matrix, int[][] binary_image, int blob_count) {
@@ -58,6 +62,7 @@ public class BrightBodyLocator {
         else {
             new_label = attached_label;
         }
+        //System.out.println("Setting label_matix[" + i + "][" + j + "] to " +  new_label);
         label_matrix[i][j] = new_label;
         addNeighbors(new_label, i, j, label_matrix, binary_image, blob_count);
         return true;
