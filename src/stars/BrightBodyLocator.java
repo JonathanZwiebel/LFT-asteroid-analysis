@@ -1,5 +1,7 @@
 package stars;
 
+import analysis.IntraimageSort;
+
 import java.util.ArrayList;
 
 public class BrightBodyLocator {
@@ -7,23 +9,20 @@ public class BrightBodyLocator {
         int[][] blob_labels = extractBlobLabels(binary_image);
         int blob_count = getMaxValue(blob_labels);
 
-        ArrayList<PixelPoint>[] mixed_bright_bodies = new ArrayList[blob_count];
-        for(int i = 0; i < mixed_bright_bodies.length; i++) {
-            mixed_bright_bodies[i] = new ArrayList();
+        ArrayList<PixelPoint>[] bright_bodies = new ArrayList[blob_count];
+        for(int i = 0; i < bright_bodies.length; i++) {
+            bright_bodies[i] = new ArrayList();
         }
         for(int i = 0; i < original_image.length; i++) {
             for(int j = 0; j < original_image[0].length; j++) {
                 if(blob_labels[i][j] != -1) {
                     System.out.println("Adding, value of blob_labels[" + i + "][" + j + "] is: " + blob_labels[i][j]);
                     // TODO: DETERMINE WHY THE POSITION NEEDS TO BE REFLECTED TWICE
-                    mixed_bright_bodies[blob_labels[i][j] - 1].add(new PixelPoint(j, 49 - i));
+                    bright_bodies[blob_labels[i][j] - 1].add(new PixelPoint(j, 49 - i));
                 }
             }
         }
-
-    // here
-
-        ArrayList<PixelPoint>[] bright_bodies = new ArrayList[]; // mixed --> original combines adjacent blobs
+        System.out.println("Second Brightest Star: " + IntraimageSort.sortedArray(original_image)[1]);
 
         ArrayList<BrightBody> true_bright_bodies = new ArrayList();
         for(ArrayList bright_body : bright_bodies) {
@@ -76,12 +75,18 @@ public class BrightBodyLocator {
     }
 
     private static void addNeighbors(int parent_label, int i, int j, int[][] label_matrix, int[][] binary_image, int blob_count) {
-        boolean blob_found;
         if(j != label_matrix[0].length - 1) {
             addToLabelSet(parent_label, i, j + 1, label_matrix, binary_image, blob_count);
         }
         if(i != label_matrix.length - 1) {
             addToLabelSet(parent_label, i + 1, j, label_matrix, binary_image, blob_count);
+        }
+
+        if(j != 0) {
+            addToLabelSet(parent_label, i, j - 1, label_matrix, binary_image, blob_count);
+        }
+        if(i != 0) {
+            addToLabelSet(parent_label, i - 1, j, label_matrix, binary_image, blob_count);
         }
     }
 
