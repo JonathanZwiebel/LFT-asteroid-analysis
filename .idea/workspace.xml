@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1dd76e3-0d03-4b21-9062-e7937e89b986" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/analysis/IntraimageSort.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/stars/BrightBody.java" afterPath="$PROJECT_DIR$/src/stars/BrightBody.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/stars/BrightBodyLocator.java" afterPath="$PROJECT_DIR$/src/stars/BrightBodyLocator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/stars/BrightBodyTracker.java" afterPath="$PROJECT_DIR$/src/stars/BrightBodyTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/MeanSubtractive.java" afterPath="$PROJECT_DIR$/src/main/MeanSubtractive.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/analysis/IntraimageSort.java" afterPath="$PROJECT_DIR$/src/analysis/IntraimageSort.java" />
     </list>
     <ignored path="K2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,7 +106,7 @@
         <entry file="file://$PROJECT_DIR$/src/stars/BrightBodyLocator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="44" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
+              <caret line="13" column="56" selection-start-line="13" selection-start-column="56" selection-end-line="13" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -120,8 +115,8 @@
       <file leaf-file-name="IntraimageSort.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/analysis/IntraimageSort.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38716355">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.8447205">
+              <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -185,11 +180,11 @@
         <option value="$PROJECT_DIR$/src/stars/BinaryTrackerInstance.java" />
         <option value="$PROJECT_DIR$/src/filter/BrightBodyFilter.java" />
         <option value="$PROJECT_DIR$/src/filter/BlurFilter.java" />
-        <option value="$PROJECT_DIR$/src/analysis/IntraimageSort.java" />
         <option value="$PROJECT_DIR$/src/stars/BrightBodyTracker.java" />
         <option value="$PROJECT_DIR$/src/stars/BrightBodyLocator.java" />
         <option value="$PROJECT_DIR$/src/main/MeanSubtractive.java" />
         <option value="$PROJECT_DIR$/src/stars/BrightBody.java" />
+        <option value="$PROJECT_DIR$/src/analysis/IntraimageSort.java" />
       </list>
     </option>
   </component>
@@ -1151,15 +1146,15 @@
     <entry file="file://$PROJECT_DIR$/src/stars/BrightBodyLocator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="44" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
+          <caret line="13" column="56" selection-start-line="13" selection-start-column="56" selection-end-line="13" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/analysis/IntraimageSort.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38716355">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.8447205">
+          <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
