@@ -13,7 +13,7 @@ public class BrightBodyMoment {
     public static float moment(float[][] image, PixelPoint[] star, int i, int j) {
         float moment = 0;
         for(PixelPoint p : star) {
-            moment += image[p.y][p.x] * Math.pow(p.x, i) * Math.pow(p.y, j);
+            moment += image[49 - p.y][p.x] * Math.pow(p.x, i) * Math.pow(p.y, j);
         }
         return moment;
     }
