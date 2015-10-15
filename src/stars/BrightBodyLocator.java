@@ -15,7 +15,8 @@ public class BrightBodyLocator {
             for(int j = 0; j < original_image[0].length; j++) {
                 if(blob_labels[i][j] != -1) {
                     System.out.println("Adding, value of blob_labels[" + i + "][" + j + "] is: " + blob_labels[i][j]);
-                    bright_bodies[blob_labels[i][j] - 1].add(new PixelPoint(i, j));
+                    // TODO: DETERMINE WHY THE POSITION NEEDS TO REFLECTED TWICE
+                    bright_bodies[blob_labels[i][j] - 1].add(new PixelPoint(j, 49 - i));
                 }
             }
         }
