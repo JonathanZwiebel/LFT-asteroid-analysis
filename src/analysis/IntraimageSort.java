@@ -19,15 +19,23 @@ public class IntraimageSort {
         HashMap<Float, PixelPoint> hashmap = new HashMap<>(2500, 0.75f);
         for (int i = 0; i < image.length; i++) {
             for (int j = 0; j < image[0].length; j++) {
-                hashmap.put(image[i][j], new PixelPoint(i, j));
+                addToHashMap(hashmap, image[i][j], new PixelPoint(i, j));
             }
         }
         TreeMap treemap = new TreeMap(hashmap);
         PixelPoint[] sortedPixelPoints = new PixelPoint[image.length * image[0].length];
         for(int i = 0; i < sortedPixelPoints.length; i++) {
-            System.out.println("Filling spot: " + i);
             sortedPixelPoints[i] = (PixelPoint) treemap.pollLastEntry().getValue();
         }
         return sortedPixelPoints;
+    }
+
+    // deals with repettions by slightly modifying values (this is heurisitic)
+    public static void addToHashMap(HashMap hashmap, float value, PixelPoint point) {
+        while(hashmap.containsKey(value)){
+            System.out.println("Duplicate keys of " + value + " at i = " + point.x + " j = " + point.y);
+            value += 0.0001f;
+        }
+        hashmap.put(value, point);
     }
 }

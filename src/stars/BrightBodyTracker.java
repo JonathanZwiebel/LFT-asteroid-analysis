@@ -13,7 +13,7 @@ public class BrightBodyTracker {
             int[][][] binary_flux_col = getFilteredCube();
             writeDataCube(binary_flux_col, "C:\\Users\\user\\Desktop\\K2\\filtered\\ktwo200000908-c00-binfilmean.fits");
 
-            BinaryTrackerInstance t = new BinaryTrackerInstance(flux_col, binary_flux_col, 0);
+            BinaryTrackerInstance t = new BinaryTrackerInstance(flux_col, binary_flux_col, 999);
             t.print();
         }
         catch (Exception e){
