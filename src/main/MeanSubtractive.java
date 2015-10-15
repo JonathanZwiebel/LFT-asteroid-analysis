@@ -1,8 +1,8 @@
 package main;
 
-import helper.FitsHelper;
-import helper.K2ValidificationHelper;
-import helper.SubtractiveHelper;
+import static helper.FitsHelper.*;
+import static helper.K2ValidificationHelper.*;
+import static helper.SubtractiveHelper.*;
 import nom.tam.fits.Fits;
 import nom.tam.fits.TableHDU;
 
@@ -18,12 +18,12 @@ public class MeanSubtractive {
 
 	public static void main(String[] args) {
         try {
-            Fits fits = FitsHelper.readFile(INPUT_FILENAME);
-            TableHDU<?> table = FitsHelper.extractTable(fits, 1);
+            Fits fits = readFile(INPUT_FILENAME);
+            TableHDU<?> table = extractTable(fits, 1);
             float[][][] raw_data = (float[][][]) table.getColumn(COLUMN);
 
             ArrayList<Boolean> valid_indices = new ArrayList<>();
-            K2ValidificationHelper.validify(fits, valid_indices);
+            validify(fits, valid_indices);
             for(int i = INITIAL_BASE; i + DELTA_TIME <= valid_indices.size(); i += TIME_SPACING) {
                 boolean valid = true;
 
@@ -35,13 +35,13 @@ public class MeanSubtractive {
                 }
 
                 if(valid) {
-                    float[][] base = FitsHelper.extractDataSlice(raw_data, i);
-                    float[][] top = FitsHelper.extractDataSlice(raw_data, i + DELTA_TIME);
-                    float[][] delta = SubtractiveHelper.subtractImages(top, base);
+                    float[][] base = extractDataSlice(raw_data, i);
+                    float[][] top = extractDataSlice(raw_data, i + DELTA_TIME);
+                    float[][] delta = subtractImages(top, base);
                     String output_filename = OUTPUT_FOLDERNAME + "\\delta" + i + "to" + (i + DELTA_TIME) + ".fits";
-                    float[][] mean = SubtractiveHelper.meanImage(base, top);
-                    float[][] divided = SubtractiveHelper.divideImage(delta, mean);
-                    FitsHelper.write2DImage(divided, output_filename);
+                    float[][] mean = meanImage(base, top);
+                    float[][] divided = divideImage(delta, mean);
+                    write2DImage(divided, output_filename);
                 }
             }
         }

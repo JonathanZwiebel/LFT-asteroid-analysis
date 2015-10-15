@@ -1,6 +1,7 @@
 package stars;
 
-import analysis.BrightBodyMoment;
+import static analysis.BrightBodyMoment.centroid;
+import static analysis.BrightBodyMoment.area;
 
 public class BrightBody {
     public float[][] image;
@@ -13,8 +14,8 @@ public class BrightBody {
         this.pre_filter_body = pre_filter_body;
         body = pre_filter_body.clone(); // for now
 
-        centroid = BrightBodyMoment.centroid(image, body.clone());
-        area = BrightBodyMoment.area(image, body.clone());
+        centroid = centroid(image, body.clone());
+        area = area(image, body.clone());
     }
 
     public boolean contains(PixelPoint point) {
