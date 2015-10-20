@@ -30,7 +30,7 @@ public class IntraimageSort {
         return sortedPixelPoints;
     }
 
-    // deals with repettions by slightly modifying values (this is heurisitic)
+    // deals with repetitions by slightly modifying values (sketchy)
     public static void addToHashMap(HashMap hashmap, float value, PixelPoint point) {
         while(hashmap.containsKey(value)){
             System.out.println("Duplicate keys of " + value + " at i = " + point.x + " j = " + point.y);

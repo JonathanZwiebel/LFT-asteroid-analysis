@@ -4,14 +4,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 
 public class BinaryTrackerInstance {
     public int index;
     public float[][] image;
     public int[][] binary_image;
-    ArrayList<BrightBody> bright_bodies;
+    BrightBodyList bright_bodies;
 
     public BinaryTrackerInstance(float[][][] original_cube, int[][][] binary_cube, int index) {
         this.index = index;

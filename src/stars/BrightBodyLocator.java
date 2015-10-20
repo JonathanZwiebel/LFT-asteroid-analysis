@@ -3,7 +3,7 @@ package stars;
 import java.util.ArrayList;
 
 public class BrightBodyLocator {
-    public static ArrayList<BrightBody> binaryLocate(float[][] original_image, int[][] binary_image) {
+    public static BrightBodyList binaryLocate(float[][] original_image, int[][] binary_image) {
         int[][] blob_labels = extractBlobLabels(binary_image);
         int blob_count = getMaxValue(blob_labels);
 
@@ -21,7 +21,7 @@ public class BrightBodyLocator {
             }
         }
 
-        ArrayList<BrightBody> true_bright_bodies = new ArrayList();
+        BrightBodyList true_bright_bodies = new BrightBodyList();
         for(ArrayList bright_body : bright_bodies) {
             true_bright_bodies.add(new BrightBody(original_image, (PixelPoint[]) bright_body.toArray(new PixelPoint[bright_body.size()])));
         }
