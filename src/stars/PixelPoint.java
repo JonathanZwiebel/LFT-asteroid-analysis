@@ -1,6 +1,8 @@
 package stars;
 
-public class PixelPoint {
+import java.io.Serializable;
+
+public class PixelPoint implements Serializable {
     public int x, y;
 
     public PixelPoint(int x, int y) {

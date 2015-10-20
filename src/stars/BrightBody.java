@@ -1,10 +1,12 @@
 package stars;
 
 
+import java.io.Serializable;
+
 import static analysis.BrightBodyMoment.centroid;
 import static analysis.BrightBodyMoment.area;
 
-public class BrightBody implements Comparable<BrightBody>{
+public class BrightBody implements Comparable<BrightBody>, Serializable{
     public float[][] image;
     Coordinate centroid;
     float area;

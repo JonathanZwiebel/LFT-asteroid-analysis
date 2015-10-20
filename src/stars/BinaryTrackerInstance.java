@@ -1,10 +1,6 @@
 package stars;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Collections;
+import java.io.*;
 
 public class BinaryTrackerInstance {
     public int index;
@@ -17,18 +13,21 @@ public class BinaryTrackerInstance {
         image = original_cube[index];
         binary_image = binary_cube[index];
         bright_bodies = BrightBodyLocator.binaryLocate(image, binary_image);
-        sortByArea();
+        bright_bodies.sortByArea();
     }
 
     public void print() {
         System.out.println("Index: " + index + " | Bright Bodies: " + bright_bodies.size());
-        for(BrightBody b : bright_bodies) {
-            System.out.println(b);
-        }
+        System.out.print(bright_bodies);
     }
 
-    private void sortByArea() {
-        Collections.sort(bright_bodies, Collections.reverseOrder());
+    // TODO: GENERIC
+    public void serialize() throws FileNotFoundException, IOException {
+        FileOutputStream file_out = new FileOutputStream("C:\\Users\\user\\Desktop\\K2\\serialized\\ktwo200000908-c00.ser");
+        ObjectOutputStream object_out = new ObjectOutputStream(file_out);
+        object_out.writeObject(bright_bodies);
+        object_out.close();
+        file_out.close();
     }
 
     public void toTextFile(String filename)throws IOException {

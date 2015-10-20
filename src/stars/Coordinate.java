@@ -1,6 +1,8 @@
 package stars;
 
-public class Coordinate {
+import java.io.Serializable;
+
+public class Coordinate implements Serializable{
     public float x, y;
 
     public Coordinate(float x, float y) {

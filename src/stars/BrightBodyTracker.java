@@ -23,6 +23,10 @@ public class BrightBodyTracker {
                 BinaryTrackerInstance t = new BinaryTrackerInstance(flux_col, binary_flux_col, i);
                 System.out.println("Finish with index " + i);
                 t.toTextFile(TEXT_FILENAME_DIRECTORY + "\\index" + i + ".txt");
+                if(i == 499) {
+                    System.out.println("Starting serialization");
+                    t.serialize();
+                }
             }
         }
         catch (Exception e){
