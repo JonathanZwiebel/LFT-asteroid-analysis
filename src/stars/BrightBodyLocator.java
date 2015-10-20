@@ -1,7 +1,5 @@
 package stars;
 
-import analysis.IntraimageSort;
-
 import java.util.ArrayList;
 
 public class BrightBodyLocator {
@@ -22,7 +20,6 @@ public class BrightBodyLocator {
                 }
             }
         }
-        System.out.println("Second Brightest Star: " + IntraimageSort.sortedArray(original_image)[1]);
 
         ArrayList<BrightBody> true_bright_bodies = new ArrayList();
         for(ArrayList bright_body : bright_bodies) {
@@ -68,7 +65,6 @@ public class BrightBodyLocator {
         else {
             new_label = attached_label;
         }
-        //System.out.println("Setting label_matix[" + i + "][" + j + "] to " +  new_label);
         label_matrix[i][j] = new_label;
         addNeighbors(new_label, i, j, label_matrix, binary_image, blob_count);
         return true;

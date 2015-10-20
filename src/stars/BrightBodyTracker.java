@@ -7,10 +7,8 @@ import nom.tam.fits.Fits;
 public class BrightBodyTracker {
     public static final String DATA_FILENAME = "C:\\Users\\user\\Desktop\\K2\\raw\\ktwo200000908-c00_lpd-targ.fits";
     public static final String SECONDARY_FILENAME = "C:\\Users\\user\\Desktop\\K2\\filtered\\ktwo200000908-c00-binfilmean.fits";
-    public static final String TEXT_FILENAME_BASE = "C:\\Users\\user\\Desktop\\K2\\text\\ktwo200000908-c00_lpd-targ";
+    public static final String TEXT_FILENAME_DIRECTORY =  "C:\\Users\\user\\Desktop\\K2\\text\\ktwo200000908-c00";
     public static final String COLUMN = "FLUX";
-
-    public static final int INDEX = 499;
 
     public static void main(String[] args) {
         try {
@@ -20,9 +18,12 @@ public class BrightBodyTracker {
             int[][][] binary_flux_col = getFilteredCube();
             writeDataCube(binary_flux_col, SECONDARY_FILENAME);
 
-            BinaryTrackerInstance t = new BinaryTrackerInstance(flux_col, binary_flux_col, INDEX);
-            t.print();
-            t.toTextFile(TEXT_FILENAME_BASE + INDEX + ".txt");
+
+            for(int i = 0; i < flux_col.length; i++) {
+                BinaryTrackerInstance t = new BinaryTrackerInstance(flux_col, binary_flux_col, i);
+                System.out.println("Finish with index " + i);
+                t.toTextFile(TEXT_FILENAME_DIRECTORY + "\\index" + i + ".txt");
+            }
         }
         catch (Exception e){
             e.printStackTrace();
