@@ -1,9 +1,10 @@
 package stars;
 
+
 import static analysis.BrightBodyMoment.centroid;
 import static analysis.BrightBodyMoment.area;
 
-public class BrightBody {
+public class BrightBody implements Comparable<BrightBody>{
     public float[][] image;
     Coordinate centroid;
     float area;
@@ -27,7 +28,11 @@ public class BrightBody {
         return false;
     }
 
+    public int compareTo(BrightBody b) {
+        return (int) this.area - (int) b.area;
+    }
+
     public String toString() {
-        return("Area: " + area + " | Centroid: " + "(" + centroid.x + " , " + centroid.y + ")");
+        return("Size: " + body.length + " | Area: " + area + " | Centroid: " + "(" + centroid.x + " , " + centroid.y + ")");
     }
 }

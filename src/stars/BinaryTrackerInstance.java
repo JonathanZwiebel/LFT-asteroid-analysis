@@ -1,6 +1,11 @@
 package stars;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class BinaryTrackerInstance {
     public int index;
@@ -13,6 +18,7 @@ public class BinaryTrackerInstance {
         image = original_cube[index];
         binary_image = binary_cube[index];
         bright_bodies = BrightBodyLocator.binaryLocate(image, binary_image);
+        sortByArea();
     }
 
     public void print() {
@@ -20,5 +26,26 @@ public class BinaryTrackerInstance {
         for(BrightBody b : bright_bodies) {
             System.out.println(b);
         }
+    }
+
+    private void sortByArea() {
+        Collections.sort(bright_bodies, Collections.reverseOrder());
+    }
+
+    public void toTextFile(String filename)throws IOException {
+        File f = new File(filename);
+        if(!f.exists()) {
+            f.createNewFile();
+        }
+        FileWriter fwriter = new FileWriter(f.getAbsoluteFile());
+        BufferedWriter writer = new BufferedWriter(fwriter);
+        writer.write("Index: " + index + " | Bright Bodies: " + bright_bodies.size());
+        writer.newLine();
+        writer.newLine();
+        for(BrightBody b : bright_bodies) {
+            writer.write(b.toString());
+            writer.newLine();
+        }
+        writer.close();
     }
 }
