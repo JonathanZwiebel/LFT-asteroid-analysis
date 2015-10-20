@@ -12,7 +12,7 @@ public class BrightBodyList extends ArrayList<BrightBody> implements Serializabl
     public String toString() {
         String ret = "";
         for(BrightBody b : this) {
-            ret += b;
+            ret += b + "\n";
         }
         return ret;
     }

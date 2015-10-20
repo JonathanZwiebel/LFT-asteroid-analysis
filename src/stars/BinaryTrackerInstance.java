@@ -21,9 +21,8 @@ public class BinaryTrackerInstance {
         System.out.print(bright_bodies);
     }
 
-    // TODO: GENERIC
-    public void serialize() throws FileNotFoundException, IOException {
-        FileOutputStream file_out = new FileOutputStream("C:\\Users\\user\\Desktop\\K2\\serialized\\ktwo200000908-c00.ser");
+    public void serialize(String filename) throws IOException {
+        FileOutputStream file_out = new FileOutputStream(filename);
         ObjectOutputStream object_out = new ObjectOutputStream(file_out);
         object_out.writeObject(bright_bodies);
         object_out.close();
