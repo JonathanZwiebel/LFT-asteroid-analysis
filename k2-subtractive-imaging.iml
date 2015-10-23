@@ -14,10 +14,10 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="module-library" exported="">
-      <library name="fits.jar">
+    <orderEntry type="module-library">
+      <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/jfits/fits.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/nom-tam-fits-1.13.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
