@@ -113,4 +113,24 @@ public class ImageStats {
         std_dev_squared /= data_list.size();
         std_dev = (float) Math.sqrt(std_dev_squared);
     }
+
+    /**
+     * TODO: Make non-static or move
+     * Calculates the mean value of an image
+     * @param image the input image
+     * @return the mean value
+     */
+    public static float mean(float[][] image) {
+        ArrayList<Float> data_list = new ArrayList();
+        for(float[] arrayf : image) {
+            for(float f : arrayf) {
+                data_list.add(f);
+            }
+        }
+        float sum = 0;
+        for(float f : data_list) {
+            sum += f;
+        }
+        return sum / data_list.size();
+    }
 }
