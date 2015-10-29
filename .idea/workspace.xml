@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1dd76e3-0d03-4b21-9062-e7937e89b986" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/analysis/BrightBodyMoment.java" afterPath="$PROJECT_DIR$/src/analysis/BrightBodyMoment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helper/FitsHelper.java" afterPath="$PROJECT_DIR$/src/helper/FitsHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/analysis/ImageMoment.java" afterPath="$PROJECT_DIR$/src/analysis/ImageMoment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helper/K2ValidificationHelper.java" afterPath="$PROJECT_DIR$/src/helper/K2ValidificationHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="C:\Users\admin\git\K2\src\analysis\MomentTester.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/analysis/ImageStats.java" afterPath="$PROJECT_DIR$/src/analysis/ImageStats.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/analysis/IntraimageSort.java" afterPath="$PROJECT_DIR$/src/analysis/IntraimageSort.java" />
     </list>
     <ignored path="K2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,22 +40,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IntraimageSort.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="IntraimageSort.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/analysis/IntraimageSort.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-              <folding />
+            <state vertical-scroll-proportion="0.36329588">
+              <caret line="22" column="64" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageMoment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ImageMoment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/analysis/ImageMoment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6179775">
-              <caret line="30" column="47" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
               <folding>
+                <element signature="e#843#844#0" expanded="true" />
                 <element signature="e#885#886#0" expanded="true" />
                 <element signature="e#1104#1105#0" expanded="true" />
                 <element signature="e#1168#1169#0" expanded="true" />
@@ -89,16 +89,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BinaryFilter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/filter/BinaryFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="BrightBodyFilter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/filter/BrightBodyFilter.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -115,8 +105,10 @@
         <entry file="file://$PROJECT_DIR$/src/analysis/ImageStats.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding />
+              <caret line="114" column="5" selection-start-line="114" selection-start-column="5" selection-end-line="114" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -176,7 +168,6 @@
         <option value="$PROJECT_DIR$/src/filter/BlurFilter.java" />
         <option value="$PROJECT_DIR$/src/stars/Coordinate.java" />
         <option value="$PROJECT_DIR$/src/stars/Star.java" />
-        <option value="$PROJECT_DIR$/src/analysis/ImageStats.java" />
         <option value="$PROJECT_DIR$/src/filter/BinaryFilter.java" />
         <option value="$PROJECT_DIR$/src/filter/StarFilter.java" />
         <option value="$PROJECT_DIR$/src/write/SimpleWriter.java" />
@@ -194,6 +185,8 @@
         <option value="$PROJECT_DIR$/src/filter/BrightBodyFilter.java" />
         <option value="$PROJECT_DIR$/src/analysis/BrightBodyMoment.java" />
         <option value="$PROJECT_DIR$/src/analysis/ImageMoment.java" />
+        <option value="$PROJECT_DIR$/src/analysis/ImageStats.java" />
+        <option value="$PROJECT_DIR$/src/analysis/IntraimageSort.java" />
       </list>
     </option>
   </component>
@@ -996,13 +989,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/analysis/MomentTester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/stars/PixelPoint.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1093,22 +1079,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/analysis/IntraimageSort.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/analysis/ImageStats.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/analysis/BrightBodyMoment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1123,14 +1093,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/analysis/ImageMoment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6179775">
-          <caret line="30" column="47" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
           <folding>
+            <element signature="e#843#844#0" expanded="true" />
             <element signature="e#885#886#0" expanded="true" />
             <element signature="e#1104#1105#0" expanded="true" />
             <element signature="e#1168#1169#0" expanded="true" />
             <element signature="e#1387#1388#0" expanded="true" />
             <element signature="e#1451#1452#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/analysis/ImageStats.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="114" column="5" selection-start-line="114" selection-start-column="5" selection-end-line="114" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/analysis/IntraimageSort.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36329588">
+          <caret line="22" column="64" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
