@@ -56,15 +56,19 @@ public class FitsHelper {
 	}
 
 	public static float[][][] extractFilteredColumn(Fits f, String column_name) throws FitsException, IOException{
+		System.out.println("extractFilteredColumn called");
 		TableHDU<?> table = (TableHDU<?>) f.getHDU(1);
+		System.out.println("TableHDU extracted");
 		ArrayList<Boolean> valid_indices = new ArrayList();
 		int valid_index_count = K2ValidificationHelper.validify(f, valid_indices);
+		System.out.println("valid_index_count initialized");
 
 		float[][][] unfiltered_column = (float[][][]) table.getColumn(column_name);
 		float[][][] filtered_column = new float[valid_index_count][unfiltered_column[0].length][unfiltered_column[0][0].length];
 
 		int insertion_index = 0;
 		for(int index = 0; insertion_index < valid_index_count; index++) {
+			System.out.println("Insertion Index: " + insertion_index);
 			if(valid_indices.get(index)) {
 				filtered_column[insertion_index] = unfiltered_column[index];
 				insertion_index++;
