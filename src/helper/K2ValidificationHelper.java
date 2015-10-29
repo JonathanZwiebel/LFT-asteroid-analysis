@@ -24,9 +24,6 @@ public class K2ValidificationHelper {
      */
     public static int validify(Fits fits, ArrayList<Boolean> valid_indexes) throws IOException, FitsException {
         TableHDU<?> thdu = (TableHDU<?>) fits.getHDU(1);
-        for(int i = 0; i < thdu.getNCols(); i++) {
-            System.out.println("Column number " + i + ": " + thdu.getColumnName(i));
-        }
         int[] quality_column = (int[]) thdu.getColumn(VALIDIFICATION_COL_NAME);
         int valid_count = 0;
         for(int i = 0; i < quality_column.length; i++) {

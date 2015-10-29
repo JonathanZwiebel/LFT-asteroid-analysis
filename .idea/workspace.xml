@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1dd76e3-0d03-4b21-9062-e7937e89b986" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\admin\git\K2\src\analysis\MomentTester.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/analysis/ImageStats.java" afterPath="$PROJECT_DIR$/src/analysis/ImageStats.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/analysis/IntraimageSort.java" afterPath="$PROJECT_DIR$/src/analysis/IntraimageSort.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helper/ArrayHelper.java" afterPath="$PROJECT_DIR$/src/helper/ArrayHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helper/FitsHelper.java" afterPath="$PROJECT_DIR$/src/helper/FitsHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helper/K2ValidificationHelper.java" afterPath="$PROJECT_DIR$/src/helper/K2ValidificationHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/helper/SubtractiveHelper.java" afterPath="$PROJECT_DIR$/src/helper/SubtractiveHelper.java" />
     </list>
     <ignored path="K2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IntraimageSort.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IntraimageSort.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/analysis/IntraimageSort.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36329588">
-              <caret line="22" column="64" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="86" selection-start-line="39" selection-start-column="86" selection-end-line="39" selection-end-column="86" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -69,31 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BrightBodyLocator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/stars/BrightBodyLocator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BrightBodyTracker.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/stars/BrightBodyTracker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="BrightBodyFilter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/filter/BrightBodyFilter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+              <caret line="35" column="68" selection-start-line="35" selection-start-column="68" selection-end-line="35" selection-end-column="68" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -113,11 +94,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="K2ValidificationHelper.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="K2ValidificationHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/helper/K2ValidificationHelper.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.46691635">
+              <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SubtractiveHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/helper/SubtractiveHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-36.833332">
+              <caret line="78" column="13" selection-start-line="78" selection-start-column="13" selection-end-line="78" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArrayHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/helper/ArrayHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -127,10 +128,20 @@
         <entry file="file://$PROJECT_DIR$/src/helper/FitsHelper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+              <caret line="115" column="60" selection-start-line="115" selection-start-column="60" selection-end-line="115" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlurFilter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/filter/BlurFilter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -159,11 +170,9 @@
         <option value="$PROJECT_DIR$/src/main/FitsHelper.java" />
         <option value="$PROJECT_DIR$/src/helper/ValidificationHelper.java" />
         <option value="$PROJECT_DIR$/src/main/SimpleSubtractive.java" />
-        <option value="$PROJECT_DIR$/src/helper/SubtractiveHelper.java" />
         <option value="$PROJECT_DIR$/src/filter/FilterTester.java" />
         <option value="$PROJECT_DIR$/src/main/Subtractive.java" />
         <option value="$PROJECT_DIR$/src/main/MeanSubtractive.java" />
-        <option value="$PROJECT_DIR$/src/helper/ArrayHelper.java" />
         <option value="$PROJECT_DIR$/src/filter/NegativeBlurFilter.java" />
         <option value="$PROJECT_DIR$/src/filter/BlurFilter.java" />
         <option value="$PROJECT_DIR$/src/stars/Coordinate.java" />
@@ -180,13 +189,15 @@
         <option value="$PROJECT_DIR$/src/stars/BinaryTrackerInstance.java" />
         <option value="$PROJECT_DIR$/src/stars/BrightBodyTracker.java" />
         <option value="$PROJECT_DIR$/src/stars/BrightBodyLocator.java" />
-        <option value="$PROJECT_DIR$/src/helper/FitsHelper.java" />
-        <option value="$PROJECT_DIR$/src/helper/K2ValidificationHelper.java" />
         <option value="$PROJECT_DIR$/src/filter/BrightBodyFilter.java" />
         <option value="$PROJECT_DIR$/src/analysis/BrightBodyMoment.java" />
         <option value="$PROJECT_DIR$/src/analysis/ImageMoment.java" />
         <option value="$PROJECT_DIR$/src/analysis/ImageStats.java" />
         <option value="$PROJECT_DIR$/src/analysis/IntraimageSort.java" />
+        <option value="$PROJECT_DIR$/src/helper/K2ValidificationHelper.java" />
+        <option value="$PROJECT_DIR$/src/helper/ArrayHelper.java" />
+        <option value="$PROJECT_DIR$/src/helper/FitsHelper.java" />
+        <option value="$PROJECT_DIR$/src/helper/SubtractiveHelper.java" />
       </list>
     </option>
   </component>
@@ -940,13 +951,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/helper/SubtractiveHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/stars/Coordinate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -965,13 +969,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="116" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/helper/ArrayHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1000,14 +997,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/filter/BlurFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1051,42 +1040,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/helper/FitsHelper.java">
+    <entry file="file://$PROJECT_DIR$/src/analysis/IntraimageSort.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <caret line="39" column="86" selection-start-line="39" selection-start-column="86" selection-end-line="39" selection-end-column="86" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/helper/K2ValidificationHelper.java">
+    <entry file="file://$PROJECT_DIR$/src/analysis/ImageStats.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/filter/BrightBodyFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+          <caret line="114" column="5" selection-start-line="114" selection-start-column="5" selection-end-line="114" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/analysis/BrightBodyMoment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1262#1263#0" expanded="true" />
-            <element signature="e#1317#1318#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1106,23 +1075,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/analysis/ImageStats.java">
+    <entry file="file://$PROJECT_DIR$/src/filter/BrightBodyFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="114" column="5" selection-start-line="114" selection-start-column="5" selection-end-line="114" selection-end-column="5" />
+          <caret line="35" column="68" selection-start-line="35" selection-start-column="68" selection-end-line="35" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/analysis/IntraimageSort.java">
+    <entry file="file://$PROJECT_DIR$/src/filter/BlurFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36329588">
-          <caret line="22" column="64" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/analysis/BrightBodyMoment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+            <element signature="e#1317#1318#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helper/ArrayHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helper/FitsHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="115" column="60" selection-start-line="115" selection-start-column="60" selection-end-line="115" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helper/SubtractiveHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-36.833332">
+          <caret line="78" column="13" selection-start-line="78" selection-start-column="13" selection-end-line="78" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helper/K2ValidificationHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46691635">
+          <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
