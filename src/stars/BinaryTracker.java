@@ -1,6 +1,6 @@
 package stars;
 
-import static filter.BrightBodyFilter.getFilteredCube;
+import static filter.MeanBrightBodyFilter.getFilteredCube;
 import static helper.FitsHelper.readFile;
 import static helper.FitsHelper.extractFilteredColumn;
 import static helper.FitsHelper.writeDataCube;
@@ -39,14 +39,14 @@ public class BinaryTracker {
      */
     public void track() throws FitsException, IOException {
         Fits fits = readFile(data_filename_);
-        float[][][] col_ = extractFilteredColumn(fits, column_);
+        float[][][] col = extractFilteredColumn(fits, column_);
 
-        int[][][] filtered_col_ = getFilteredCube();
-        writeDataCube(filtered_col_, secondary_filename_);
+        int[][][] filtered_col = getFilteredCube();
+        writeDataCube(filtered_col, secondary_filename_);
 
 
-        for(int i = 0; i < col_.length; i++) {
-            BinaryTrackerInstance t = new BinaryTrackerInstance(col_, filtered_col_, i);
+        for(int i = 0; i < col.length; i++) {
+            BinaryTrackerInstance t = new BinaryTrackerInstance(col, filtered_col, i);
             t.toTextFile(text_directory_ + "\\index" + i + ".txt");
             t.serialize(serialized_directory_ + "\\index" + i + ".ser");
         }

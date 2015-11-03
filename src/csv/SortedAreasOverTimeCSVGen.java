@@ -6,7 +6,7 @@ import java.io.*;
 
 /**
  * Generates a CSV from a BinaryTracker object where each column is a valid timestamp and
- * each row is the area of a BrightBody, sorted started from the greatest area
+ * each row is the area of a TrackBrightBody, sorted started from the greatest area
  */
 public class SortedAreasOverTimeCSVGen implements CSVGenerator{
 
@@ -22,7 +22,5 @@ public class SortedAreasOverTimeCSVGen implements CSVGenerator{
         }
         BinaryTracker tracker_ = (BinaryTracker) data;
         FileWriter writer_ = new FileWriter(filename);
-
-        for()
     }
 }

@@ -1,54 +1,36 @@
 package filter;
 
+import helper.ArrayHelper;
 import helper.FitsHelper;
 import nom.tam.fits.Fits;
+import nom.tam.fits.FitsException;
+
+import java.io.IOException;
 
 
 /**
- * This class filters a FITS image into just the stars
+ * This class filters a FITS image by doing a positive binary filter over the mean
  */
-public class MeanBrightBodyFilter {
-    public static final String INPUT_FILENAME = "C:\\Users\\admin\\Desktop\\K2\\raw\\ktwo200000905-c00_lpd-targ.fits";
-    public static final String OUTPUT_HEAD = "C:\\Users\\admin\\Desktop\\K2\\filtered\\ktwo200000908-c00";
-    public static final String COLUMN = "FLUX";
+public class MeanBrightBodyFilter implements BrightBodyFilter {
+    String input_filename_, output_head_, column_;
 
-    public static final int BINARY_THRESHOLD = 1000;
-    public static final int BLUR_SIZE = 0;
-
-    public static final String BINARY_EXTENSION = "-binfilmean";
-    public static final String BLUR_EXTENSION = "-blurfill" + BLUR_SIZE;
-
-    public static void main(String[] args) {
-        try {
-            Fits f = FitsHelper.readFile(INPUT_FILENAME);
-            float[][][] column = FitsHelper.extractFilteredColumn(f, COLUMN);
-            int[][][] binary_filtered = BinaryFilter.meanFilter(column);
-            int[][][] blur_filtered = BlurFilter.filter(binary_filtered, BLUR_SIZE, BlurFilter.Blur_Filter_Type.NEGATIVE);
-
-            FitsHelper.writeDataCube(binary_filtered, OUTPUT_HEAD + BINARY_EXTENSION + ".fits");
-            FitsHelper.writeDataCube(blur_filtered, OUTPUT_HEAD + BINARY_EXTENSION + BLUR_EXTENSION + ".fits");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+    public MeanBrightBodyFilter(String input_filename, String output_head, String column) {
+        this.input_filename_ = input_filename;
+        this.output_head_ = output_head;
+        this.column_ = column;
     }
 
-    // for now instead of writing out to a fits and then having the tracker pick it up
-    // this method will pass the data to the tracker
-    // CHANGE THIS
-    // TODO: CHANGE THIS
-    public static int[][][] filter(String input_filename, String column, String blur_size) {
-        try {
-            Fits f = FitsHelper.readFile(INPUT_FILENAME);
-            float[][][] column = FitsHelper.extractFilteredColumn(f, COLUMN);
-            int[][][] binary_filtered = BinaryFilter.meanFilter(column);
-            int[][][] blur_filtered = BlurFilter.filter(binary_filtered, BLUR_SIZE, BlurFilter.Blur_Filter_Type.NEGATIVE);
+    public float[][][] filter() throws FitsException, IOException {
+        Fits f = FitsHelper.readFile(input_filename_);
+        float[][][] column = FitsHelper.extractFilteredColumn(f, column_);
+        int[][][] filtered = BinaryFilter.meanFilter(column);
+        return ArrayHelper.intToFloat(filtered);
+    }
 
-            return blur_filtered;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void writeFilter() throws FitsException, IOException {
+        Fits f = FitsHelper.readFile(input_filename_);
+        float[][][] column = FitsHelper.extractFilteredColumn(f, column_);
+        int[][][] filtered = BinaryFilter.meanFilter(column);
+        FitsHelper.writeDataCube(filtered, output_head_ + "-binfilmean.fits");
     }
 }

@@ -1,7 +1,13 @@
 package filter;
 
+import nom.tam.fits.FitsException;
+
+import java.io.IOException;
+
 /**
- * Created by admin on 11/2/15.
+ * Interface for filtering a TrackBrightBody
  */
-public class BrightBodyFilter {
+public interface BrightBodyFilter {
+    void writeFilter() throws FitsException, IOException;
+    float[][][] filter() throws FitsException, IOException;
 }
