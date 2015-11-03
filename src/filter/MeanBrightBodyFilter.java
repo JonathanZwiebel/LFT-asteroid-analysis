@@ -34,7 +34,8 @@ public class MeanBrightBodyFilter implements BrightBodyFilter {
     public int[][][] filter() throws FitsException, IOException {
         Fits f = FitsHelper.readFile(input_filename_);
         float[][][] column = FitsHelper.extractFilteredColumn(f, column_);
-        int[][][] filtered = BinaryFilter.meanFilter(column);
+        BinaryFilter binaryFilter = new BinaryFilter(column);
+        int[][][] filtered = binaryFilter.meanFilter();
         return filtered;
     }
 
@@ -46,7 +47,8 @@ public class MeanBrightBodyFilter implements BrightBodyFilter {
     public void writeFilter() throws FitsException, IOException {
         Fits f = FitsHelper.readFile(input_filename_);
         float[][][] column = FitsHelper.extractFilteredColumn(f, column_);
-        int[][][] filtered = BinaryFilter.meanFilter(column);
+        BinaryFilter binaryFilter = new BinaryFilter(column);
+        int[][][] filtered = binaryFilter.meanFilter();
         FitsHelper.writeDataCube(filtered, output_head_ + "-binfilmean.fits");
     }
 }
