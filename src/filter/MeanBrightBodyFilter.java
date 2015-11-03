@@ -1,6 +1,5 @@
 package filter;
 
-import helper.ArrayHelper;
 import helper.FitsHelper;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
@@ -32,15 +31,15 @@ public class MeanBrightBodyFilter implements BrightBodyFilter {
      * @throws FitsException
      * @throws IOException
      */
-    public float[][][] filter() throws FitsException, IOException {
+    public int[][][] filter() throws FitsException, IOException {
         Fits f = FitsHelper.readFile(input_filename_);
         float[][][] column = FitsHelper.extractFilteredColumn(f, column_);
         int[][][] filtered = BinaryFilter.meanFilter(column);
-        return ArrayHelper.intToFloat(filtered);
+        return filtered;
     }
 
     /**
-     * Generates and writes the filtered datat cube
+     * Generates and writes the filtered data cube
      * @throws FitsException
      * @throws IOException
      */

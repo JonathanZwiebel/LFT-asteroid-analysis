@@ -21,5 +21,5 @@ public interface BrightBodyFilter {
      * @throws FitsException
      * @throws IOException
      */
-    float[][][] filter() throws FitsException, IOException;
+    int[][][] filter() throws FitsException, IOException;
 }

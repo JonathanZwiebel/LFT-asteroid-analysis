@@ -1,9 +1,10 @@
 package stars;
 
-import static filter.MeanBrightBodyFilter.getFilteredCube;
 import static helper.FitsHelper.readFile;
 import static helper.FitsHelper.extractFilteredColumn;
 import static helper.FitsHelper.writeDataCube;
+
+import filter.MeanBrightBodyFilter;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 
@@ -41,9 +42,8 @@ public class BinaryTracker {
         Fits fits = readFile(data_filename_);
         float[][][] col = extractFilteredColumn(fits, column_);
 
-        int[][][] filtered_col = getFilteredCube();
-        writeDataCube(filtered_col, secondary_filename_);
-
+        MeanBrightBodyFilter meanBrightBodyFilter = new MeanBrightBodyFilter(data_filename_, "Null", "FLUX");
+        int[][][] filtered_col = meanBrightBodyFilter.filter();
 
         for(int i = 0; i < col.length; i++) {
             BinaryTrackerInstance t = new BinaryTrackerInstance(col, filtered_col, i);
