@@ -93,7 +93,6 @@ public class BinaryTracker {
      * @throws IOException
      */
     public void toMassAreaSortedCSV(String filename, int body_count) throws IOException {
-        int safety = 0;
         File f = new File(filename);
         if(!f.exists()) {
             f.createNewFile();
@@ -102,19 +101,11 @@ public class BinaryTracker {
         BufferedWriter writer = new BufferedWriter(file_writer);
         writer.write("\"Index\"");
         for(int i = 1; i <= body_count; i++) {
-            safety++;
-            if(safety > 50000) {
-                System.exit(-100);
-            }
             writer.write(",\"Body " + i + " Area\"");
         }
         writer.newLine();
         for(int index = 0; index < instances.length; index++) {
             writer.write("\"" + index + "\"");
-            if(safety > 50000) {
-                System.exit(-100);
-            }
-            safety++;
             writer.write(instances[index].areasToCSVLine(body_count));
             writer.newLine();
         }
