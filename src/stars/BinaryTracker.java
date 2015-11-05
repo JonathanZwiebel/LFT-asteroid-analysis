@@ -11,8 +11,7 @@ import java.io.IOException;
 
 /**
  * Stores BinaryTrackerInstances over a single FITs file. Will filter a given image based on a passed binary filter and
- * then group adjacent units into BrightBodies. BrightBodies will be tracked by BinaryTrackerInstances
- * TODO: Make a data struct holding the instances and set the outputs to a new place
+ * then group adjacent units into BrightBodies. BrightBodies will be tracked by BinaryTrackerInstances.
  */
 public class BinaryTracker {
     private String data_filename_, column_;
