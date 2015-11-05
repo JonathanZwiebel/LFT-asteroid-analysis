@@ -2,7 +2,6 @@ package stars;
 
 import static helper.FitsHelper.readFile;
 import static helper.FitsHelper.extractFilteredColumn;
-import static helper.FitsHelper.writeDataCube;
 
 import filter.MeanBrightBodyFilter;
 import nom.tam.fits.Fits;
@@ -13,23 +12,18 @@ import java.io.IOException;
 /**
  * Stores BinaryTrackerInstances over a single FITs file. Will filter a given image based on a passed binary filter and
  * then group adjacent units into BrightBodies. BrightBodies will be tracked by BinaryTrackerInstances
+ * TODO: Make a data struct holding the instances and set the outputs to a new place
  */
 public class BinaryTracker {
-    String data_filename_, secondary_filename_, text_directory_, serialized_directory_, column_;
-
+    private String data_filename_, column_;
+    public BinaryTrackerInstance[] instances;
     /**
      * Constructs a BinaryTracker object
      * @param data_filename the data file with the field of bodies
-     * @param secondary_filename the binary filter file
-     * @param text_directory directory to dump generated .txt files
-     * @param serialized_directory directory to dump generated .ser files
      * @param column column name
      */
-    public BinaryTracker(String data_filename, String secondary_filename, String text_directory, String serialized_directory, String column) {
+    public BinaryTracker(String data_filename, String column) {
         this.data_filename_ = data_filename;
-        this.secondary_filename_ = secondary_filename;
-        this.text_directory_ = text_directory;
-        this.serialized_directory_ = serialized_directory;
         this.column_ = column;
     }
 
@@ -45,10 +39,35 @@ public class BinaryTracker {
         MeanBrightBodyFilter meanBrightBodyFilter = new MeanBrightBodyFilter(data_filename_, "Null", "FLUX");
         int[][][] filtered_col = meanBrightBodyFilter.filter();
 
+        instances = new BinaryTrackerInstance[col.length - 1];
         for(int i = 0; i < col.length; i++) {
-            BinaryTrackerInstance t = new BinaryTrackerInstance(col, filtered_col, i);
-            t.toTextFile(text_directory_ + "\\index" + i + ".txt");
-            t.serialize(serialized_directory_ + "\\index" + i + ".ser");
+            instances[i] = new BinaryTrackerInstance(col, filtered_col, i);
+        }
+    }
+
+    /**
+     * Generates text files for each instance in the tracker
+     * @param text_directory directory to place the .txt files
+     * @throws IOException
+     */
+    public void toTextFiles(String text_directory) throws IOException {
+        int count = 0;
+        for(BinaryTrackerInstance instance : instances) {
+            instance.toTextFile(text_directory + "\\index" + count + ".txt");
+            count++;
+        }
+    }
+
+    /**
+     * Generates serialized BinaryTrackerInstances as .ser files for all instances within the tracker
+     * @param serialized_directory directory to place the .ser files
+     * @throws IOException
+     */
+    public void toSerializedFiles(String serialized_directory) throws IOException{
+        int count = 0;
+        for(BinaryTrackerInstance instance : instances) {
+            instance.serialize(serialized_directory + "\\index" + count + ".txt");
+            count++;
         }
     }
 }

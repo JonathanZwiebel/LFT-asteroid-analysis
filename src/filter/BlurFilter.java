@@ -2,6 +2,7 @@ package filter;
 
 /**
  * This class filters an image by checking the pixels around it and setting the value to their median
+ * TODO: Make non-static
  */
 public class BlurFilter {
     public enum Blur_Filter_Type {
