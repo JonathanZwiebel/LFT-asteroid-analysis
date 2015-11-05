@@ -10,7 +10,9 @@ import java.util.Arrays;
 public class ArrayStats {
     public float[] array, sorted_array;
     public int n;
-    public float min, q1, med, q3, max, iqr;
+    public float min, q1, med, q3, max, iqr, range;
+    public float fd_width;
+    public int fd_col_count;
 
     /**
      * Constructs an ArrayStats object to track an array
@@ -23,6 +25,9 @@ public class ArrayStats {
         n = array.length;
         computeQuartiles();
         iqr = q3 - q1;
+        range = max - min;
+        fd_width = 2 * iqr * (float) Math.pow(n, -(float) 1 / 3);
+        fd_col_count  = (int) (range / fd_width) + 1;
     }
 
     /**
