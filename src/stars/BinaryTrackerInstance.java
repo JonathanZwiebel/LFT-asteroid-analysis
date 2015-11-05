@@ -1,5 +1,6 @@
 package stars;
 
+import javax.swing.*;
 import java.io.*;
 
 /**
@@ -85,5 +86,18 @@ public class BinaryTrackerInstance {
         }
         writer.close();
         file_writer_.close();
+    }
+
+    /**
+     * Returns a CSV parsable String of the are of the first body_count bright bodies sorted by descending area
+     * @param body_count number of bright bodies to include
+     * @return CSV of the bright body areas
+     */
+    public String areasToCSVLine(int body_count) {
+        String ret = "";
+        for(int i = 0; i < body_count; i++) {
+            ret += ",\"" + bright_bodies_.get(i).area + "\"";
+        }
+        return ret;
     }
  }

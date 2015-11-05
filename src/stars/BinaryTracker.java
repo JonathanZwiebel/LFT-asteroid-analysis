@@ -7,6 +7,9 @@ import filter.MeanBrightBodyFilter;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -81,5 +84,41 @@ public class BinaryTracker {
             instance.toCSV(csv_directory + "\\index" + count + ".csv");
             count++;
         }
+    }
+
+    /**
+     * Generates a massive CSV that includes the brightness over time for the n brightest bright bodies
+     * @param filename .csv file location
+     * @param body_count number of bright bodies to include
+     * @throws IOException
+     */
+    public void toMassAreaSortedCSV(String filename, int body_count) throws IOException {
+        int safety = 0;
+        File f = new File(filename);
+        if(!f.exists()) {
+            f.createNewFile();
+        }
+        FileWriter file_writer = new FileWriter(f.getAbsoluteFile());
+        BufferedWriter writer = new BufferedWriter(file_writer);
+        writer.write("\"Index\"");
+        for(int i = 1; i <= body_count; i++) {
+            safety++;
+            if(safety > 50000) {
+                System.exit(-100);
+            }
+            writer.write(",\"Body " + i + " Area\"");
+        }
+        writer.newLine();
+        for(int index = 0; index < instances.length; index++) {
+            writer.write("\"" + index + "\"");
+            if(safety > 50000) {
+                System.exit(-100);
+            }
+            safety++;
+            writer.write(instances[index].areasToCSVLine(body_count));
+            writer.newLine();
+        }
+        writer.close();
+        file_writer.close();
     }
 }
