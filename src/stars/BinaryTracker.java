@@ -38,7 +38,7 @@ public class BinaryTracker {
         MeanBrightBodyFilter meanBrightBodyFilter = new MeanBrightBodyFilter(data_filename_, "Null", "FLUX");
         int[][][] filtered_col = meanBrightBodyFilter.filter();
 
-        instances = new BinaryTrackerInstance[col.length - 1];
+        instances = new BinaryTrackerInstance[col.length];
         for(int i = 0; i < col.length; i++) {
             instances[i] = new BinaryTrackerInstance(col, filtered_col, i);
         }
@@ -66,6 +66,19 @@ public class BinaryTracker {
         int count = 0;
         for(BinaryTrackerInstance instance : instances) {
             instance.serialize(serialized_directory + "\\index" + count + ".txt");
+            count++;
+        }
+    }
+
+    /**
+     * Generates CSVs for all instances within the tracker
+     * @param csv_directory directory to place the .csv files
+     * @throws IOException
+     */
+    public void toCSVs(String csv_directory) throws IOException{
+        int count = 0;
+        for(BinaryTrackerInstance instance : instances) {
+            instance.toCSV(csv_directory + "\\index" + count + ".csv");
             count++;
         }
     }

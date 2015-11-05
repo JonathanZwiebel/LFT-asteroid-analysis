@@ -46,7 +46,7 @@ public class BinaryTrackerInstance {
      * @param filename .txt file location
      * @throws IOException
      */
-    public void toTextFile(String filename)throws IOException {
+    public void toTextFile(String filename) throws IOException {
         File f = new File(filename);
         if(!f.exists()) {
             f.createNewFile();
@@ -61,5 +61,29 @@ public class BinaryTrackerInstance {
             writer.newLine();
         }
         writer.close();
+        file_writer.close();
     }
-}
+
+    /**
+     * Generates a CSV output of the sorted bright bodies with each row corresponding to a BrightBody, the first
+     * column being area and the second column being centroid
+     * @param filename
+     * @throws IOException
+     */
+    public void toCSV(String filename) throws IOException {
+        File f = new File(filename);
+        if(!f.exists()) {
+            f.createNewFile();
+        }
+        FileWriter file_writer_ = new FileWriter(f.getAbsoluteFile());
+        BufferedWriter writer = new BufferedWriter(file_writer_);
+        writer.write("\"Area\",\"Centroid X\",\"Centroid Y\"");
+        writer.newLine();
+        for(BrightBody bright_body : bright_bodies_) {
+            writer.write("\"" + bright_body.area + "\",\"" + bright_body.centroid.x + "\",\"" + bright_body.centroid.y + "\"");
+            writer.newLine();
+        }
+        writer.close();
+        file_writer_.close();
+    }
+ }
