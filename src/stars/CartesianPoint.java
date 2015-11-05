@@ -2,15 +2,23 @@ package stars;
 
 import java.io.Serializable;
 
-public class PixelPoint implements Serializable {
+/**
+ * A cartesian coordinate point
+ */
+public class CartesianPoint implements Serializable {
     public int x, y;
 
-    public PixelPoint(int x, int y) {
+    /**
+     * Constructs a CartesianPoint
+     * @param x the x-value
+     * @param y the y-value
+     */
+    public CartesianPoint(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public boolean equals (PixelPoint p) {
+    public boolean equals (CartesianPoint p) {
         if (x == p.x && y == p.y) {
             return true;
         }

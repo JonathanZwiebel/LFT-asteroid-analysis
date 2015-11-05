@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * A serializable AL of BrightBodies
+ * A serializable and sortable ArrayList of bright bodies
  * */
 public class BrightBodyList extends ArrayList<BrightBody> implements Serializable {
 
@@ -17,6 +17,9 @@ public class BrightBodyList extends ArrayList<BrightBody> implements Serializabl
         return ret;
     }
 
+    /**
+     * Sorts all of the bright bodies in descending order (largest area first)
+     */
     public void sortByArea() {
         Collections.sort(this, Collections.reverseOrder());
     }

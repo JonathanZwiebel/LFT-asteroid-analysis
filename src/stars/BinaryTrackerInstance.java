@@ -51,8 +51,8 @@ public class BinaryTrackerInstance {
         if(!f.exists()) {
             f.createNewFile();
         }
-        FileWriter fwriter = new FileWriter(f.getAbsoluteFile());
-        BufferedWriter writer = new BufferedWriter(fwriter);
+        FileWriter file_writer = new FileWriter(f.getAbsoluteFile());
+        BufferedWriter writer = new BufferedWriter(file_writer);
         writer.write("Index: " + index + " | Bright Bodies: " + bright_bodies_.size());
         writer.newLine();
         writer.newLine();

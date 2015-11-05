@@ -13,16 +13,26 @@ import static analysis.BrightBodyMoment.area;
 public class BrightBody implements Comparable<BrightBody>, Serializable{
     public Coordinate centroid;
     public float area;
-    public PixelPoint[] body;
+    public CartesianPoint[] body;
 
-    public BrightBody(float[][] image, PixelPoint[] body) {
+    /**
+     * Constructs a bright body given the source image and coordinates
+     * @param image source image
+     * @param body coordinates in the bright body
+     */
+    public BrightBody(float[][] image, CartesianPoint[] body) {
         this.body = body;
         centroid = centroid(image, body.clone());
         area = area(image, body.clone());
     }
 
-    public boolean contains(PixelPoint point) {
-        for(PixelPoint p : body) {
+    /**
+     * Determines if this bright body contains a particular point
+     * @param point
+     * @return
+     */
+    public boolean contains(CartesianPoint point) {
+        for(CartesianPoint p : body) {
             if(point.equals(p)) {
                 return true;
             }

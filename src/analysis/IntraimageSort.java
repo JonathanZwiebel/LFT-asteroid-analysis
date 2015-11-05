@@ -1,11 +1,12 @@
 package analysis;
 
-import stars.PixelPoint;
+import stars.CartesianPoint;
+
 import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
- * Has a static method to through an image and return a PixelPoint array of the coordinates brightness
+ * Has a static method to through an image and return a CartesianPoint array of the coordinates brightness
  * TODO: Safely remove this
  */
 public class IntraimageSort {
@@ -16,17 +17,17 @@ public class IntraimageSort {
      * @param image the input image
      * @return the sorted array of PixelPoints
      */
-    public static PixelPoint[] sortedArray(float[][] image) {
-        HashMap<Float, PixelPoint> hashmap = new HashMap<>(2500, 0.75f);
+    public static CartesianPoint[] sortedArray(float[][] image) {
+        HashMap<Float, CartesianPoint> hashmap = new HashMap<>(2500, 0.75f);
         for (int i = 0; i < image.length; i++) {
             for (int j = 0; j < image[0].length; j++) {
-                addToHashMap(hashmap, image[i][j], new PixelPoint(i, j));
+                addToHashMap(hashmap, image[i][j], new CartesianPoint(i, j));
             }
         }
         TreeMap treemap = new TreeMap(hashmap);
-        PixelPoint[] sortedPixelPoints = new PixelPoint[image.length * image[0].length];
+        CartesianPoint[] sortedPixelPoints = new CartesianPoint[image.length * image[0].length];
         for(int i = 0; i < sortedPixelPoints.length; i++) {
-            sortedPixelPoints[i] = (PixelPoint) treemap.pollLastEntry().getValue();
+            sortedPixelPoints[i] = (CartesianPoint) treemap.pollLastEntry().getValue();
         }
         return sortedPixelPoints;
     }
@@ -37,7 +38,7 @@ public class IntraimageSort {
      * @param value the value to add
      * @param point the corresponding PixelPoiint
      */
-    private static void addToHashMap(HashMap hashmap, float value, PixelPoint point) {
+    private static void addToHashMap(HashMap hashmap, float value, CartesianPoint point) {
         while(hashmap.containsKey(value)){
             value += SHIFT_VALUE;
         }
