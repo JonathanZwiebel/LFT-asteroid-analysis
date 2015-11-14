@@ -93,20 +93,28 @@ public class BinaryTracker {
      * @throws IOException
      */
     public void toMassAreaSortedCSV(String filename, int body_count) throws IOException {
+        float[][] rank_ordered_bright_bodies = new float[body_count][instances.length];
+        for(BinaryTrackerInstance instance : instances) {
+            instance.addToRankOrderedBrightBodies(rank_ordered_bright_bodies);
+        }
+
         File f = new File(filename);
         if(!f.exists()) {
             f.createNewFile();
         }
         FileWriter file_writer = new FileWriter(f.getAbsoluteFile());
         BufferedWriter writer = new BufferedWriter(file_writer);
-        writer.write("\"Index\"");
+        writer.write("Index");
         for(int i = 1; i <= body_count; i++) {
-            writer.write(",\"Body " + i + " Area\"");
+            writer.write(",Body of Size Rank " + i + " Area");
         }
         writer.newLine();
+
         for(int index = 0; index < instances.length; index++) {
-            writer.write("\"" + index + "\"");
-            writer.write(instances[index].areasToCSVLine(body_count));
+            writer.write(Integer.toString(index));
+            for(int bright_body_rank = 1; bright_body_rank <= body_count; bright_body_rank++ ) {
+                writer.write("," + Float.toString(rank_ordered_bright_bodies[bright_body_rank - 1][index]));
+            }
             writer.newLine();
         }
         writer.close();

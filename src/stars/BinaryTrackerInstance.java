@@ -68,7 +68,7 @@ public class BinaryTrackerInstance {
     /**
      * Generates a CSV output of the sorted bright bodies with each row corresponding to a BrightBody, the first
      * column being area and the second column being centroid
-     * @param filename
+     * @param filename .csv file location
      * @throws IOException
      */
     public void toCSV(String filename) throws IOException {
@@ -89,15 +89,12 @@ public class BinaryTrackerInstance {
     }
 
     /**
-     * Returns a CSV parsable String of the are of the first body_count bright bodies sorted by descending area
-     * @param body_count number of bright bodies to include
-     * @return CSV of the bright body areas
+     * Adds to a two dimensional matrix of rank ordered bright bodies the brightest bodies of this instance
+     * @param rank_ordered_bright_bodies two dimensional matrix of rank ordered bright bodies
      */
-    public String areasToCSVLine(int body_count) {
-        String ret = "";
-        for(int i = 0; i < body_count; i++) {
-            ret += ",\"" + bright_bodies_.get(i).area + "\"";
+    public void addToRankOrderedBrightBodies(float[][] rank_ordered_bright_bodies) {
+        for(int i = 0; i < rank_ordered_bright_bodies.length; i++) {
+            rank_ordered_bright_bodies[i][index] = bright_bodies_.get(i).area;
         }
-        return ret;
     }
  }
