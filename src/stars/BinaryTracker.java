@@ -129,7 +129,7 @@ public class BinaryTracker {
 
         for(int i = 0; i < body_count; i++) {
             ArrayStats rank_ordered_bright_bodies_stats = new ArrayStats(rank_ordered_bright_bodies[i]);
-            float bin_count = (float) Math.sqrt(rank_ordered_bright_bodies_stats.n);
+            float bin_count = (float) Math.sqrt(rank_ordered_bright_bodies_stats.n) + i;
             float bin_width = rank_ordered_bright_bodies_stats.range / bin_count;
             while ((bins[i].size() - 1) * bin_width + rank_ordered_bright_bodies_stats.min < rank_ordered_bright_bodies_stats.max) {
                 bins[i].add(bins[i].size() * bin_width + rank_ordered_bright_bodies_stats.min);
@@ -137,10 +137,20 @@ public class BinaryTracker {
         }
 
         //TODO: Make not the first but the maximum size
-        for(int i = 0; i < bins[0].size(); i++) {
-            writer.write("histogram");
+        boolean adding_bin_vals = true;
+        int i = 0;
+        while(adding_bin_vals) {
+            i++;
+            writer.write("bin");
             for(ArrayList<Float> bin : bins) {
-                writer.write("," + bin.get(i));
+                adding_bin_vals = false;
+                if(bin.size() > i) {
+                    adding_bin_vals = true;
+                    writer.write("," + bin.get(i));
+                }
+                else {
+                    writer.write(",");
+                }
             }
             writer.newLine();
         }
