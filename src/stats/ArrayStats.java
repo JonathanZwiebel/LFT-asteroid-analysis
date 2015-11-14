@@ -37,16 +37,16 @@ public class ArrayStats {
         min = sorted_array[0];
         max = sorted_array[n - 1];
 
-        int p = n % 2;
-        if(p == 0) {
+        int p = n / 2;
+        if(p % 2 == 0) {
             med = (sorted_array[p - 1] + sorted_array[p]) / 2;
         }
         else {
             med = sorted_array[p];
         }
 
-        int q = n % 4;
-        if(q == 0 || q == 1) {
+        int q = n / 4;
+        if(q % 4 == 0 || q % 4 == 1) {
             q1 = (sorted_array[q - 1] + sorted_array[q]) / 2;
             q3 = (sorted_array[n - q - 1] + sorted_array[n - q]);
         }

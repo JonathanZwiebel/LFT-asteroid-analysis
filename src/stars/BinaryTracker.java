@@ -6,11 +6,13 @@ import static helper.FitsHelper.extractFilteredColumn;
 import filter.MeanBrightBodyFilter;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
+import stats.ArrayStats;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Stores BinaryTrackerInstances over a single FITs file. Will filter a given image based on a passed binary filter and
@@ -117,6 +119,33 @@ public class BinaryTracker {
             }
             writer.newLine();
         }
+
+
+        ArrayList<Float>[] bins = new ArrayList[body_count];
+
+        for(int i = 0; i < bins.length; i++) {
+            bins[i] = new ArrayList();
+        }
+
+        for(int i = 0; i < body_count; i++) {
+            ArrayStats rank_ordered_bright_bodies_stats = new ArrayStats(rank_ordered_bright_bodies[i]);
+            float bin_count = (float) Math.sqrt(rank_ordered_bright_bodies_stats.n);
+            float bin_width = rank_ordered_bright_bodies_stats.range / bin_count;
+            while ((bins[i].size() - 1) * bin_width + rank_ordered_bright_bodies_stats.min < rank_ordered_bright_bodies_stats.max) {
+                bins[i].add(bins[i].size() * bin_width + rank_ordered_bright_bodies_stats.min);
+            }
+        }
+
+        //TODO: Make not the first but the maximum size
+        for(int i = 0; i < bins[0].size(); i++) {
+            writer.write("histogram");
+            for(ArrayList<Float> bin : bins) {
+                writer.write("," + bin.get(i));
+            }
+            writer.newLine();
+        }
+
+
         writer.close();
         file_writer.close();
     }
