@@ -48,7 +48,7 @@ public class ArrayStats {
         int q = n / 4;
         if(q % 4 == 0 || q % 4 == 1) {
             q1 = (sorted_array[q - 1] + sorted_array[q]) / 2;
-            q3 = (sorted_array[n - q - 1] + sorted_array[n - q]);
+            q3 = (sorted_array[n - q - 1] + sorted_array[n - q]) / 2;
         }
         else {
             q1 = sorted_array[q];

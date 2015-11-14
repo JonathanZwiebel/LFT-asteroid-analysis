@@ -129,14 +129,12 @@ public class BinaryTracker {
 
         for(int i = 0; i < body_count; i++) {
             ArrayStats rank_ordered_bright_bodies_stats = new ArrayStats(rank_ordered_bright_bodies[i]);
-            float bin_count = (float) Math.sqrt(rank_ordered_bright_bodies_stats.n) + i;
-            float bin_width = rank_ordered_bright_bodies_stats.range / bin_count;
+            float bin_width = 2.0f * rank_ordered_bright_bodies_stats.iqr * (float) Math.pow(rank_ordered_bright_bodies_stats.n, -0.33333f);
             while ((bins[i].size() - 1) * bin_width + rank_ordered_bright_bodies_stats.min < rank_ordered_bright_bodies_stats.max) {
                 bins[i].add(bins[i].size() * bin_width + rank_ordered_bright_bodies_stats.min);
             }
         }
 
-        //TODO: Make not the first but the maximum size
         boolean adding_bin_vals = true;
         int i = 0;
         while(adding_bin_vals) {
