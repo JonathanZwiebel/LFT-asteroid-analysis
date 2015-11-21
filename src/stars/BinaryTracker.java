@@ -45,7 +45,7 @@ public class BinaryTracker {
 
         instances = new BinaryTrackerInstance[col.length];
         for(int i = 0; i < col.length; i++) {
-            instances[i] = new BinaryTrackerInstance(col, filtered_col, i);
+            instances[i] = new BinaryTrackerInstance(col[i], filtered_col[i], i);
         }
         return col;
     }

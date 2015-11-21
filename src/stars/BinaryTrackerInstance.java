@@ -21,10 +21,10 @@ public class BinaryTrackerInstance {
      * @param index index of the cube to check
      * TODO: Determine if it makes sense to pass the images instead of cubes and the index
      */
-    public BinaryTrackerInstance(float[][][] original_cube, int[][][] binary_cube, int index) {
+    public BinaryTrackerInstance(float[][] original_cube, int[][] binary_cube, int index) {
         this.index = index;
-        image_ = original_cube[index];
-        binary_image_ = binary_cube[index];
+        image_ = original_cube;
+        binary_image_ = binary_cube;
         bright_bodies_ = BrightBodyLocator.binaryLocate(image_, binary_image_);
         bright_bodies_.sortByArea();
     }

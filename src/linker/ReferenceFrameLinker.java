@@ -1,9 +1,11 @@
 package linker;
 
+import filter.MeanBrightBodyFilter;
 import helper.ArrayHelper;
 import helper.FitsHelper;
 import helper.SubtractiveHelper;
 import stars.BinaryTracker;
+import stars.BinaryTrackerInstance;
 
 /**
  * @author Jonathan Zwiebel
@@ -19,14 +21,14 @@ public class ReferenceFrameLinker {
     public ReferenceFrameLinker(BinaryTracker tracker, float[][][] cleaned_data) {
         tracker_ = tracker;
         cleaned_data_ = cleaned_data;
-        float[][] ref_frame = generateReferenceFrame();
+        float[][] ref_frame = SubtractiveHelper.meanImage(cleaned_data_);
     }
 
     /**
      * Generates a reference frame by applying an SRS and the averaging on each pixel
      * @return reference frame
      */
-    private float[][] generateReferenceFrame() {
+    private float[][] generateSampledReferenceFrame() {
         int sample_count = (int) Math.sqrt(cleaned_data_.length);
         int sampled = 0;
         float[][][] samples = new float[sample_count][][];
