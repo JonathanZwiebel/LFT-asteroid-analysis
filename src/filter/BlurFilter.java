@@ -59,9 +59,6 @@ public class BlurFilter {
         if(x < 0 ||  length <= x) {
             return false;
         }
-        if(y < 0 || width <= y) {
-            return false;
-        }
-        return true;
+        return !(y < 0 || width <= y);
     }
 }

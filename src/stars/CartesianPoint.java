@@ -19,10 +19,7 @@ public class CartesianPoint implements Serializable {
     }
 
     public boolean equals (CartesianPoint p) {
-        if (x == p.x && y == p.y) {
-            return true;
-        }
-        return false;
+        return x == p.x && y == p.y;
     }
 
     public String toString() {
