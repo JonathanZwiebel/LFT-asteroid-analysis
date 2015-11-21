@@ -30,7 +30,7 @@ public class BrightBodyMoment {
     }
 
     /**
-     * Returns the area of a TrackBrightBody
+     * Returns the area of a Track
      * @param image the input image
      * @param bright_body the <code>CartesianPoint</code> that make up the bright body
      * @return the area of the star
@@ -40,7 +40,7 @@ public class BrightBodyMoment {
     }
 
     /**
-     * Returns the centroid of a TrackBrightBody
+     * Returns the centroid of a Track
      * @param image the input image
      * @param bright_body the <code>CartesianPoint</code> that make up the bright body
      * @return The centroid of the star as a a coordinate

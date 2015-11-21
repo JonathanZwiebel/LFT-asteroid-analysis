@@ -5,7 +5,7 @@ import nom.tam.fits.FitsException;
 import java.io.IOException;
 
 /**
- * Interface for filtering a TrackBrightBody
+ * Interface for filtering a Track
  */
 public interface BrightBodyFilter {
     /**
