@@ -36,7 +36,7 @@ public class BinaryTracker {
      * @throws FitsException
      * @throws IOException
      */
-    public void track() throws FitsException, IOException {
+    public float[][][] track() throws FitsException, IOException {
         Fits fits = readFile(data_filename_);
         float[][][] col = extractFilteredColumn(fits, column_);
 
@@ -47,6 +47,7 @@ public class BinaryTracker {
         for(int i = 0; i < col.length; i++) {
             instances[i] = new BinaryTrackerInstance(col, filtered_col, i);
         }
+        return col;
     }
 
     /**
