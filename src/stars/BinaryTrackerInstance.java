@@ -5,16 +5,19 @@ import java.io.*;
 /**
  * Stores the bright bodies within a single timestamp of a BinaryTracker based on a passed binary mask. Adjacent
  * positives will be grouped into single bright bodies and extractable as a sorted BrightBodyList.
+ * TODO: Consider making this a private class
+ * TODO[Major]: Make a tracker instance abstract class
  */
-public class BinaryTrackerInstance {
-    private final int index;
-    private final BrightBodyList bright_bodies_;
+public class BinaryTrackerInstance extends TrackerInstance{
+    private int index;
+    private BrightBodyList bright_bodies_;
 
     /**
      * Constructs a binary tracker instance given the original cube, binary mask cube and index cube
      * @param original_image original bright body field
      * @param binary_filter_image masked image containing positives at regions to search
      * @param index index of the cube to check
+     * TODO: Move all of these procedures out of the constructor
      */
     public BinaryTrackerInstance(float[][] original_image, int[][] binary_filter_image, int index) {
         this.index = index;

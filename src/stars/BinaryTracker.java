@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class BinaryTracker {
     private final String data_filename_, column_;
-    private BinaryTrackerInstance[] instances;
+    public BinaryTrackerInstance[] instances;
     /**
      * Constructs a BinaryTracker object
      * @param data_filename the data file with the field of bodies
