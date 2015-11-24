@@ -1,6 +1,5 @@
 package stars;
 
-import javax.swing.*;
 import java.io.*;
 
 /**
@@ -8,7 +7,6 @@ import java.io.*;
  * positives will be grouped into single bright bodies and extractable as a sorted BrightBodyList.
  */
 public class BinaryTrackerInstance {
-    // TODO: Add a CSV Generator
     public int index;
     private float[][] image_;
     private int[][] binary_image_;
@@ -16,17 +14,26 @@ public class BinaryTrackerInstance {
 
     /**
      * Constructs a binary tracker instance given the original cube, binary mask cube and index cube
-     * @param original_cube original bright body field
-     * @param binary_cube masked image containing positives at regions to search
+     * @param original_image original bright body field
+     * @param binary_filter_image masked image containing positives at regions to search
      * @param index index of the cube to check
-     * TODO: Determine if it makes sense to pass the images instead of cubes and the index
      */
-    public BinaryTrackerInstance(float[][] original_cube, int[][] binary_cube, int index) {
+    public BinaryTrackerInstance(float[][] original_image, int[][] binary_filter_image, int index) {
         this.index = index;
-        image_ = original_cube;
-        binary_image_ = binary_cube;
+        image_ = original_image;
+        binary_image_ = binary_filter_image;
         bright_bodies_ = BrightBodyLocator.binaryLocate(image_, binary_image_);
         bright_bodies_.sortByArea();
+    }
+
+    /**
+     * Constructs a binary tracker instance given the original slice and the binary filter slice not
+     * in the context of a larger cube
+     * @param original_image original bright body image
+     * @param binary_filter_image masked image containing positives at regions to search
+     */
+    public BinaryTrackerInstance(float[][] original_image, int[][] binary_filter_image) {
+        this(original_image, binary_filter_image, -1);
     }
 
     /**

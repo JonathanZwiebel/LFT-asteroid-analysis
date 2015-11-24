@@ -5,6 +5,8 @@ import analysis.ImageStats;
 /**
  * This class applies a binary filter to a data set, setting all values below the filter to 0 and all above to 1
  */
+//TODO: Half of these methods are public and half are private when they should all be the same
+
 public class BinaryFilter {
     float[][][] cube_;
 
@@ -29,7 +31,7 @@ public class BinaryFilter {
         return output_cube;
     }
 
-    private int[][] filter(float[][] image, double threshold) {
+    public static int[][] filter(float[][] image, double threshold) {
         int[][] return_binary_image = new int[image.length][image[0].length];
         for (int i = 0; i < image.length; i++) {
             for (int j = 0; j < image[0].length; j++) {
@@ -55,7 +57,7 @@ public class BinaryFilter {
         return output_cube;
     }
 
-    private int[][] meanFilter(float[][] image) {
+    public static int[][] meanFilter(float[][] image) {
         return filter(image, ImageStats.mean(image));
     }
 }
