@@ -16,9 +16,9 @@ public class Track {
 
     public static void main(String[] args) {
         try {
-            BinaryTracker bbt = new BinaryTracker(DATA_FILENAME, COLUMN);
-            bbt.track();
-            bbt.toMassAreaSortedCSV(MASS_CSV_FILENAME, 5);
+            BinaryTracker tracker = new BinaryTracker(DATA_FILENAME, COLUMN);
+            tracker.track();
+            tracker.toMassAreaSortedCSV(MASS_CSV_FILENAME, 5);
 
         }
         catch(Exception e ) {

@@ -19,8 +19,8 @@ import java.util.ArrayList;
  * then group adjacent units into BrightBodies. BrightBodies will be tracked by BinaryTrackerInstances.
  */
 public class BinaryTracker {
-    private String data_filename_, column_;
-    public BinaryTrackerInstance[] instances;
+    private final String data_filename_, column_;
+    private BinaryTrackerInstance[] instances;
     /**
      * Constructs a BinaryTracker object
      * @param data_filename the data file with the field of bodies
@@ -103,7 +103,7 @@ public class BinaryTracker {
 
         File f = new File(filename);
         if(!f.exists()) {
-            f.createNewFile();
+            assert f.createNewFile();
         }
         FileWriter file_writer = new FileWriter(f.getAbsoluteFile());
         BufferedWriter writer = new BufferedWriter(file_writer);
@@ -122,10 +122,10 @@ public class BinaryTracker {
         }
 
 
-        ArrayList<Float>[] bins = new ArrayList[body_count];
+        @SuppressWarnings("unchecked") ArrayList<Float>[] bins = new ArrayList[body_count];
 
         for(int i = 0; i < bins.length; i++) {
-            bins[i] = new ArrayList();
+            bins[i] = new ArrayList<>();
         }
 
         for(int i = 0; i < body_count; i++) {
@@ -136,15 +136,15 @@ public class BinaryTracker {
             }
         }
 
-        boolean adding_bin_vals = true;
+        boolean adding_bin_values = true;
         int i = 0;
-        while(adding_bin_vals) {
+        while(adding_bin_values) {
             i++;
             writer.write("bin");
             for(ArrayList<Float> bin : bins) {
-                adding_bin_vals = false;
+                adding_bin_values = false;
                 if(bin.size() > i) {
-                    adding_bin_vals = true;
+                    adding_bin_values = true;
                     writer.write("," + bin.get(i));
                 }
                 else {

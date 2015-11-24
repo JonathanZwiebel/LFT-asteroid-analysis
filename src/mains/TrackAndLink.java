@@ -9,6 +9,11 @@ import stars.BinaryTracker;
  *
  * This class will track a cube of bright bodies in standard FITS format and the link them between individual frames
  * to get references to individual bright bodies over time.
+ * TODO[MAJOR]: Split procedure into four macro steps called through instantiated classes
+ * TODO: 1. Clean the raw data file
+ * TODO: 2. Identify bright bodies in individual frames
+ * TODO: 3. Link immobile bright bodies between frames
+ * TODO: 4. Link mobile bright bodies between frames
  */
 public class TrackAndLink {
     public static final String DATA_FILENAME =          "C:\\Users\\admin\\Desktop\\K2\\raw\\ktwo200000905-c00_lpd-targ.fits";
@@ -17,6 +22,7 @@ public class TrackAndLink {
     public static void main(String[] args) {
         try {
             BinaryTracker tracker = new BinaryTracker(DATA_FILENAME, COLUMN);
+            //TODO: Make the call to tracker.track() clearer and more explicit
             float[][][] cleaned_data = tracker.track();
             ReferenceFrameLinker linker = new ReferenceFrameLinker(tracker, cleaned_data);
         }

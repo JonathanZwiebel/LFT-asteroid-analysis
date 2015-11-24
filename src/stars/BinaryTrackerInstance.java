@@ -7,10 +7,8 @@ import java.io.*;
  * positives will be grouped into single bright bodies and extractable as a sorted BrightBodyList.
  */
 public class BinaryTrackerInstance {
-    public int index;
-    private float[][] image_;
-    private int[][] binary_image_;
-    private BrightBodyList bright_bodies_;
+    private final int index;
+    private final BrightBodyList bright_bodies_;
 
     /**
      * Constructs a binary tracker instance given the original cube, binary mask cube and index cube
@@ -20,9 +18,7 @@ public class BinaryTrackerInstance {
      */
     public BinaryTrackerInstance(float[][] original_image, int[][] binary_filter_image, int index) {
         this.index = index;
-        image_ = original_image;
-        binary_image_ = binary_filter_image;
-        bright_bodies_ = BrightBodyLocator.binaryLocate(image_, binary_image_);
+        bright_bodies_ = BrightBodyLocator.binaryLocate(original_image, binary_filter_image);
         bright_bodies_.sortByArea();
     }
 

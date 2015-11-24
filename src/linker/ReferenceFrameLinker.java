@@ -30,5 +30,13 @@ public class ReferenceFrameLinker {
         //TODO[MAJOR]: Not necessarily a mean image filter
         float[][] ref_frame = SubtractiveHelper.meanImage(cleaned_data_);
         ref_frame_tracker_instance_ = new BinaryTrackerInstance(ref_frame, BinaryFilter.meanFilter(ref_frame));
+
+    }
+
+    /**
+     * Links the objects within the
+     */
+    public void link() {
+
     }
 }
