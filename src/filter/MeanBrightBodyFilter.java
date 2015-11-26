@@ -11,18 +11,19 @@ import java.io.IOException;
  * This class filters a FITS image by doing a positive binary filter over the mean value of the image
  */
 public class MeanBrightBodyFilter implements BrightBodyFilter {
-    String input_filename_, output_head_, column_;
+    private String output_head_, column_;
+    private float[][][] data_;
 
     /**
      * Constructs a MeanBrightBodyFilter object
-     * @param input_filename BrightBody file
+     * @param data Preprocessed data
      * @param output_head Filtered output file
      * @param column Column to filter
      */
-    public MeanBrightBodyFilter(String input_filename, String output_head, String column) {
-        this.input_filename_ = input_filename;
-        this.output_head_ = output_head;
-        this.column_ = column;
+    public MeanBrightBodyFilter(float[][][] data, String output_head, String column) {
+        data_ = data;
+        output_head_ = output_head;
+        column_ = column;
     }
 
     /**
@@ -32,9 +33,7 @@ public class MeanBrightBodyFilter implements BrightBodyFilter {
      * @throws IOException
      */
     public int[][][] filter() throws FitsException, IOException {
-        Fits f = FitsHelper.readFile(input_filename_);
-        float[][][] column = FitsHelper.extractFilteredColumn(f, column_);
-        BinaryFilter binaryFilter = new BinaryFilter(column);
+        BinaryFilter binaryFilter = new BinaryFilter(data_);
         int[][][] filtered = binaryFilter.meanFilter();
         return filtered;
     }
@@ -45,9 +44,7 @@ public class MeanBrightBodyFilter implements BrightBodyFilter {
      * @throws IOException
      */
     public void writeFilter() throws FitsException, IOException {
-        Fits f = FitsHelper.readFile(input_filename_);
-        float[][][] column = FitsHelper.extractFilteredColumn(f, column_);
-        BinaryFilter binaryFilter = new BinaryFilter(column);
+        BinaryFilter binaryFilter = new BinaryFilter(data_);
         int[][][] filtered = binaryFilter.meanFilter();
         FitsHelper.writeDataCube(filtered, output_head_ + "-binfilmean.fits");
     }

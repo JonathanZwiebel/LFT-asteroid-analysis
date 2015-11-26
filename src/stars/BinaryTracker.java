@@ -1,10 +1,6 @@
 package stars;
 
-import static helper.FitsHelper.readFile;
-import static helper.FitsHelper.extractFilteredColumn;
-
 import filter.MeanBrightBodyFilter;
-import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 import stats.ArrayStats;
 
@@ -20,15 +16,15 @@ import java.util.ArrayList;
  * TODO: Rename to filter
  */
 public class BinaryTracker {
-    private float[][][] data_cube_;
+    private float[][][] data_;
     public BinaryTrackerInstance[] instances;
 
     /**
      * Constructs a BinaryTracker
-     * @param data_cube cleaned data cube
+     * @param data cleaned data cube
      */
-    public BinaryTracker(float[][][] data_cube) {
-        data_cube_ = data_cube;
+    public BinaryTracker(float[][][] data) {
+        data_ = data;
     }
 
     /**
@@ -37,12 +33,12 @@ public class BinaryTracker {
      * @throws IOException
      */
     public void track() throws FitsException, IOException {
-        MeanBrightBodyFilter meanBrightBodyFilter = new MeanBrightBodyFilter(data_filename_, "Null", "FLUX");
+        MeanBrightBodyFilter meanBrightBodyFilter = new MeanBrightBodyFilter(data_, "Null", "FLUX");
         int[][][] filtered_col = meanBrightBodyFilter.filter();
 
-        instances = new BinaryTrackerInstance[data_cube_.length];
-        for(int i = 0; i < data_cube_.length; i++) {
-            instances[i] = new BinaryTrackerInstance(data_cube_[i], filtered_col[i], i);
+        instances = new BinaryTrackerInstance[data_.length];
+        for(int i = 0; i < data_.length; i++) {
+            instances[i] = new BinaryTrackerInstance(data_[i], filtered_col[i], i);
         }
     }
 
