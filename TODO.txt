@@ -1,5 +1,0 @@
-Major structural changes neccesary.
-
-Many classes need to be split, removed, and/or deleted.
-Generated files need to be inside path as well.
-
