@@ -8,6 +8,10 @@
 .idea/
 *.xml
 
+# Eclipse #
+.project
+.classpath
+
 
 # Package Files #
 *.jar
