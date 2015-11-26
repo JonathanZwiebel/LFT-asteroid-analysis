@@ -14,7 +14,7 @@
 
 
 # Package Files #
-*.jar
+# *.jar removed to allow nom-tam-fits to be pushed #
 *.war
 *.ear
 
