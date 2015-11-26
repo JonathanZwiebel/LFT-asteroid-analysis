@@ -17,18 +17,18 @@ import java.util.ArrayList;
 /**
  * Stores BinaryTrackerInstances over a single FITs file. Will filter a given image based on a passed binary filter and
  * then group adjacent units into BrightBodies. BrightBodies will be tracked by BinaryTrackerInstances.
+ * TODO: Rename to filter
  */
 public class BinaryTracker {
-    private final String data_filename_, column_;
+    private float[][][] data_cube_;
     public BinaryTrackerInstance[] instances;
+
     /**
-     * Constructs a BinaryTracker object
-     * @param data_filename the data file with the field of bodies
-     * @param column column name
+     * Constructs a BinaryTracker
+     * @param data_cube cleaned data cube
      */
-    public BinaryTracker(String data_filename, String column) {
-        this.data_filename_ = data_filename;
-        this.column_ = column;
+    public BinaryTracker(float[][][] data_cube) {
+        data_cube_ = data_cube;
     }
 
     /**
@@ -36,18 +36,14 @@ public class BinaryTracker {
      * @throws FitsException
      * @throws IOException
      */
-    public float[][][] track() throws FitsException, IOException {
-        Fits fits = readFile(data_filename_);
-        float[][][] col = extractFilteredColumn(fits, column_);
-
+    public void track() throws FitsException, IOException {
         MeanBrightBodyFilter meanBrightBodyFilter = new MeanBrightBodyFilter(data_filename_, "Null", "FLUX");
         int[][][] filtered_col = meanBrightBodyFilter.filter();
 
-        instances = new BinaryTrackerInstance[col.length];
-        for(int i = 0; i < col.length; i++) {
-            instances[i] = new BinaryTrackerInstance(col[i], filtered_col[i], i);
+        instances = new BinaryTrackerInstance[data_cube_.length];
+        for(int i = 0; i < data_cube_.length; i++) {
+            instances[i] = new BinaryTrackerInstance(data_cube_[i], filtered_col[i], i);
         }
-        return col;
     }
 
     /**

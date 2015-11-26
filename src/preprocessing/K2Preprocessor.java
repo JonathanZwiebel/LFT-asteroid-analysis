@@ -17,18 +17,28 @@ public class K2Preprocessor extends Preprocessor {
     public static final String COLUMN = "FLUX";
     public static final String VALID_COLUMN = "QUALITY";
     public static final int HDU_INDEX = 1;
+    private Fits file_;
 
     /**
      * Reads a FITS file from the K2 mission and converts it into a data cube of floats. All blank indices or indices
      * where the quality value is >= 16384 are not included in the data cube
      *
-     * @param fits input FITS file
+     * @param file K2 formatted fits file
+     */
+    public K2Preprocessor(Fits file) {
+        file_ = file;
+    }
+
+    /**
+     * Reads a FITS file from the K2 mission and converts it into a data cube of floats. All blank indices or indices
+     * where the quality value is >= 16384 are not included in the data cube
+     *
      * @return cleaned data cube
      * @throws FitsException
      * @throws IOException
      */
-    public float[][][] read(Fits fits) throws FitsException, IOException {
-        TableHDU<?> table = (TableHDU<?>) fits.getHDU(HDU_INDEX);
+    public float[][][] read() throws FitsException, IOException {
+        TableHDU<?> table = (TableHDU<?>) file_.getHDU(HDU_INDEX);
         ArrayList<Boolean> valid_indices = new ArrayList();
         int valid_index_count = fillValidIndices(table, valid_indices);
 

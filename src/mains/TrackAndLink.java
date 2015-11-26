@@ -1,7 +1,12 @@
 package mains;
 
 import linker.ReferenceFrameLinker;
+import nom.tam.fits.Fits;
+import preprocessing.K2Preprocessor;
+import preprocessing.Preprocessor;
 import stars.BinaryTracker;
+
+import java.io.File;
 
 /**
  * @author Joanthan Zwiebel
@@ -27,11 +32,13 @@ public class TrackAndLink {
 
     public static void main(String[] args) {
         try {
-            BinaryTracker tracker = new BinaryTracker(DATA_FILENAME, COLUMN);
-            //TODO: Make the call to tracker.track() clearer and more explicit
-            //TODO: Cleaning is a unique procedure
-            float[][][] cleaned_data = tracker.track();
-            ReferenceFrameLinker linker = new ReferenceFrameLinker(tracker, cleaned_data);
+            Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(DATA_FILENAME)));
+            float[][][] data = preprocessor.read();
+
+            BinaryTracker tracker = new BinaryTracker(data);
+            tracker.track();
+
+            ReferenceFrameLinker linker = new ReferenceFrameLinker(tracker, data);
         }
         catch(Exception e ) {
             e.printStackTrace();
