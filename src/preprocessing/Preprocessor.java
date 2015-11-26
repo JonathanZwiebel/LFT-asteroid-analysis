@@ -1,6 +1,9 @@
 package preprocessing;
 
-import java.io.File;
+import nom.tam.fits.Fits;
+import nom.tam.fits.FitsException;
+
+import java.io.IOException;
 
 /**
  * @author Jonathan Zwiebel
@@ -12,5 +15,5 @@ import java.io.File;
  * TODO[Major]: Make this work with non-rectangular data sets
  */
 public abstract class Preprocessor {
-    public abstract float[][][] read(File f);
+    public abstract float[][][] read(Fits fits) throws FitsException, IOException;
 }
