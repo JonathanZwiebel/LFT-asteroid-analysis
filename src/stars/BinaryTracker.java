@@ -46,6 +46,7 @@ public class BinaryTracker {
      * Generates text files for each instance in the tracker
      * @param text_directory directory to place the .txt files
      * @throws IOException
+     * TODO: Make to mass
      */
     public void toTextFiles(String text_directory) throws IOException {
         int count = 0;
@@ -58,6 +59,7 @@ public class BinaryTracker {
     /**
      * Generates serialized BinaryTrackerInstances as .ser files for all instances within the tracker
      * @param serialized_directory directory to place the .ser files
+     * TODO: Make to mass
      * @throws IOException
      */
     public void toSerializedFiles(String serialized_directory) throws IOException{

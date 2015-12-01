@@ -39,7 +39,7 @@ public class K2Preprocessor extends Preprocessor {
      */
     public float[][][] read() throws FitsException, IOException {
         TableHDU<?> table = (TableHDU<?>) file_.getHDU(HDU_INDEX);
-        ArrayList<Boolean> valid_indices = new ArrayList();
+        ArrayList<Boolean> valid_indices = new ArrayList<>();
         int valid_index_count = fillValidIndices(table, valid_indices);
 
         float[][][] unfiltered_column = (float[][][]) table.getColumn(COLUMN);
@@ -72,11 +72,11 @@ public class K2Preprocessor extends Preprocessor {
         int valid_count = 0;
         for(int i = 0; i < quality_column.length; i++) {
             if (quality_column[i] < 16384) {
-                valid_indexes.add(true);
+                valid_indexes.add(i, true);
                 valid_count++;
             }
             else {
-                valid_indexes.add(false);
+                valid_indexes.add(i, false);
             }
         }
         return valid_count;
