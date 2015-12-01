@@ -1,4 +1,4 @@
-package stars;
+package locator;
 
 import filter.MeanBrightBodyFilter;
 import nom.tam.fits.FitsException;
@@ -11,9 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Stores BinaryTrackerInstances over a single FITs file. Will filter a given image based on a passed binary filter and
+ * Stores BinaryTrackerInstances over a single FITS file. Will filter a given image based on a passed binary filter and
  * then group adjacent units into BrightBodies. BrightBodies will be tracked by BinaryTrackerInstances.
- * TODO: Rename to filter
  */
 public class BinaryTracker {
     private float[][][] data_;

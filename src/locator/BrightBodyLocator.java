@@ -1,4 +1,8 @@
-package stars;
+package locator;
+
+import brightbodies.BrightBody;
+import brightbodies.BrightBodyList;
+import brightbodies.CartesianPoint;
 
 import java.util.ArrayList;
 

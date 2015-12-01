@@ -1,4 +1,4 @@
-package stars;
+package locator;
 
 import java.io.IOException;
 import java.io.Serializable;

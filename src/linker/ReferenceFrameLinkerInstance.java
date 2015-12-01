@@ -1,6 +1,6 @@
 package linker;
 
-import stars.TrackerInstance;
+import locator.TrackerInstance;
 
 /**
  * @author Jonathan Zwiebel

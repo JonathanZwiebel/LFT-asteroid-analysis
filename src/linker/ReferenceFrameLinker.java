@@ -2,14 +2,14 @@ package linker;
 
 import filter.BinaryFilter;
 import helper.SubtractiveHelper;
-import stars.BinaryTracker;
-import stars.BinaryTrackerInstance;
+import locator.BinaryTracker;
+import locator.BinaryTrackerInstance;
 
 /**
  * @author Jonathan Zwiebel
  * @version November 20th, 2015
  *
- * This class takes a BinaryTracker object and will link the stars between them creating LinkedStarsMap by taking the
+ * This class takes a BinaryTracker object and will link the brightbodies between them creating LinkedStarsMap by taking the
  * mean of the images to generate a reference frame which will be tracked with a binary track. Each individual frame
  * will then be compared individually and bright bodies with similar brightnesses and locations to match bright bodies
  * between the original data and the reference frame. Unlinked objects will then be sent to a free body tracker.

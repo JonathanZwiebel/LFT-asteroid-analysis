@@ -3,13 +3,14 @@ package mains;
 import nom.tam.fits.Fits;
 import preprocessing.K2Preprocessor;
 import preprocessing.Preprocessor;
-import stars.BinaryTracker;
+import locator.BinaryTracker;
 
 import java.io.File;
 
 /**
- * Created by Jonathan Zwiebel on 11/2/15.
- *
+ * @author Jonathan Zwiebel
+ * @version November 30th, 2015
+ * TODO: Make command-line argument based
  */
 public class Track {
     public static final String DATA_FILENAME =          "c:\\users\\admin\\desktop\\k2\\raw\\ktwo200000852-c00_lpd-targ.fits";

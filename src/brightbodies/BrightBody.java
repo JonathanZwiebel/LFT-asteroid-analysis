@@ -1,4 +1,4 @@
-package stars;
+package brightbodies;
 
 
 import java.io.Serializable;

@@ -1,6 +1,6 @@
 package analysis;
 
-import stars.CartesianPoint;
+import brightbodies.CartesianPoint;
 
 import java.util.HashMap;
 import java.util.TreeMap;

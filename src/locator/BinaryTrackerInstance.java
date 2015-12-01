@@ -1,4 +1,7 @@
-package stars;
+package locator;
+
+import brightbodies.BrightBody;
+import brightbodies.BrightBodyList;
 
 import java.io.*;
 

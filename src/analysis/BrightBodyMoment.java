@@ -1,7 +1,7 @@
 package analysis;
 
-import stars.CartesianPoint;
-import stars.Coordinate;
+import brightbodies.CartesianPoint;
+import brightbodies.Coordinate;
 
 /**
  * This class holds static methods that help with finding the moment, area, and centroid of a bright_body within

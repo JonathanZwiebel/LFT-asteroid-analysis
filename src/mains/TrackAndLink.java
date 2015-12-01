@@ -4,7 +4,7 @@ import linker.ReferenceFrameLinker;
 import nom.tam.fits.Fits;
 import preprocessing.K2Preprocessor;
 import preprocessing.Preprocessor;
-import stars.BinaryTracker;
+import locator.BinaryTracker;
 
 import java.io.File;
 
