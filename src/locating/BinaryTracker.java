@@ -1,4 +1,4 @@
-package locator;
+package locating;
 
 import filter.MeanBrightBodyFilter;
 import nom.tam.fits.FitsException;

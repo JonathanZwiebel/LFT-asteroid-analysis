@@ -3,7 +3,7 @@ package mains;
 import nom.tam.fits.Fits;
 import preprocessing.K2Preprocessor;
 import preprocessing.Preprocessor;
-import locator.BinaryTracker;
+import locating.BinaryTracker;
 
 import java.io.File;
 

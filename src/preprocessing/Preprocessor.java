@@ -15,5 +15,11 @@ import java.io.IOException;
  * TODO[Major]: Make this work with non-rectangular data sets
  */
 public abstract class Preprocessor {
+    public Fits file_;
+
+    public Preprocessor(Fits file) {
+        file_ = file;
+    }
+
     public abstract float[][][] read() throws FitsException, IOException;
 }

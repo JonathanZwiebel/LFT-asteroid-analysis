@@ -17,7 +17,6 @@ public class K2Preprocessor extends Preprocessor {
     public static final String COLUMN = "FLUX";
     public static final String VALID_COLUMN = "QUALITY";
     public static final int HDU_INDEX = 1;
-    private Fits file_;
 
     /**
      * Reads a FITS file from the K2 mission and converts it into a data cube of floats. All blank indices or indices
@@ -26,7 +25,7 @@ public class K2Preprocessor extends Preprocessor {
      * @param file K2 formatted fits file
      */
     public K2Preprocessor(Fits file) {
-        file_ = file;
+        super(file);
     }
 
     /**

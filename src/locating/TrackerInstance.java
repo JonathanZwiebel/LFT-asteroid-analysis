@@ -1,4 +1,4 @@
-package locator;
+package locating;
 
 import java.io.IOException;
 import java.io.Serializable;

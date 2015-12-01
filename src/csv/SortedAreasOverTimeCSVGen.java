@@ -1,6 +1,6 @@
 package csv;
 
-import locator.BinaryTracker;
+import locating.BinaryTracker;
 
 import java.io.*;
 
