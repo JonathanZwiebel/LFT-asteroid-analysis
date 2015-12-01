@@ -15,7 +15,7 @@ import java.io.IOException;
  * TODO[Major]: Make this work with non-rectangular data sets
  */
 public abstract class Preprocessor {
-    public Fits file_;
+    protected Fits file_;
 
     public Preprocessor(Fits file) {
         file_ = file;
