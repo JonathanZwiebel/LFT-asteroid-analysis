@@ -1,7 +1,5 @@
 package linker;
 
-import locating.TrackerInstance;
-
 /**
  * @author Jonathan Zwiebel
  * @version November 23rd., 2015

@@ -23,5 +23,6 @@ public class BinaryLocator extends Locator {
 
         threshold_ = CubeStats.mean(data_);
         // TODO[Fix]: Throws a bug when threshold is to low
+        // TODO: More than just mean
     }
 }

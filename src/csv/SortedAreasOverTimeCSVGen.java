@@ -1,7 +1,5 @@
 package csv;
 
-import locating.BinaryTracker;
-
 import java.io.*;
 
 /**

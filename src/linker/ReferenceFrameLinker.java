@@ -2,8 +2,6 @@ package linker;
 
 import filter.BinaryFilter;
 import helper.SubtractiveHelper;
-import locating.BinaryTracker;
-import locating.BinaryTrackerInstance;
 
 /**
  * @author Jonathan Zwiebel
