@@ -2,7 +2,7 @@ package mains;
 
 import helper.FitsHelper;
 import nom.tam.fits.Fits;
-import write.SimpleWriter;
+import analysis.SimpleWriter;
 
 /**
  * This class will generate an animation with a given column and data set

@@ -1,4 +1,4 @@
-package stats;
+package analysis;
 
 
 import java.util.Arrays;

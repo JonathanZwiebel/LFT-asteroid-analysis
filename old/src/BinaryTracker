@@ -1,6 +1,6 @@
 import filter.MeanBrightBodyFilter;
 import nom.tam.fits.FitsException;
-import stats.ArrayStats;
+import analysis.ArrayStats;
 
 import java.io.BufferedWriter;
 import java.io.File;
