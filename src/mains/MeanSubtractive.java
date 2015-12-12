@@ -1,4 +1,4 @@
-package main;
+package mains;
 
 import static helper.FitsHelper.*;
 import static helper.K2ValidificationHelper.*;

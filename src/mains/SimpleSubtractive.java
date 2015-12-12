@@ -1,4 +1,4 @@
-package main;
+package mains;
 
 import helper.FitsHelper;
 import helper.SubtractiveHelper;
