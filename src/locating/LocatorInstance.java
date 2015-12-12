@@ -19,7 +19,7 @@ public abstract class LocatorInstance {
 
     /**
      * Locates all of the BrightBodies in the data array
-     * @return BrightBodyList showing locations of all of the Brightbodies
+     * @return BrightBodyList showing locations of all of the bright bodies
      */
-    public abstract BrightBodyList locate();
+    public abstract BrightBodyList locate(Locator parent);
 }

@@ -1,6 +1,7 @@
 package locating;
 
 import brightbodies.BrightBodyList;
+import filter.BinaryFilter;
 
 /**
  * @author Jonathan Zwiebel
@@ -12,8 +13,14 @@ public class BinaryLocatorInstance extends LocatorInstance {
         super(data);
     }
 
-    //TODO: Implement
-    public BrightBodyList locate() {
-        return null;
+    /**
+     * Finds all of the pixels above the threshold value
+     * @return List of bright bodies, joined pixels above threshold value
+     */
+    public BrightBodyList locate(Locator parent) {
+        int[][] filtered = BinaryFilter.filter(data_, ((BinaryLocator) parent).threshold_);
+        BrightBodyList bodies = BrightBodyLocator.binaryLocate(data_, filtered);
+        bodies.sortByArea();
+        return bodies;
     }
 }
