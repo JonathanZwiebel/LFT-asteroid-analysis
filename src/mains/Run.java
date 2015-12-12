@@ -27,9 +27,8 @@ import java.io.File;
  *   TODO: 3A.2 Connect bright bodies in each frame to ones in reference (should be different ways)
  * TODO: 4. Track mobile bright bodies between frames
  */
-public class TrackAndLink {
+public class Run {
     public static final String DATA_FILENAME =          "C:\\Users\\admin\\Desktop\\K2\\raw\\ktwo200000905-c00_lpd-targ.fits";
-    public static final String COLUMN =                 "FLUX";
 
     public static void main(String[] args) {
         try {

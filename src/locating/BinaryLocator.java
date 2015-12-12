@@ -11,6 +11,7 @@ public class BinaryLocator extends Locator {
     private ThresholdType threshold_type_;
     private float argument_;
 
+    //Todo: Add more include blurs
     public enum ThresholdType {
         GIVEN,
         MEAN
