@@ -20,6 +20,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
     /**
      * Finds all of the pixels above the threshold value
      * @return List of bright bodies, joined pixels above threshold value
+     * TODO[Fix]: Throws a bug when threshold is too low
      */
     public BrightBodyList locate(Locator parent) {
         int[][] filtered = BinaryFilter.filter(data_, ((BinaryLocator) parent).threshold_);
@@ -51,7 +52,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
 
     private static int[][] extractBlobLabels(int[][] binary_image) {
         // Creates a label matrix and initializes all values to 0
-        // Within the label matrix: -1 is dark, 0 is not searced, +n is unique label n
+        // Within the label matrix: -1 is dark, 0 is not searched, +n is unique label n
         int[][] label_matrix = new int[binary_image.length][binary_image[0].length];
         for(int i = 0; i < label_matrix.length; i++) {
             for(int j = 0; j < label_matrix[0].length; j++) {

@@ -27,7 +27,7 @@ public class Track {
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(DATA_FILENAME)));
             float[][][] data = preprocessor.read();
 
-            Locator locator = new BinaryLocator(data);
+            Locator locator = new BinaryLocator(data, BinaryLocator.ThresholdType.MEAN);
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
         }

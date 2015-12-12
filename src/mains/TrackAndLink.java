@@ -36,7 +36,7 @@ public class TrackAndLink {
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(DATA_FILENAME)));
             float[][][] data = preprocessor.read();
 
-            Locator locator = new BinaryLocator(data);
+            Locator locator = new BinaryLocator(data, BinaryLocator.ThresholdType.GIVEN, 500);
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
 
