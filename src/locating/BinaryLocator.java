@@ -20,6 +20,7 @@ public class BinaryLocator extends Locator {
         }
 
         // TODO assign threshold
-        threshold_ = 100.0f;
+        // TODO[Fix]: Throws a bug when threshold is to low
+        threshold_ = 400.0f;
     }
 }

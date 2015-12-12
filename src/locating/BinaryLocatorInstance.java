@@ -19,7 +19,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
      */
     public BrightBodyList locate(Locator parent) {
         int[][] filtered = BinaryFilter.filter(data_, ((BinaryLocator) parent).threshold_);
-        BrightBodyList bodies = BrightBodyLocator.binaryLocate(data_, filtered);
+        BrightBodyList bodies = BrightBodyLocator.binaryLocate(data_.clone(), filtered.clone());
         bodies.sortByArea();
         return bodies;
     }

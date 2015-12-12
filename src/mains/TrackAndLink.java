@@ -1,10 +1,11 @@
 package mains;
 
-import linker.ReferenceFrameLinker;
+import brightbodies.BrightBodyList;
+import locating.BinaryLocator;
+import locating.Locator;
 import nom.tam.fits.Fits;
 import preprocessing.K2Preprocessor;
 import preprocessing.Preprocessor;
-import locating.BinaryTracker;
 
 import java.io.File;
 
@@ -35,10 +36,11 @@ public class TrackAndLink {
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(DATA_FILENAME)));
             float[][][] data = preprocessor.read();
 
-            BinaryTracker tracker = new BinaryTracker(data);
-            tracker.track();
+            Locator locator = new BinaryLocator(data);
+            locator.initialize();
+            BrightBodyList[] bodies = locator.locate();
 
-            ReferenceFrameLinker linker = new ReferenceFrameLinker(tracker, data);
+            System.out.println(bodies[3]);
         }
         catch(Exception e ) {
             e.printStackTrace();

@@ -1,9 +1,11 @@
 package mains;
 
+import brightbodies.BrightBodyList;
+import locating.BinaryLocator;
+import locating.Locator;
 import nom.tam.fits.Fits;
 import preprocessing.K2Preprocessor;
 import preprocessing.Preprocessor;
-import locating.BinaryTracker;
 
 import java.io.File;
 
@@ -25,13 +27,9 @@ public class Track {
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(DATA_FILENAME)));
             float[][][] data = preprocessor.read();
 
-
-            BinaryTracker tracker = new BinaryTracker(data);
-            tracker.track();
-
-
-            tracker.toMassAreaSortedCSV(MASS_CSV_FILENAME, 5);
-            //tracker.toTextFiles(TEXT_DIRECTORY);
+            Locator locator = new BinaryLocator(data);
+            locator.initialize();
+            BrightBodyList[] bodies = locator.locate();
         }
         catch(Exception e ) {
             e.printStackTrace();
