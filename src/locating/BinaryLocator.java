@@ -1,5 +1,7 @@
 package locating;
 
+import analysis.CubeStats;
+
 /**
  * @author Jonathan Zwiebel
  * @version December 3rd, 2015
@@ -19,8 +21,7 @@ public class BinaryLocator extends Locator {
             instances_[index] = new BinaryLocatorInstance(data_[index]);
         }
 
-        // TODO assign threshold
+        threshold_ = CubeStats.mean(data_);
         // TODO[Fix]: Throws a bug when threshold is to low
-        threshold_ = 400.0f;
     }
 }
