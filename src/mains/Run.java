@@ -33,19 +33,27 @@ public class Run {
 
     public static void main(String[] args) {
         try {
+            System.out.println("Preprocessing");
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(args[0])));
             float[][][] data = preprocessor.read();
 
+            System.out.println("Locating");
             Locator locator = new BinaryLocator(data, BinaryLocator.ThresholdType.MEAN, -1);
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
 
-            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data);
+            System.out.println("Filtering");
+            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, 0.80f);
             BrightBodyList[][] filtered_bodies = filter.filter();
             BrightBodyList[] immobile_bodies = filtered_bodies[0];
             BrightBodyList[] mobile_bodies = filtered_bodies[1];
 
-            System.out.println(bodies[3]);
+            System.out.println("In frame 3\n===============");
+            System.out.println("Immobile: ");
+            System.out.println(immobile_bodies[3]);
+            System.out.println("=============\nMobile: ");
+            System.out.println(mobile_bodies[3]);
+
         }
         catch(Exception e ) {
             e.printStackTrace();

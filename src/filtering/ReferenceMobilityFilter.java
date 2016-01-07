@@ -141,7 +141,7 @@ public class ReferenceMobilityFilter extends MobilityFilter {
         for(CartesianPoint c : original.body) {
             if(reference.contains(c)) {
                 // TODO[IMPORTANT]: MAKE SURE THIS IS THE CORRECT COORDINATE POINT
-                sum += original.source[original.source.length - c.y][c.x];
+                sum += original.source[original.source.length - c.y - 1][c.x];
             }
         }
         return sum;
