@@ -14,6 +14,7 @@ public class BrightBody implements Comparable<BrightBody>, Serializable{
     public Coordinate centroid;
     public float area;
     public CartesianPoint[] body;
+    public float[][] source;
 
     /**
      * Constructs a bright body given the source image and coordinates
@@ -24,6 +25,7 @@ public class BrightBody implements Comparable<BrightBody>, Serializable{
         this.body = body;
         centroid = centroid(image, body.clone());
         area = area(image, body.clone());
+        source = image;
     }
 
     /**

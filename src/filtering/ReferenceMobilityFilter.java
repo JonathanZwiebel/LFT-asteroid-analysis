@@ -1,8 +1,13 @@
 package filtering;
 
+import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
+import brightbodies.CartesianPoint;
 import helper.SubtractiveHelper;
 import locating.BinaryLocator;
+
+import java.lang.instrument.Instrumentation;
+import java.util.Objects;
 
 /**
  * @author Jonathan Zwiebel
@@ -44,7 +49,7 @@ public class ReferenceMobilityFilter extends MobilityFilter {
             filtered_bodies[1][index] = filtered_bodies_instance[1]; // mobile
         }
 
-        return new BrightBodyList[0][0];
+        return filtered_bodies;
     }
 
     /**
@@ -85,10 +90,60 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      * @return data cube with first slice as immobile and second slice as mobile bright bodies
      *
      * TODO: Consider if it is better to returns a special data type for sorted BrightBodyList
-     *
+     * TODO: Consider if a deep copy is better than an indexed boolean array
      * Likely to be very memory intensive
      */
     private BrightBodyList[] mobilitySeparation(BrightBodyList input_bodies, BrightBodyList reference_bodies, float similarity_threshold_) {
+        BrightBodyList[] sorted_bodies = new BrightBodyList[2];
+        sorted_bodies[0] = new BrightBodyList(); // immobile
+        sorted_bodies[1] = new BrightBodyList(); // mobile
 
+        // TODO: Check that input_bodies are actually sorted
+        reference_bodies.sortByArea();
+        boolean[] reference_bodies_used = new boolean[reference_bodies.size()];
+
+        for(BrightBody body : input_bodies) {
+            boolean matched = false;
+            //System.out.println("Running mobility test on bright body of area " + body.area);
+            for(int ref_index = 0; ref_index < reference_bodies.size(); ref_index++) {
+                if(reference_bodies_used[ref_index]) {
+                    break;
+                }
+                float overlap = overlap(body, reference_bodies.get(ref_index));
+                float percent_overlap = overlap / body.area;
+                //System.out.println("Overlap with reference " + ref_index + ": " + overlap + " | " + percent_overlap + " percent");
+                if(percent_overlap > similarity_threshold_) {
+                    //System.out.println("Pass!");
+                    reference_bodies_used[ref_index] = true;
+                    matched = true;
+                    break;
+                }
+            }
+            if(matched) {
+                sorted_bodies[0].add(body);
+            }
+            else {
+                sorted_bodies[1].add(body);
+            }
+        }
+        return sorted_bodies;
+    }
+
+    /**
+     * Returns the sum of the values on the original bright body coordinates that also exist in the reference bright
+     * body
+     * @return overlap value
+     *
+     * TODO?: Different kinds of overlap
+     */
+    private float overlap(BrightBody original, BrightBody reference) {
+        float sum = 0;
+        for(CartesianPoint c : original.body) {
+            if(reference.contains(c)) {
+                // TODO[IMPORTANT]: MAKE SURE THIS IS THE CORRECT COORDINATE POINT
+                sum += original.source[original.source.length - c.y][c.x];
+            }
+        }
+        return sum;
     }
 }
