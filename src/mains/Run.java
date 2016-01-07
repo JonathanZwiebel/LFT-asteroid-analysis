@@ -19,7 +19,7 @@ import java.io.File;
  * TODO: 1. Clean the raw data file
  * TODO: 2. Identify bright bodies in individual frames
  *  TODO: 2A Binary Locator
- *   TODO: 2A.1 Filter the bodies into hit or miss spots to create a mask (different filters)
+ *   TODO: 2A.1 MobilityFilter the bodies into hit or miss spots to create a mask (different filters)
  *   TODO: 2A.2 Combine the mask and original image to get tracked bright bodies (different combination techniques)
  * TODO: 3. Link immobile bright bodies between frames
  *  TODO: 3A Reference Linking
