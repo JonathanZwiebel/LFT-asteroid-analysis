@@ -107,7 +107,7 @@ public class ReferenceMobilityFilter extends MobilityFilter {
             //System.out.println("Running mobility test on bright body of area " + body.area);
             for(int ref_index = 0; ref_index < reference_bodies.size(); ref_index++) {
                 if(reference_bodies_used[ref_index]) {
-                    break;
+                    continue;
                 }
                 float overlap = overlap(body, reference_bodies.get(ref_index));
                 float percent_overlap = overlap / body.area;
