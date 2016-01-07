@@ -14,15 +14,17 @@ import locating.BinaryLocator;
  */
 public class ReferenceMobilityFilter extends MobilityFilter {
     float[][][] processed_data_;
+    float similarity_threshold_;
 
     /**
      * Constructs a ReferenceMobilityFilter object with the bright bodies from a locator and the data from a processor
-     * @param bright_body_list bright bodies from a locator
+     * @param bright_body_lists bright bodies from a locator
      * @param processed_data processed data from a processor
      */
-    public ReferenceMobilityFilter(BrightBodyList[] bright_body_list, float[][][] processed_data) {
-        super(bright_body_list);
+    public ReferenceMobilityFilter(BrightBodyList[] bright_body_lists, float[][][] processed_data, float similarity_threshold) {
+        super(bright_body_lists);
         processed_data_ = processed_data;
+        similarity_threshold_ = similarity_threshold;
     }
 
     /**
@@ -33,10 +35,13 @@ public class ReferenceMobilityFilter extends MobilityFilter {
         float[][] reference_frame = generateReferenceFrame();
         BrightBodyList reference_bodies = generateReferenceFrameBodies(reference_frame);
 
-        BrightBodyList[][] filtered_bodies = new BrightBodyList[2][bright_body_list_.length];
+        BrightBodyList[][] filtered_bodies = new BrightBodyList[2][bright_body_lists_.length];
         // TODO: Consider if this for loop is better replaced by a single method
-        for(int index = 0; index < bright_body_list_.length; index++) {
-            mobilitySeparation(index, bright_body_list_, filtered_bodies);
+        for(int index = 0; index < bright_body_lists_.length; index++) {
+            BrightBodyList[] filtered_bodies_instance = mobilitySeparation(bright_body_lists_[index], reference_bodies, similarity_threshold_);
+            assert filtered_bodies_instance.length == 2;
+            filtered_bodies[0][index] = filtered_bodies_instance[0]; // immobile
+            filtered_bodies[1][index] = filtered_bodies_instance[1]; // mobile
         }
 
         return new BrightBodyList[0][0];
@@ -68,5 +73,22 @@ public class ReferenceMobilityFilter extends MobilityFilter {
         BinaryLocator reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN);
         reference_frame_locator.initialize();
         return reference_frame_locator.locate()[0];
+    }
+
+    /**
+     * Separates the pre-located bright bodies in input_bodies into two BrightBodyLists by comparing similarity to
+     * reference_bodies. If they match by the threshold value
+     * TODO: Allow for simple circle checks on centroid and body size as well as full check
+     *
+     * @param input_bodies bright bodies in the slice being searched
+     * @param reference_bodies bright bodies in the reference slice
+     * @return data cube with first slice as immobile and second slice as mobile bright bodies
+     *
+     * TODO: Consider if it is better to returns a special data type for sorted BrightBodyList
+     *
+     * Likely to be very memory intensive
+     */
+    private BrightBodyList[] mobilitySeparation(BrightBodyList input_bodies, BrightBodyList reference_bodies, float similarity_threshold_) {
+
     }
 }

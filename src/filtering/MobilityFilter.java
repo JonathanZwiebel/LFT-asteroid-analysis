@@ -10,14 +10,14 @@ import brightbodies.BrightBodyList;
  * @version January 6th, 2016
  */
 public abstract class MobilityFilter {
-    protected BrightBodyList[] bright_body_list_;
+    protected BrightBodyList[] bright_body_lists_;
 
     /**
      * Constructs a MobilityFilter object that will filter the immobile and mobile bright bodies
-     * @param bright_body_list bright body list extracted from locator
+     * @param bright_body_lists bright body list extracted from locator
      */
-    public MobilityFilter(BrightBodyList[] bright_body_list) {
-        bright_body_list_ = bright_body_list;
+    public MobilityFilter(BrightBodyList[] bright_body_lists) {
+        bright_body_lists_ = bright_body_lists;
     }
 
     /**
