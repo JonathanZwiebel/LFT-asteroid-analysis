@@ -1,6 +1,8 @@
 package mains;
 
 import brightbodies.BrightBodyList;
+import filtering.MobilityFilter;
+import filtering.ReferenceMobilityFilter;
 import locating.BinaryLocator;
 import locating.Locator;
 import nom.tam.fits.Fits;
@@ -11,7 +13,7 @@ import java.io.File;
 
 /**
  * @author Jonathan Zwiebel
- * @version November 20th, 2015
+ * @version January 6th, 2015
  *
  * This class will track a cube of bright bodies in standard FITS format and the link them between individual frames
  * to get references to individual bright bodies over time.
@@ -37,6 +39,11 @@ public class Run {
             Locator locator = new BinaryLocator(data, BinaryLocator.ThresholdType.MEAN, -1);
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
+
+            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data);
+            BrightBodyList[][] filtered_bodies = filter.filter();
+            BrightBodyList[] immobile_bodies = filtered_bodies[0];
+            BrightBodyList[] mobile_bodies = filtered_bodies[1];
 
             System.out.println(bodies[3]);
         }
