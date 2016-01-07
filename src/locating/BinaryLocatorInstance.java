@@ -13,6 +13,10 @@ import java.util.ArrayList;
  */
 public class BinaryLocatorInstance extends LocatorInstance {
 
+    /**
+     * Constructs a BinaryLocatorInstance that belongs to a BinaryLocator object
+     * @param data one slice of the data in the BinaryLocatorInstance
+     */
     public BinaryLocatorInstance(float[][] data) {
         super(data);
     }
@@ -21,6 +25,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
      * Finds all of the pixels above the threshold value
      * @return List of bright bodies, joined pixels above threshold value
      * TODO[Fix]: Throws a bug when threshold is too low
+     * TODO[Large]: Don't use filter
      */
     public BrightBodyList locate(Locator parent) {
         int[][] filtered = BinaryFilter.filter(data_, ((BinaryLocator) parent).threshold_);
@@ -50,6 +55,11 @@ public class BinaryLocatorInstance extends LocatorInstance {
         return bodies;
     }
 
+    /**
+     * Extracts a matrix of numerical labels for each coordinate that identifies which bright body it belongs to
+     * @param binary_image original binary image
+     * @return integer array of labels
+     */
     private static int[][] extractBlobLabels(int[][] binary_image) {
         // Creates a label matrix and initializes all values to 0
         // Within the label matrix: -1 is dark, 0 is not searched, +n is unique label n
@@ -136,6 +146,11 @@ public class BinaryLocatorInstance extends LocatorInstance {
         }
     }
 
+    /**
+     * Returns the maximum value in an integer matrix
+     * @param matrix matrix to be searched
+     * @return maximum value
+     */
     private static int getMaxValue(int[][] matrix) {
         int max = Integer.MIN_VALUE;
         for(int[] array : matrix) {

@@ -10,7 +10,7 @@ import preprocessing.Preprocessor;
 import java.io.File;
 
 /**
- * @author Joanthan Zwiebel
+ * @author Jonathan Zwiebel
  * @version November 20th, 2015
  *
  * This class will track a cube of bright bodies in standard FITS format and the link them between individual frames
@@ -28,14 +28,13 @@ import java.io.File;
  * TODO: 4. Track mobile bright bodies between frames
  */
 public class Run {
-    public static final String DATA_FILENAME =          "C:\\Users\\admin\\Desktop\\K2\\raw\\ktwo200000905-c00_lpd-targ.fits";
 
     public static void main(String[] args) {
         try {
-            Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(DATA_FILENAME)));
+            Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(args[0])));
             float[][][] data = preprocessor.read();
 
-            Locator locator = new BinaryLocator(data, BinaryLocator.ThresholdType.GIVEN, 500);
+            Locator locator = new BinaryLocator(data, BinaryLocator.ThresholdType.MEAN, -1);
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
 
