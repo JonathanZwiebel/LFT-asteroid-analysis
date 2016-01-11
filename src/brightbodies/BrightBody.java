@@ -30,8 +30,8 @@ public class BrightBody implements Comparable<BrightBody>, Serializable{
 
     /**
      * Determines if this bright body contains a particular point
-     * @param point
-     * @return
+     * @param point the point to check
+     * @return true if the point is in the body
      */
     public boolean contains(CartesianPoint point) {
         for(CartesianPoint p : body) {

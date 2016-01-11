@@ -14,7 +14,7 @@
 
 
 # Package Files #
-# *.jar removed to allow nom-tam-fits to be pushed #
+*.jar
 *.war
 *.ear
 
@@ -24,3 +24,5 @@ hs_err_pid*
 
 # Data #
 data/
+
+!lib/*
