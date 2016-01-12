@@ -3,15 +3,13 @@ package filtering;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
+import helper.ArrayHelper;
 import helper.SubtractiveHelper;
 import locating.BinaryLocator;
 
-import java.lang.instrument.Instrumentation;
-import java.util.Objects;
-
 /**
  * @author Jonathan Zwiebel
- * @version January 6th, 2016
+ * @version January 12th, 2016
  *
  * Filters the bright bodies by generating a reference frame that is indicative of the cube as a whole. Locates the
  * bright bodies within that cube and then compares the bright bodies in each frame to that of the reference cube
@@ -19,17 +17,20 @@ import java.util.Objects;
  */
 public class ReferenceMobilityFilter extends MobilityFilter {
     float[][][] processed_data_;
-    float similarity_threshold_;
+    float similarity_threshold_; // the percent similarity that two birght bodies must share to be considered the same
+    float shift_; // a linear shift that is applied to the ref image before being compared
+    // TODO: More shifts than just linear addition of a float
 
     /**
      * Constructs a ReferenceMobilityFilter object with the bright bodies from a locator and the data from a processor
      * @param bright_body_lists bright bodies from a locator
      * @param processed_data processed data from a processor
      */
-    public ReferenceMobilityFilter(BrightBodyList[] bright_body_lists, float[][][] processed_data, float similarity_threshold) {
+    public ReferenceMobilityFilter(BrightBodyList[] bright_body_lists, float[][][] processed_data, float similarity_threshold, float shift) {
         super(bright_body_lists);
         processed_data_ = processed_data;
         similarity_threshold_ = similarity_threshold;
+        shift_ = shift;
     }
 
     /**
@@ -61,7 +62,9 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      * TODO[Major]: Allow for shifts to the reference frame
      */
     private float[][] generateReferenceFrame() {
-        return SubtractiveHelper.meanImage(processed_data_);
+        float[][] mean_image = SubtractiveHelper.meanImage(processed_data_);
+        float[][] shifted_image = ArrayHelper.shift(mean_image, shift_);
+        return shifted_image;
     }
 
     /**
@@ -77,7 +80,10 @@ public class ReferenceMobilityFilter extends MobilityFilter {
         float[][][] reference_frame_cube = {reference_frame};
         BinaryLocator reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN);
         reference_frame_locator.initialize();
-        return reference_frame_locator.locate()[0];
+        System.out.println("Reference Frame");
+        BrightBodyList ret = reference_frame_locator.locate()[0];
+        System.out.println(ret);
+        return ret;
     }
 
     /**

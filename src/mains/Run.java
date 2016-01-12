@@ -43,7 +43,7 @@ public class Run {
             BrightBodyList[] bodies = locator.locate();
 
             System.out.println("Filtering");
-            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, 0.80f);
+            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, 0.80f, 50.0f);
             BrightBodyList[][] filtered_bodies = filter.filter();
             BrightBodyList[] immobile_bodies = filtered_bodies[0];
             BrightBodyList[] mobile_bodies = filtered_bodies[1];

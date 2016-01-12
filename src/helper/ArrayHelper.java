@@ -32,4 +32,14 @@ public class ArrayHelper {
         }
         return cubef;
     }
+
+    public static float[][] shift(float[][] data, float shift) {
+        float[][] output = data.clone();
+        for(int i = 0; i < output.length; i++) {
+            for(int j = 0; j < output.length; j++) {
+                output[i][j] += shift;
+            }
+        }
+        return output;
+    }
 }
