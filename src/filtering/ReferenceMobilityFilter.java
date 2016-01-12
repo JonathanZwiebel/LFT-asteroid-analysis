@@ -1,11 +1,13 @@
 package filtering;
 
+import analysis.ImageStats;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
 import helper.ArrayHelper;
 import helper.SubtractiveHelper;
 import locating.BinaryLocator;
+import mains.Subtractive;
 
 /**
  * @author Jonathan Zwiebel
@@ -63,8 +65,7 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      */
     private float[][] generateReferenceFrame() {
         float[][] mean_image = SubtractiveHelper.meanImage(processed_data_);
-        float[][] shifted_image = ArrayHelper.shift(mean_image, shift_);
-        return shifted_image;
+        return ArrayHelper.shift(mean_image, shift_);
     }
 
     /**
@@ -78,7 +79,8 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      */
     private BrightBodyList generateReferenceFrameBodies(float[][] reference_frame) {
         float[][][] reference_frame_cube = {reference_frame};
-        BinaryLocator reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN);
+        float mean = ImageStats.mean(reference_frame);
+        BinaryLocator reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.GIVEN, mean - shift_);
         reference_frame_locator.initialize();
         System.out.println("Reference Frame");
         BrightBodyList ret = reference_frame_locator.locate()[0];
