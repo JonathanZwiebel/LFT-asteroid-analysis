@@ -8,12 +8,14 @@ import locating.Locator;
 import nom.tam.fits.Fits;
 import preprocessing.K2Preprocessor;
 import preprocessing.Preprocessor;
+import locating.BinaryLocator.ThresholdType;
+import filtering.ReferenceMobilityFilter.ReferenceBodyDetectionMethod;
 
 import java.io.File;
 
 /**
  * @author Jonathan Zwiebel
- * @version January 6th, 2015
+ * @version January 12th, 2015
  *
  * This class will track a cube of bright bodies in standard FITS format and the link them between individual frames
  * to get references to individual bright bodies over time.
@@ -38,22 +40,21 @@ public class Run {
             float[][][] data = preprocessor.read();
 
             System.out.println("Locating");
-            Locator locator = new BinaryLocator(data, BinaryLocator.ThresholdType.MEAN, -1);
+            Locator locator = new BinaryLocator(data, ThresholdType.GIVEN, 840.0f);
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
 
             System.out.println("Filtering");
-            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, 0.80f, 1500.0f);
+            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, 0.60f, ReferenceBodyDetectionMethod.ABSOLUTE, 840.0f);
             BrightBodyList[][] filtered_bodies = filter.filter();
             BrightBodyList[] immobile_bodies = filtered_bodies[0];
             BrightBodyList[] mobile_bodies = filtered_bodies[1];
 
-            System.out.println("In frame 3\n===============");
+            System.out.println("In frame 1429\n===============");
             System.out.println("Immobile: ");
-            System.out.println(immobile_bodies[3]);
+            System.out.println(immobile_bodies[1428]);
             System.out.println("=============\nMobile: ");
-            System.out.println(mobile_bodies[3]);
-
+            System.out.println(mobile_bodies[1428]);
         }
         catch(Exception e ) {
             e.printStackTrace();

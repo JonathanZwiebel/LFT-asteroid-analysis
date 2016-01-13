@@ -1,13 +1,10 @@
 package filtering;
 
-import analysis.ImageStats;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
-import helper.ArrayHelper;
 import helper.SubtractiveHelper;
 import locating.BinaryLocator;
-import mains.Subtractive;
 
 /**
  * @author Jonathan Zwiebel
@@ -18,22 +15,35 @@ import mains.Subtractive;
  * through area overlap
  */
 public class ReferenceMobilityFilter extends MobilityFilter {
-    float[][][] processed_data_;
-    float similarity_threshold_; // the percent similarity that two birght bodies must share to be considered the same
-    float shift_; // a linear shift that is applied to the ref image before being compared
-    // TODO: More shifts than just linear addition of a float
+    private float[][][] processed_data_;
+    private float similarity_threshold_; // the percent similarity that two bright bodies must share to be considered the same
+    private ReferenceBodyDetectionMethod ref_gen_method_;
+    private float[] args_;
+
+    // TODO[Major] Make this not a special enum but instead an enum from the standard locator set
+    public enum ReferenceBodyDetectionMethod {
+        ABSOLUTE,
+        MEAN
+    }
+
 
     /**
      * Constructs a ReferenceMobilityFilter object with the bright bodies from a locator and the data from a processor
-     * @param bright_body_lists bright bodies from a locator
-     * @param processed_data processed data from a processor
+     * @param bright_body_lists the set of bright bodies in each frame
+     * @param processed_data the floating point data of brightness in each frame
+     * @param similarity_threshold percent similarity that searched body must share with existing body to be immobile
+     * @param ref_gen_method how the reference frame will be generated
+     * @param args varargs for reference generation method arguments
      */
-    public ReferenceMobilityFilter(BrightBodyList[] bright_body_lists, float[][][] processed_data, float similarity_threshold, float shift) {
+    public ReferenceMobilityFilter(BrightBodyList[] bright_body_lists, float[][][] processed_data, float similarity_threshold, ReferenceBodyDetectionMethod ref_gen_method, float... args) {
         super(bright_body_lists);
         processed_data_ = processed_data;
         similarity_threshold_ = similarity_threshold;
-        shift_ = shift;
+        ref_gen_method_ = ref_gen_method;
+        args_ = args;
     }
+
+
 
     /**
      * Filters the bright bodies using reference frame filtration into mobile and immobile bright bodies
@@ -61,11 +71,9 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      *
      * @return reference frame
      * TODO[Major]: Allow for more types of reference frames than just mean
-     * TODO[Major]: Allow for shifts to the reference frame
      */
     private float[][] generateReferenceFrame() {
-        float[][] mean_image = SubtractiveHelper.meanImage(processed_data_);
-        return ArrayHelper.shift(mean_image, shift_);
+        return SubtractiveHelper.meanImage(processed_data_);
     }
 
     /**
@@ -79,8 +87,19 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      */
     private BrightBodyList generateReferenceFrameBodies(float[][] reference_frame) {
         float[][][] reference_frame_cube = {reference_frame};
-        float mean = ImageStats.mean(reference_frame);
-        BinaryLocator reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.GIVEN, mean - shift_);
+        BinaryLocator reference_frame_locator;
+
+        switch(ref_gen_method_) {
+            case ABSOLUTE:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.GIVEN, args_[0]);
+                break;
+            case MEAN:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN);
+                break;
+            default:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN);
+        }
+
         reference_frame_locator.initialize();
         System.out.println("Reference Frame");
         BrightBodyList ret = reference_frame_locator.locate()[0];
