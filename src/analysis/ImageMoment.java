@@ -17,7 +17,7 @@ public class ImageMoment {
         float moment = 0;
         for(int x = 0; x < image.length; x++) {
             for(int y = 0; y < image[0].length; y++) {
-                moment += image[x][y] * Math.pow(x, i) * Math.pow(y, j);
+                moment += image[image.length - y - 1][x] * Math.pow(x, i) * Math.pow(y, j);
             }
         }
         return moment;

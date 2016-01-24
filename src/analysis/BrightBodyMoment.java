@@ -10,7 +10,6 @@ import brightbodies.Coordinate;
  */
 public class BrightBodyMoment {
 
-    public static final int IMAGE_SIZE = 49;
 
     /**
      * Calculates the moment of a subset of <code>CartesianPoint</code> within an image with degree i
@@ -24,7 +23,7 @@ public class BrightBodyMoment {
     public static float moment(float[][] image, CartesianPoint[] bright_body, int i, int j) {
         float moment = 0;
         for(CartesianPoint p : bright_body) {
-            moment += image[IMAGE_SIZE - p.y][p.x] * Math.pow(p.x, i) * Math.pow(p.y, j);
+            moment += image[image.length - p.y - 1][p.x] * Math.pow(p.x, i) * Math.pow(p.y, j);
         }
         return moment;
     }
