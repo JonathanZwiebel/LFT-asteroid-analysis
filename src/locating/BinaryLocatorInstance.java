@@ -3,7 +3,8 @@ package locating;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
-import filter.BinaryFilter;
+import filter.BinaryMask;
+import filter.ImageMask;
 
 import java.util.ArrayList;
 
@@ -25,12 +26,13 @@ public class BinaryLocatorInstance extends LocatorInstance {
      * Finds all of the pixels above the threshold value
      * @return List of bright bodies, joined pixels above threshold value
      * TODO[Fix]: Throws a bug when threshold is too low
-     * TODO[Large]: Don't use filter
+     * TODO[Large]: Don't use mask
      */
     public BrightBodyList locate(Locator parent) {
-        int[][] filtered = BinaryFilter.filter(data_, ((BinaryLocator) parent).threshold_);
+        ImageMask mask = new BinaryMask(data_);
+        boolean[][] masked = mask.mask(((BinaryLocator) parent).threshold_);
 
-        int[][] blob_labels = extractBlobLabels(filtered);
+        int[][] blob_labels = extractBlobLabels(masked);
         int blob_count = getMaxValue(blob_labels);
 
         ArrayList<CartesianPoint>[] bright_bodies = new ArrayList[blob_count];
@@ -60,7 +62,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
      * @param binary_image original binary image
      * @return integer array of labels
      */
-    private static int[][] extractBlobLabels(int[][] binary_image) {
+    private static int[][] extractBlobLabels(boolean[][] binary_image) {
         // Creates a label matrix and initializes all values to 0
         // Within the label matrix: -1 is dark, 0 is not searched, +n is unique label n
         int[][] label_matrix = new int[binary_image.length][binary_image[0].length];
@@ -91,19 +93,19 @@ public class BinaryLocatorInstance extends LocatorInstance {
      * @param blob_count the current number of blobs in the set
      * @return if there was a new blob by this call
      */
-    private static boolean addToLabelSet(int attached_label, int i, int j, int[][] label_matrix, int[][] binary_image, int blob_count) {
+    private static boolean addToLabelSet(int attached_label, int i, int j, int[][] label_matrix, boolean[][] binary_image, int blob_count) {
         // Already been searched
         if(label_matrix[i][j] != 0) {
             return false;
         }
 
         // Has not been searched but has negative on the mask
-        if(binary_image[i][j] == 0) {
+        if(!binary_image[i][j]) {
             label_matrix[i][j] = -1;
             return false;
         }
 
-        assert binary_image[i][j] == 1 && label_matrix[i][j] == 0; // light and not searched
+        assert binary_image[i][j] && label_matrix[i][j] == 0; // light and not searched
 
         int new_label;
         // This is a new label set, begin new labelling system
@@ -130,7 +132,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
      * @param blob_count the current number of blods in the set
      * TODO: Don't call addToLabelSet if already searched
      */
-    private static void addNeighbors(int parent_label, int i, int j, int[][] label_matrix, int[][] binary_image, int blob_count) {
+    private static void addNeighbors(int parent_label, int i, int j, int[][] label_matrix, boolean[][] binary_image, int blob_count) {
         if(j != label_matrix[0].length - 1) {
             addToLabelSet(parent_label, i, j + 1, label_matrix, binary_image, blob_count);
         }
