@@ -1,4 +1,4 @@
-package filter;
+package mask;
 
 
 /**
@@ -6,10 +6,10 @@ package filter;
  * above the threshold to true
  */
 
-public class BinaryMask implements ImageMask {
+public class BinaryImageMask implements ImageMask {
     float[][] data_;
 
-    public BinaryMask(float[][] data) {
+    public BinaryImageMask(float[][] data) {
         data_ = data;
     }
 

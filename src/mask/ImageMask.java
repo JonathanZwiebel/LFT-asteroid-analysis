@@ -1,4 +1,4 @@
-package filter;
+package mask;
 
 /**
  * @author JonathanZwiebel
