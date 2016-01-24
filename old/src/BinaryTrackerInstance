@@ -27,7 +27,7 @@ public class BinaryTrackerInstance extends TrackerInstance{
     }
 
     /**
-     * Constructs a binary tracker instance given the original slice and the binary filter slice not
+     * Constructs a binary tracker instance given the original slice and the binary mask slice not
      * in the context of a larger cube
      * @param original_image original bright body image
      * @param binary_filter_image masked image containing positives at regions to search

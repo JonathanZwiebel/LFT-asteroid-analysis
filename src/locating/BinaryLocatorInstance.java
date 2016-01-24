@@ -3,8 +3,8 @@ package locating;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
-import filter.BinaryMask;
-import filter.ImageMask;
+import mask.BinaryImageMask;
+import mask.ImageMask;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
      * TODO[Large]: Don't use mask
      */
     public BrightBodyList locate(Locator parent) {
-        ImageMask mask = new BinaryMask(data_);
+        ImageMask mask = new BinaryImageMask(data_);
         boolean[][] masked = mask.mask(((BinaryLocator) parent).threshold_);
 
         int[][] blob_labels = extractBlobLabels(masked);
