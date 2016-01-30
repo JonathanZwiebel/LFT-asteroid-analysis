@@ -101,10 +101,7 @@ public class ReferenceMobilityFilter extends MobilityFilter {
         }
 
         reference_frame_locator.initialize();
-        System.out.println("Reference Frame");
-        BrightBodyList ret = reference_frame_locator.locate()[0];
-        System.out.println(ret);
-        return ret;
+        return reference_frame_locator.locate()[0];
     }
 
     /**

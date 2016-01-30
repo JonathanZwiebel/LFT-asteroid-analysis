@@ -39,22 +39,42 @@ public class Run {
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(args[0])));
             float[][][] data = preprocessor.read();
 
-            System.out.println("Locating");
-            Locator locator = new BinaryLocator(data, ThresholdType.GIVEN, 840.0f);
+
+
+            float arg1 = Float.parseFloat(args[1]);
+            Locator locator;
+            if(arg1 == -1) {
+                System.out.println("Locating with mean threshold");
+                locator = new BinaryLocator(data, ThresholdType.MEAN);
+            }
+            else {
+                System.out.println("Locating with given threshold: " + arg1);
+                locator = new BinaryLocator(data, ThresholdType.GIVEN, arg1);
+            }
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
 
-            System.out.println("Filtering");
-            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, 0.60f, ReferenceBodyDetectionMethod.ABSOLUTE, 840.0f);
+
+            float arg2 = Float.parseFloat(args[2]);
+            float arg3 = Float.parseFloat(args[3]);
+            MobilityFilter filter;
+            if(arg3 == -1) {
+                System.out.println("Filtering with sim thresh of " + arg2 + " and mean threshold reference image");
+                filter = new ReferenceMobilityFilter(bodies, data, arg2, ReferenceBodyDetectionMethod.MEAN);
+            }
+            else {
+                System.out.println("Filtering with sim thresh of " + arg2 + " and given threshold reference image: " + arg3);
+                filter = new ReferenceMobilityFilter(bodies, data, arg2, ReferenceBodyDetectionMethod.ABSOLUTE, arg3);
+            }
             BrightBodyList[][] filtered_bodies = filter.filter();
             BrightBodyList[] immobile_bodies = filtered_bodies[0];
             BrightBodyList[] mobile_bodies = filtered_bodies[1];
 
-            System.out.println("In frame 1429\n===============");
-            System.out.println("Immobile: ");
-            System.out.println(immobile_bodies[1428]);
-            System.out.println("=============\nMobile: ");
-            System.out.println(mobile_bodies[1428]);
+            int arg4 = Integer.parseInt(args[4]);
+            System.out.println("In frame " + args[4]);
+            System.out.println("Immobile: " + immobile_bodies[arg4].size());
+            System.out.println("Mobile: " + mobile_bodies[arg4].size());
+            System.out.println(immobile_bodies.length);
         }
         catch(Exception e ) {
             e.printStackTrace();
