@@ -4,12 +4,12 @@ import analysis.CubeStats;
 
 /**
  * @author Jonathan Zwiebel
- * @version December 3rd, 2015
+ * @version January 26th, 2016
  */
 public class BinaryLocator extends Locator {
     public float threshold_;
     private ThresholdType threshold_type_;
-    private float argument_;
+    private float[] args_;
 
     //Todo: Add more and include blurs
     public enum ThresholdType {
@@ -18,18 +18,18 @@ public class BinaryLocator extends Locator {
     }
 
     /**
-     * Constructs a BinaryLocator object using in floating point data extracted from a preprocessor
+     * Constructs a BinaryLocator object using floating point data extracted from a preprocessor
      * the data extracted from the preprocessor
      * @param data data extracted from the preprocessor
      * @param threshold_type how the binary filtering will be done
-     * @param argument argument that may be passed to threshold
+     * @param args argument that may be passed to threshold
      */
-    public BinaryLocator(float[][][] data, ThresholdType threshold_type, float argument) {
+    public BinaryLocator(float[][][] data, ThresholdType threshold_type, float ... args) {
         super(data);
 
         threshold_type_ = threshold_type;
         if(threshold_type_ == ThresholdType.GIVEN) {
-            argument_ = argument;
+            args_ = args;
         }
     }
 
@@ -55,7 +55,7 @@ public class BinaryLocator extends Locator {
 
         switch(threshold_type_) {
             case GIVEN:
-                threshold_ = argument_;
+                threshold_ = args_[0];
                 break;
             case MEAN:
                 threshold_ = CubeStats.mean(data_);

@@ -15,7 +15,7 @@ import java.io.File;
 
 /**
  * @author Jonathan Zwiebel
- * @version January 12th, 2015
+ * @version January 29th, 2016
  *
  * This class will track a cube of bright bodies in standard FITS format and the link them between individual frames
  * to get references to individual bright bodies over time.

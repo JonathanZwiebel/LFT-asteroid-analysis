@@ -3,7 +3,7 @@ package filtering;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
-import helper.SubtractiveHelper;
+import helper.DataMathematicsHelper;
 import locating.BinaryLocator;
 
 /**
@@ -73,7 +73,7 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      * TODO[Major]: Allow for more types of reference frames than just mean
      */
     private float[][] generateReferenceFrame() {
-        return SubtractiveHelper.meanImage(processed_data_);
+        return DataMathematicsHelper.meanImage(processed_data_);
     }
 
     /**

@@ -3,10 +3,9 @@ package helper;
 /**
  * Static methods to help with image subtraction
  */
-public class SubtractiveHelper {
+public class DataMathematicsHelper {
 	/**
-	 * TODO: Check sizing
-	 * Subtracts two images from eachother
+	 * Subtracts two images from each other
 	 * @param top the top image
 	 * @param base the base image
 	 * @return top - base
