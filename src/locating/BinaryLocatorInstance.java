@@ -26,7 +26,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
      * Finds all of the pixels above the threshold value
      * @return List of bright bodies, joined pixels above threshold value
      * TODO[Fix]: Throws a bug when threshold is too low
-     * TODO[Large]: Don't use mask
+     * TODO: Mask is thrown away but may want to be accessed
      */
     public BrightBodyList locate(Locator parent) {
         ImageMask mask = new BinaryImageMask(data_);

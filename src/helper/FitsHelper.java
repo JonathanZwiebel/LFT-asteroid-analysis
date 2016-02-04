@@ -100,6 +100,28 @@ public class FitsHelper {
 		writeDataCube(ArrayHelper.intToFloat(cube), filename);
 	}
 
+	/**
+	 * Writes a 2d image of booleans to a new FITS file
+	 * @param image the input image
+	 * @param filename filename
+	 * @throws FitsException
+	 * @throws IOException
+	 */
+	public static void write2DImage(boolean[][] image, String filename) throws FitsException, IOException{
+		write2DImage(ArrayHelper.booleanToFloat(image), filename);
+	}
+
+	/**
+	 * Writes a 3d cube of booleans to a new FITS file
+	 * @param cube the inout cube
+	 * @param filename filename
+	 * @throws FitsException
+	 * @throws IOException
+	 */
+	public static void writeDataCube(boolean[][][] cube, String filename) throws FitsException, IOException{
+		writeDataCube(ArrayHelper.booleanToFloat(cube), filename);
+	}
+
     /**
      * Extracts a column from a FITS File filtered through the K2 filtering method as a cube
      * @param fits the FITS file
