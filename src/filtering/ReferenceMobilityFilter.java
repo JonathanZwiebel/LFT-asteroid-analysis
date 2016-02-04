@@ -58,8 +58,8 @@ public class ReferenceMobilityFilter extends MobilityFilter {
         for(int index = 0; index < bright_body_lists_.length; index++) {
             BrightBodyList[] filtered_bodies_instance = mobilitySeparation(bright_body_lists_[index], reference_bodies, similarity_threshold_);
             assert filtered_bodies_instance.length == 2;
-            filtered_bodies[0][index] = filtered_bodies_instance[0]; // immobile
-            filtered_bodies[1][index] = filtered_bodies_instance[1]; // mobile
+            filtered_bodies[IMMOBILE_INDEX][index] = filtered_bodies_instance[IMMOBILE_INDEX];
+            filtered_bodies[MOBILE_INDEX][index] = filtered_bodies_instance[MOBILE_INDEX]; // mobile
         }
 
         return filtered_bodies;
@@ -119,8 +119,8 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      */
     private BrightBodyList[] mobilitySeparation(BrightBodyList input_bodies, BrightBodyList reference_bodies, float similarity_threshold_) {
         BrightBodyList[] sorted_bodies = new BrightBodyList[2];
-        sorted_bodies[0] = new BrightBodyList(); // immobile
-        sorted_bodies[1] = new BrightBodyList(); // mobile
+        sorted_bodies[IMMOBILE_INDEX] = new BrightBodyList();
+        sorted_bodies[MOBILE_INDEX] = new BrightBodyList();
 
         // TODO: Check that input_bodies are actually sorted
         reference_bodies.sortByArea();
@@ -144,10 +144,10 @@ public class ReferenceMobilityFilter extends MobilityFilter {
                 }
             }
             if(matched) {
-                sorted_bodies[0].add(body);
+                sorted_bodies[IMMOBILE_INDEX].add(body);
             }
             else {
-                sorted_bodies[1].add(body);
+                sorted_bodies[MOBILE_INDEX].add(body);
             }
         }
         return sorted_bodies;

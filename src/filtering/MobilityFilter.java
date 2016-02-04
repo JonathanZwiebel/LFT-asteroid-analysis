@@ -10,6 +10,9 @@ import brightbodies.BrightBodyList;
  * @version January 6th, 2016
  */
 public abstract class MobilityFilter {
+    public static final int IMMOBILE_INDEX = 0;
+    public static final int MOBILE_INDEX = 1;
+
     protected BrightBodyList[] bright_body_lists_;
 
     /**

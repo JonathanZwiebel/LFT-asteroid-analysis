@@ -16,87 +16,90 @@ import java.io.File;
 
 /**
  * @author Jonathan Zwiebel
- * @version January 29th, 2016
+ * @version February 3rd, 2016
  *
- * This class will track a cube of bright bodies in standard FITS format and the link them between individual frames
- * to get references to individual bright bodies over time.
- * TODO[MAJOR]: Split procedure into four macro steps called through instantiated classes
- * TODO: 1. Clean the raw data file
- * TODO: 2. Identify bright bodies in individual frames
- *  TODO: 2A Binary Locator
- *   TODO: 2A.1 MobilityFilter the bodies into hit or miss spots to create a mask (different filters)
- *   TODO: 2A.2 Combine the mask and original image to get tracked bright bodies (different combination techniques)
- * TODO: 3. Link immobile bright bodies between frames
- *  TODO: 3A Reference Linking
- *   TODO: 3A.1 Generate a reference frame (different generation techniques)
- *   TODO: 3A.2 Connect bright bodies in each frame to ones in reference (should be different ways)
- * TODO: 4. Track mobile bright bodies between frames
+ * TODO: Consider the data output in a fifth macro step
  */
 public class Run {
-
+    /**
+     * Main method to be run for program execution
+     * @param args Location, Initial locating threshold, Similarity threshold, Reference locating threshold, Timestamp
+     * TODO: Make mean passable by more than just -1
+     */
     public static void main(String[] args) {
+        String data_location = args[0];
+        float detection_threshold = Float.parseFloat(args[1]);
+        float similarity_threshold = Float.parseFloat(args[2]);
+        float reference_frame_detection_threshold = Float.parseFloat(args[3]);
+        int timestamp = Integer.parseInt(args[4]);
+
         try {
             System.out.println("Preprocessing");
-            Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(args[0])));
+            Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(data_location)));
             float[][][] data = preprocessor.read();
 
-
-
-            float arg1 = Float.parseFloat(args[1]);
             Locator locator;
-            if(arg1 == -1) {
+            if(detection_threshold == -1) {
                 System.out.println("Locating with mean threshold");
                 locator = new BinaryLocator(data, ThresholdType.MEAN);
             }
             else {
-                System.out.println("Locating with given threshold: " + arg1);
-                locator = new BinaryLocator(data, ThresholdType.GIVEN, arg1);
+                System.out.println("Locating with given threshold: " + detection_threshold);
+                locator = new BinaryLocator(data, ThresholdType.GIVEN, detection_threshold);
             }
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
 
 
-            float arg2 = Float.parseFloat(args[2]);
-            float arg3 = Float.parseFloat(args[3]);
             MobilityFilter filter;
-            if(arg3 == -1) {
-                System.out.println("Filtering with sim thresh of " + arg2 + " and mean threshold reference image");
-                filter = new ReferenceMobilityFilter(bodies, data, arg2, ReferenceBodyDetectionMethod.MEAN);
+            if(reference_frame_detection_threshold == -1) {
+                System.out.println("Filtering with sim thresh of " + similarity_threshold + " and mean threshold reference image");
+                filter = new ReferenceMobilityFilter(bodies, data, similarity_threshold, ReferenceBodyDetectionMethod.MEAN);
             }
             else {
-                System.out.println("Filtering with sim thresh of " + arg2 + " and given threshold reference image: " + arg3);
-                filter = new ReferenceMobilityFilter(bodies, data, arg2, ReferenceBodyDetectionMethod.ABSOLUTE, arg3);
+                System.out.println("Filtering with sim thresh of " + similarity_threshold + " and given threshold reference image: " + reference_frame_detection_threshold);
+                filter = new ReferenceMobilityFilter(bodies, data, similarity_threshold, ReferenceBodyDetectionMethod.ABSOLUTE, reference_frame_detection_threshold);
             }
             BrightBodyList[][] filtered_bodies = filter.filter();
-            BrightBodyList[] immobile_bodies = filtered_bodies[0];
-            BrightBodyList[] mobile_bodies = filtered_bodies[1];
+            BrightBodyList[] immobile_bodies = filtered_bodies[MobilityFilter.IMMOBILE_INDEX];
+            BrightBodyList[] mobile_bodies = filtered_bodies[MobilityFilter.MOBILE_INDEX];
 
-            int arg4 = Integer.parseInt(args[4]);
-            System.out.println("In frame " + args[4]);
-            int mob_count = mobile_bodies[arg4].size();
-            int imob_count = immobile_bodies[arg4].size();
-            int total_count = mob_count + imob_count;
-            System.out.println("Total: " + total_count);
-            System.out.println("Immobile: " + imob_count);
-            System.out.println("Mobile: " + mob_count);
-            System.out.println("Mobile Rate: " + mob_count / (float) total_count);
-            System.out.print("Mean Mobile Area: ");
-            float mobile_area_sum = 0.0f;
-            for(BrightBody b : mobile_bodies[arg4]) {
-                mobile_area_sum += b.area;
-            }
-            System.out.print(mobile_area_sum / mob_count);
-
-
-            System.out.print("\nMean Mobile Size: ");
-            float mobile_size_sum = 0.0f;
-            for(BrightBody b : mobile_bodies[arg4]) {
-                mobile_size_sum += b.body.length;
-            }
-            System.out.println(mobile_size_sum / mob_count);
+            printSimpleDetectionStatsTimestamped(mobile_bodies, immobile_bodies, timestamp);
         }
         catch(Exception e ) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Prints a simplified set of data about mobile and immobile locating and filtering for a given timestamp
+     *
+     * @param mobile_bodies the BrightBodyList[] of mobile bright bodies generated by a mobility filter
+     * @param immobile_bodies the BrightBodyList[] of immobile bright bodies generated by a mobility filter
+     * @param timestamp the timestamp in the data to output the data
+     */
+    public static void printSimpleDetectionStatsTimestamped(BrightBodyList[] mobile_bodies, BrightBodyList[] immobile_bodies, int timestamp) {
+        System.out.println("In frame " + timestamp);
+        int mob_count = mobile_bodies[timestamp].size();
+        int imob_count = immobile_bodies[timestamp].size();
+        int total_count = mob_count + imob_count;
+        System.out.println("Total: " + total_count);
+        System.out.println("Immobile: " + imob_count);
+        System.out.println("Mobile: " + mob_count);
+        System.out.println("Mobile Rate: " + mob_count / (float) total_count);
+        System.out.print("Mean Mobile Area: ");
+        float mobile_area_sum = 0.0f;
+        for(BrightBody b : mobile_bodies[timestamp]) {
+            mobile_area_sum += b.area;
+        }
+        System.out.print(mobile_area_sum / mob_count);
+
+
+        System.out.print("\nMean Mobile Size: ");
+        float mobile_size_sum = 0.0f;
+        for(BrightBody b : mobile_bodies[timestamp]) {
+            mobile_size_sum += b.body.length;
+        }
+        System.out.println(mobile_size_sum / mob_count);
     }
 }
