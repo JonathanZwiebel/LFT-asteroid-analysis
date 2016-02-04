@@ -1,12 +1,10 @@
-package preprocessingtests;
+package preprocessing;
 
 import org.junit.Test;
 
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 import org.junit.Assert;
-import preprocessing.K2Preprocessor;
-import preprocessing.Preprocessor;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +13,7 @@ import java.io.IOException;
 /**
  * @author Jonathan Zwiebel
  * @version 1/29/16
+ *
  * Experimental Unit tests to cover the K2Preprocessor
  */
 public class TestK2Preprocessor {
@@ -46,5 +45,10 @@ public class TestK2Preprocessor {
     public void testArrayReadNotNull() throws FitsException, IOException {
         Preprocessor test_preprocessor = new K2Preprocessor(new Fits(new File("data\\905.fits")));
         Assert.assertNotNull("K2Preprocessor read returned null", test_preprocessor.read());
+    }
+
+    @Test
+    public void testDataReadCorrectly() {
+        Assert.fail("not yet implemented");
     }
 }

@@ -1,5 +1,6 @@
 package mains;
 
+import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import filtering.MobilityFilter;
 import filtering.ReferenceMobilityFilter;
@@ -72,9 +73,27 @@ public class Run {
 
             int arg4 = Integer.parseInt(args[4]);
             System.out.println("In frame " + args[4]);
-            System.out.println("Immobile: " + immobile_bodies[arg4].size());
-            System.out.println("Mobile: " + mobile_bodies[arg4].size());
-            System.out.println(immobile_bodies.length);
+            int mob_count = mobile_bodies[arg4].size();
+            int imob_count = immobile_bodies[arg4].size();
+            int total_count = mob_count + imob_count;
+            System.out.println("Total: " + total_count);
+            System.out.println("Immobile: " + imob_count);
+            System.out.println("Mobile: " + mob_count);
+            System.out.println("Mobile Rate: " + mob_count / (float) total_count);
+            System.out.print("Mean Mobile Area: ");
+            float mobile_area_sum = 0.0f;
+            for(BrightBody b : mobile_bodies[arg4]) {
+                mobile_area_sum += b.area;
+            }
+            System.out.print(mobile_area_sum / mob_count);
+
+
+            System.out.print("\nMean Mobile Size: ");
+            float mobile_size_sum = 0.0f;
+            for(BrightBody b : mobile_bodies[arg4]) {
+                mobile_size_sum += b.body.length;
+            }
+            System.out.println(mobile_size_sum / mob_count);
         }
         catch(Exception e ) {
             e.printStackTrace();
