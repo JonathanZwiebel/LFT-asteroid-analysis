@@ -14,7 +14,8 @@ public class BinaryLocator extends Locator {
     //Todo: Add more and include blurs
     public enum ThresholdType {
         GIVEN,
-        MEAN
+        MEAN,
+        MEAN_SHIFTED
     }
 
     /**
@@ -28,18 +29,7 @@ public class BinaryLocator extends Locator {
         super(data);
 
         threshold_type_ = threshold_type;
-        if(threshold_type_ == ThresholdType.GIVEN) {
-            args_ = args;
-        }
-    }
-
-    /**
-     * Constructs a BinaryLocator object with no additionally argument
-     * @param data data extracted from the preprocessor
-     * @param threshold_type data extracted from the preprocessor
-     */
-    public BinaryLocator(float[][][] data, ThresholdType threshold_type) {
-        this(data, threshold_type, -1.0f);
+        args_ = args;
     }
 
     /**
@@ -59,6 +49,9 @@ public class BinaryLocator extends Locator {
                 break;
             case MEAN:
                 threshold_ = CubeStats.mean(data_);
+                break;
+            case MEAN_SHIFTED:
+                threshold_ = CubeStats.mean(data_) + args_[0];
                 break;
             default:
                 System.out.println("Error: Unrecognized threshold type");

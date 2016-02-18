@@ -1,6 +1,5 @@
 package mains;
 
-import analysis.SimpleWriter;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import filtering.MobilityFilter;
@@ -34,10 +33,11 @@ public class Run {
     public static void main(String[] args) {
         String data_location = args[0];
         float detection_threshold = Float.parseFloat(args[1]);
-        float similarity_threshold = Float.parseFloat(args[2]);
-        float reference_frame_detection_threshold = Float.parseFloat(args[3]);
-        int timestamp = Integer.parseInt(args[4]);
-        String mask_location = args[5];
+        float mean_shifted_detection_threshold_shift = Float.parseFloat(args[2]);
+        float similarity_threshold = Float.parseFloat(args[3]);
+        float reference_frame_detection_threshold = Float.parseFloat(args[4]);
+        int timestamp = Integer.parseInt(args[5]);
+        String mask_location = args[6];
 
         long start_time = System.currentTimeMillis();
 
@@ -51,6 +51,10 @@ public class Run {
                 System.out.println("Locating with mean threshold");
                 locator = new BinaryLocator(data, ThresholdType.MEAN);
             }
+            else if(detection_threshold == -2) {
+                System.out.println("Locating with mean threshold and shift of " + mean_shifted_detection_threshold_shift);
+                locator =  new BinaryLocator(data, ThresholdType.MEAN_SHIFTED, mean_shifted_detection_threshold_shift);
+          }
             else {
                 System.out.println("Locating with given threshold: " + detection_threshold);
                 locator = new BinaryLocator(data, ThresholdType.GIVEN, detection_threshold);
