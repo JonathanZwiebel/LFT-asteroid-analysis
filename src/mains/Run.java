@@ -28,57 +28,83 @@ public class Run {
     /**
      * Main method to be run for program execution
      * @param args Location, Initial locating threshold, Similarity threshold, Reference locating threshold, Timestamp
-     * TODO: Make mean passable by more than just -1
      */
     public static void main(String[] args) {
-        String data_location = args[0];
-        float detection_threshold = Float.parseFloat(args[1]);
-        float mean_shifted_detection_threshold_shift = Float.parseFloat(args[2]);
-        float similarity_threshold = Float.parseFloat(args[3]);
-        float reference_frame_detection_threshold = Float.parseFloat(args[4]);
-        int timestamp = Integer.parseInt(args[5]);
-        String mask_location = args[6];
+        // Start data parsing
+        int argumentReadLoc = 0;
+
+        String data_location = args[argumentReadLoc];
+        argumentReadLoc++;
+
+        float[] detection_args = null;
+        ThresholdType detection_threshold_type = null;
+        String detection_threshold_type_string = args[argumentReadLoc];
+        argumentReadLoc++;
+        switch(detection_threshold_type_string) {
+            case "MEAN":
+                detection_threshold_type = ThresholdType.MEAN;
+                detection_args = new float[]{};
+                break;
+            case "GIVEN":
+                detection_threshold_type = ThresholdType.GIVEN;
+                detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                argumentReadLoc++;
+                break;
+            case "MEAN_SHIFTED":
+                detection_threshold_type = ThresholdType.MEAN_SHIFTED;
+                detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                argumentReadLoc++;
+                break;
+            default:
+                System.out.println("Illegal detection threshold type");
+                System.exit(1);
+        }
+
+        float similarity_threshold = Float.parseFloat(args[argumentReadLoc]);
+        argumentReadLoc++;
+
+        float[] reference_frame_detection_args = null;
+        ReferenceBodyDetectionMethod reference_frame_detection_threshold_type = null;
+        String reference_frame_detection_threshold_type_string = args[argumentReadLoc];
+        argumentReadLoc++;
+        switch(reference_frame_detection_threshold_type_string) {
+            case "MEAN":
+                reference_frame_detection_threshold_type = ReferenceBodyDetectionMethod.MEAN;
+                reference_frame_detection_args = new float[]{};
+                break;
+            case "GIVEN":
+                reference_frame_detection_threshold_type = ReferenceBodyDetectionMethod.ABSOLUTE;
+                reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                argumentReadLoc++;
+                break;
+            default:
+                System.out.println("Illegal reference frame detection method");
+                break;
+        }
+
+        int timestamp = Integer.parseInt(args[argumentReadLoc]);
+        // End data parsing
+
 
         long start_time = System.currentTimeMillis();
-
         try {
             System.out.println("Preprocessing");
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(data_location)));
             float[][][] data = preprocessor.read();
 
-            Locator locator;
-            if(detection_threshold == -1) {
-                System.out.println("Locating with mean threshold");
-                locator = new BinaryLocator(data, ThresholdType.MEAN);
-            }
-            else if(detection_threshold == -2) {
-                System.out.println("Locating with mean threshold and shift of " + mean_shifted_detection_threshold_shift);
-                locator =  new BinaryLocator(data, ThresholdType.MEAN_SHIFTED, mean_shifted_detection_threshold_shift);
-          }
-            else {
-                System.out.println("Locating with given threshold: " + detection_threshold);
-                locator = new BinaryLocator(data, ThresholdType.GIVEN, detection_threshold);
-            }
+            System.out.println("Locating");
+            Locator locator = new BinaryLocator(data, detection_threshold_type, detection_args);
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
 
-
-            MobilityFilter filter;
-            if(reference_frame_detection_threshold == -1) {
-                System.out.println("Filtering with similarity threshold of " + similarity_threshold + " and mean threshold reference image");
-                filter = new ReferenceMobilityFilter(bodies, data, similarity_threshold, ReferenceBodyDetectionMethod.MEAN);
-            }
-            else {
-                System.out.println("Filtering with similarity threshold of " + similarity_threshold + " and given threshold reference image: " + reference_frame_detection_threshold);
-                filter = new ReferenceMobilityFilter(bodies, data, similarity_threshold, ReferenceBodyDetectionMethod.ABSOLUTE, reference_frame_detection_threshold);
-            }
+            System.out.println("Filtering");
+            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, similarity_threshold, reference_frame_detection_threshold_type, reference_frame_detection_args);
             BrightBodyList[][] filtered_bodies = filter.filter();
             BrightBodyList[] immobile_bodies = filtered_bodies[MobilityFilter.IMMOBILE_INDEX];
             BrightBodyList[] mobile_bodies = filtered_bodies[MobilityFilter.MOBILE_INDEX];
 
             printSimpleDetectionStatsTimestamped(mobile_bodies, immobile_bodies, timestamp);
             printSimpleDetectionDataTimestamped(mobile_bodies, immobile_bodies, timestamp);
-            writeBinaryImageMask(mask_location + detection_threshold + ".fits", data[timestamp], detection_threshold);
         }
         catch(Exception e ) {
             e.printStackTrace();
