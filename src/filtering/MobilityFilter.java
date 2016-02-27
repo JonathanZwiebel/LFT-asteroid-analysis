@@ -3,15 +3,16 @@ package filtering;
 import brightbodies.BrightBodyList;
 
 /**
- * This class represents the third macro step and splits up the bright bodies into mobile bright bodies and
- * immobile bright bodies
+ * This class represents the third macro step and splits up the bright bodies into immobile bright bodies, mobile
+ * bright bodies, and noise
  *
  * @author Jonathan Zwiebel
  * @version January 6th, 2016
  */
 public abstract class MobilityFilter {
-    public static final int IMMOBILE_INDEX = 0;
-    public static final int MOBILE_INDEX = 1;
+    public static final int IBB_INDEX = 0;
+    public static final int MBB_INDEX = 1;
+    public static final int NOISE_INDEX = 2;
 
     protected BrightBodyList[] bright_body_lists_;
 

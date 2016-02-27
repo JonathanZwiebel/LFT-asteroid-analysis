@@ -23,7 +23,9 @@ public class ReferenceMobilityFilter extends MobilityFilter {
     // TODO[Major] Make this not a special enum but instead an enum from the standard locator set
     public enum ReferenceBodyDetectionMethod {
         ABSOLUTE,
-        MEAN
+        MEAN,
+        MEAN_SHIFTED,
+        MEAN_SCALED
     }
 
 
@@ -53,13 +55,14 @@ public class ReferenceMobilityFilter extends MobilityFilter {
         float[][] reference_frame = generateReferenceFrame();
         BrightBodyList reference_bodies = generateReferenceFrameBodies(reference_frame);
 
-        BrightBodyList[][] filtered_bodies = new BrightBodyList[2][bright_body_lists_.length];
+        BrightBodyList[][] filtered_bodies = new BrightBodyList[3][bright_body_lists_.length];
         // TODO: Consider if this for loop is better replaced by a single method
         for(int index = 0; index < bright_body_lists_.length; index++) {
             BrightBodyList[] filtered_bodies_instance = mobilitySeparation(bright_body_lists_[index], reference_bodies, similarity_threshold_);
-            assert filtered_bodies_instance.length == 2;
-            filtered_bodies[IMMOBILE_INDEX][index] = filtered_bodies_instance[IMMOBILE_INDEX];
-            filtered_bodies[MOBILE_INDEX][index] = filtered_bodies_instance[MOBILE_INDEX]; // mobile
+            assert filtered_bodies_instance.length == 3;
+            filtered_bodies[IBB_INDEX][index] = filtered_bodies_instance[IBB_INDEX];
+            filtered_bodies[MBB_INDEX][index] = filtered_bodies_instance[MBB_INDEX];
+            filtered_bodies[NOISE_INDEX][index] = filtered_bodies_instance[NOISE_INDEX];
         }
 
         return filtered_bodies;
@@ -87,17 +90,24 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      */
     private BrightBodyList generateReferenceFrameBodies(float[][] reference_frame) {
         float[][][] reference_frame_cube = {reference_frame};
-        BinaryLocator reference_frame_locator;
+        BinaryLocator reference_frame_locator = null;
 
         switch(ref_gen_method_) {
             case ABSOLUTE:
-                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.GIVEN, args_[0]);
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.ABSOLUTE, args_[0]);
                 break;
             case MEAN:
                 reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN);
                 break;
+            case MEAN_SHIFTED:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN_SHIFTED, args_[0]);
+                break;
+            case MEAN_SCALED:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN_SCALED, args_[0]);
+                break;
             default:
-                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN);
+                System.err.println("Illegal reference frame generation method");
+                System.exit(1);
         }
 
         reference_frame_locator.initialize();
@@ -118,9 +128,10 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      * Likely to be very memory intensive
      */
     private BrightBodyList[] mobilitySeparation(BrightBodyList input_bodies, BrightBodyList reference_bodies, float similarity_threshold_) {
-        BrightBodyList[] sorted_bodies = new BrightBodyList[2];
-        sorted_bodies[IMMOBILE_INDEX] = new BrightBodyList();
-        sorted_bodies[MOBILE_INDEX] = new BrightBodyList();
+        BrightBodyList[] sorted_bodies = new BrightBodyList[3];
+        sorted_bodies[IBB_INDEX] = new BrightBodyList();
+        sorted_bodies[MBB_INDEX] = new BrightBodyList();
+        sorted_bodies[NOISE_INDEX] = new BrightBodyList();
 
         // TODO: Check that input_bodies are actually sorted
         reference_bodies.sortByArea();
@@ -128,26 +139,23 @@ public class ReferenceMobilityFilter extends MobilityFilter {
 
         for(BrightBody body : input_bodies) {
             boolean matched = false;
-            //System.out.println("Running mobility test on bright body of area " + body.area);
             for(int ref_index = 0; ref_index < reference_bodies.size(); ref_index++) {
                 if(reference_bodies_used[ref_index]) {
                     continue;
                 }
                 float overlap = overlap(body, reference_bodies.get(ref_index));
                 float percent_overlap = overlap / body.area;
-                //System.out.println("Overlap with reference " + ref_index + ": " + overlap + " | " + percent_overlap + " percent");
                 if(percent_overlap > similarity_threshold_) {
-                    //System.out.println("Pass!");
                     reference_bodies_used[ref_index] = true;
                     matched = true;
                     break;
                 }
             }
             if(matched) {
-                sorted_bodies[IMMOBILE_INDEX].add(body);
+                sorted_bodies[IBB_INDEX].add(body);
             }
             else {
-                sorted_bodies[MOBILE_INDEX].add(body);
+                sorted_bodies[MBB_INDEX].add(body);
             }
         }
         return sorted_bodies;
