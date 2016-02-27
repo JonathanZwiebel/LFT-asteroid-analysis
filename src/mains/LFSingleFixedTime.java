@@ -4,21 +4,20 @@ import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import filter.MobilityFilter;
 import filter.ReferenceMobilityFilter;
-import helper.FitsHelper;
 import locate.BinaryLocator;
 import locate.BinaryLocator.ThresholdType;
 import locate.Locator;
-import mask.BinaryImageMask;
 import nom.tam.fits.Fits;
-import nom.tam.fits.FitsException;
 import preprocess.K2Preprocessor;
 import preprocess.Preprocessor;
 import filter.ReferenceMobilityFilter.ReferenceBodyDetectionMethod;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
+ * A top-level runnable type that will run locate-track given type and parameters on a single file and output
+ * information about the distribution and placement of BBs into the the three categories.
+ *
  * @author Jonathan Zwiebel
  * @version February 26th, 2016
  *
@@ -57,6 +56,11 @@ class LFSingleFixedTime {
                 detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
+            case "MEAN_SCALED":
+                detection_threshold_type = ThresholdType.MEAN_SCALED;
+                detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                argumentReadLoc++;
+                break;
             default:
                 System.out.println("Illegal detection threshold type");
                 System.exit(1);
@@ -79,9 +83,19 @@ class LFSingleFixedTime {
                 reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
+            case "MEAN_SHIFTED":
+                reference_frame_detection_threshold_type = ReferenceBodyDetectionMethod.MEAN_SHIFTED;
+                reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                argumentReadLoc++;
+                break;
+            case "MEAN_SCALED":
+                reference_frame_detection_threshold_type = ReferenceBodyDetectionMethod.MEAN_SCALED;
+                reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                argumentReadLoc++;
+                break;
             default:
                 System.out.println("Illegal reference frame detection method");
-                break;
+                System.exit(1);
         }
 
         int timestamp = Integer.parseInt(args[argumentReadLoc]);
@@ -163,23 +177,5 @@ class LFSingleFixedTime {
         System.out.println("Immobile:\n" + immobile_bodies[timestamp]);
         System.out.println("Noise: " + noise_bodies[timestamp]);
         System.out.println();
-    }
-
-
-    /**
-     * Writes a quickly generated BinaryImageMask to a fits file to make analysis of detected patterns easier
-     *
-     * @param location location in the filepath to write to
-     * @param data floating point astro-data
-     * @param threshold threshold for the BinaryImageMask
-     * @throws FitsException
-     * @throws IOException
-     *
-     * TODO[Minor]: Make this work with mean
-     */
-    public static void writeBinaryImageMask(String location, float[][] data, float threshold) throws FitsException, IOException {
-        BinaryImageMask mask_generator = new BinaryImageMask(data);
-        boolean[][] mask = mask_generator.mask(threshold);
-        FitsHelper.write2DImage(mask, location);
     }
 }
