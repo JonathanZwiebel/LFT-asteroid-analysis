@@ -1,7 +1,7 @@
 package mains;
 
 /**
- * Help dialog
+ * A top level runnable type for a help dialog about the LocateFilterTrack program
  *
  * @author Jonathan Zwiebel
  * @version February 26 2016

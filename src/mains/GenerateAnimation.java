@@ -5,7 +5,12 @@ import nom.tam.fits.Fits;
 import analysis.SimpleWriter;
 
 /**
- * This class will generate an animation with a given column and data set
+ * A top level runnable type that will create an animation from a FITS file for human viewing
+ *
+ * @author Jonathan Zwiebel
+ * @version February 26 2016
+ *
+ * TODO: Add functionality for files in non-kepler format
  */
 class GenerateAnimation {
     public static void run(String[] args) {
