@@ -96,6 +96,7 @@ public class Run {
             Locator locator = new BinaryLocator(data, detection_threshold_type, detection_args);
             locator.initialize();
             BrightBodyList[] bodies = locator.locate();
+            writeBinaryImageMask("data/mask/905-timestamp" + timestamp + "bin-" + (int) detection_args[0] + ".fits", data[timestamp], detection_args[0]);
 
             System.out.println("Filtering");
             MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, similarity_threshold, reference_frame_detection_threshold_type, reference_frame_detection_args);
