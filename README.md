@@ -1,4 +1,4 @@
-# LFT-asteroid-detection
+# LFT-asteroid-analysis
 
 Author: Jonathan Zwiebel
 
