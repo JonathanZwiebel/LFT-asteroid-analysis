@@ -1,4 +1,4 @@
-package locating;
+package locate;
 
 import analysis.CubeStats;
 

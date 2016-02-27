@@ -1,10 +1,10 @@
-package filtering;
+package filter;
 
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
 import helper.DataMathematicsHelper;
-import locating.BinaryLocator;
+import locate.BinaryLocator;
 
 /**
  * @author Jonathan Zwiebel

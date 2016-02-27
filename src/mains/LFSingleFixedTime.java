@@ -2,18 +2,18 @@ package mains;
 
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
-import filtering.MobilityFilter;
-import filtering.ReferenceMobilityFilter;
+import filter.MobilityFilter;
+import filter.ReferenceMobilityFilter;
 import helper.FitsHelper;
-import locating.BinaryLocator;
-import locating.Locator;
+import locate.BinaryLocator;
+import locate.BinaryLocator.ThresholdType;
+import locate.Locator;
 import mask.BinaryImageMask;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
-import preprocessing.K2Preprocessor;
-import preprocessing.Preprocessor;
-import locating.BinaryLocator.ThresholdType;
-import filtering.ReferenceMobilityFilter.ReferenceBodyDetectionMethod;
+import preprocess.K2Preprocessor;
+import preprocess.Preprocessor;
+import filter.ReferenceMobilityFilter.ReferenceBodyDetectionMethod;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,14 +24,16 @@ import java.io.IOException;
  *
  * TODO: Consider the data output in a fifth macro step
  */
-class Run {
+class LFSingleFixedTime {
     /**
      * Main method to be run for program execution
      * @param args Location, Initial locating threshold, Similarity threshold, Reference locating threshold, Timestamp
      */
-    public static void main(String[] args) {
+    public static void run(String[] args) {
+        assert args[0] == "LF_SINGLE_FIXED_TIME";
+
         // Start data parsing
-        int argumentReadLoc = 0;
+        int argumentReadLoc = 1;
 
         String data_location = args[argumentReadLoc];
         argumentReadLoc++;

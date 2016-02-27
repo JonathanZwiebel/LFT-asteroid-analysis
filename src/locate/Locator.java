@@ -1,4 +1,4 @@
-package locating;
+package locate;
 
 import brightbodies.BrightBodyList;
 
