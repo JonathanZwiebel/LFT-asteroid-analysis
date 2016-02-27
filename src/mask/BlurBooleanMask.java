@@ -11,7 +11,7 @@ public class BlurBooleanMask implements BooleanMask {
         NEGATIVE
     }
 
-    private boolean[][] data_;
+    private final boolean[][] data_;
 
     public BlurBooleanMask(boolean[][] data) {
         data_ = data;
@@ -65,9 +65,6 @@ public class BlurBooleanMask implements BooleanMask {
     }
 
     private static boolean isPointValid(int x, int y, int length, int width) {
-        if(x < 0 ||  length <= x) {
-            return false;
-        }
-        return !(y < 0 || width <= y);
+        return !(x < 0 || length <= x) && !(y < 0 || width <= y);
     }
 }

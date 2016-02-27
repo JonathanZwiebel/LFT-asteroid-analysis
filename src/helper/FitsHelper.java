@@ -132,7 +132,7 @@ public class FitsHelper {
      */
 	public static float[][][] extractFilteredColumn(Fits fits, String column_name) throws FitsException, IOException{
 		TableHDU<?> table = (TableHDU<?>) fits.getHDU(1);
-		ArrayList<Boolean> valid_indices = new ArrayList();
+		ArrayList<Boolean> valid_indices = new ArrayList<>();
 		int valid_index_count = K2ValidificationHelper.validify(fits, valid_indices);
 
 		float[][][] unfiltered_column = (float[][][]) table.getColumn(column_name);

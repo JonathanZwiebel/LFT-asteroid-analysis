@@ -8,8 +8,8 @@ import analysis.CubeStats;
  */
 public class BinaryLocator extends Locator {
     public float threshold_;
-    private ThresholdType threshold_type_;
-    private float[] args_;
+    private final ThresholdType threshold_type_;
+    private final float[] args_;
 
     //Todo: Add more and include blurs
     public enum ThresholdType {

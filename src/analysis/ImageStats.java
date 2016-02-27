@@ -7,59 +7,26 @@ import java.util.Collections;
  * This class finds various statistics of an image by treating each pixel value as a homogenous data point
  * TODO: Safely remove this class or make it non-instantiatable
  */
-public class ImageStats {
-    /**
-     * The image that this class performs statistics on
-     */
-    float[][] image;
+class ImageStats {
 
     /**
      * An ArrayList of the data in the iamge
      */
-    ArrayList<Float> data_list;
+    private ArrayList<Float> data_list;
 
     /**
      * The mean of the data
      */
-    public float mean;
-
-    /**
-     * The standard deviation of the data
-     */
-    public float std_dev;
-
-    /**
-     * The minimum value of the data
-     */
-    public float min;
-
-    /**
-     * The first quartile of the data
-     */
-    public float q1;
-
-    /**
-     * The median of the data
-     */
-    public float med;
-
-    /**
-     * The third quartile of the data
-     */
-    public float q3;
-
-    /**
-     * The maximum value of the data
-     */
-    public float max;
+    private float mean;
 
     /**
      * Constructs an instance of ImageStats with a given image
      * @param image the input image
      */
     public ImageStats(float[][] image) {
-        this.image = image;
-        ArrayList<Float> data_list = new ArrayList();
+        /*
+      The image that this class performs statistics on
+     */
         for(float[] arrayf : image) {
             for(float f : arrayf) {
                 data_list.add(f);
@@ -94,11 +61,26 @@ public class ImageStats {
      */
     private void findQuartiles() {
         int size = data_list.size();
-        min = data_list.get(0);
-        q1 = data_list.get(size / 4);
-        med = data_list.get(size / 2);
-        q3 = data_list.get(size * 3 / 4);
-        max = data_list.get(size - 1);
+        /*
+      The minimum value of the data
+     */
+        float min = data_list.get(0);
+        /*
+      The first quartile of the data
+     */
+        float q1 = data_list.get(size / 4);
+        /*
+      The median of the data
+     */
+        float med = data_list.get(size / 2);
+        /*
+      The third quartile of the data
+     */
+        float q3 = data_list.get(size * 3 / 4);
+        /*
+      The maximum value of the data
+     */
+        float max = data_list.get(size - 1);
     }
 
     /**
@@ -111,7 +93,10 @@ public class ImageStats {
             std_dev_squared += Math.pow(f - mean, 2);
         }
         std_dev_squared /= data_list.size();
-        std_dev = (float) Math.sqrt(std_dev_squared);
+        /*
+      The standard deviation of the data
+     */
+        float std_dev = (float) Math.sqrt(std_dev_squared);
     }
 
     /**
@@ -121,7 +106,7 @@ public class ImageStats {
      * @return the mean value
      */
     public static float mean(float[][] image) {
-        ArrayList<Float> data_list = new ArrayList();
+        ArrayList<Float> data_list = new ArrayList<>();
         for(float[] arrayf : image) {
             for(float f : arrayf) {
                 data_list.add(f);

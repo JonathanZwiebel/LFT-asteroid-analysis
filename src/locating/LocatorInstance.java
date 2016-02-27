@@ -7,13 +7,13 @@ import brightbodies.BrightBodyList;
  * @version November 30th, 2015
  */
 public abstract class LocatorInstance {
-    float[][] data_;
+    final float[][] data_;
 
     /**
      * Constructs a LocatorInstance given an image array from the data cube, to be called by a Locator object
      * @param data one index of a data cube
      */
-    public LocatorInstance (float[][] data) {
+    LocatorInstance(float[][] data) {
         data_ = data.clone();
     }
 

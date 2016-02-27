@@ -15,10 +15,10 @@ import locating.BinaryLocator;
  * through area overlap
  */
 public class ReferenceMobilityFilter extends MobilityFilter {
-    private float[][][] processed_data_;
-    private float similarity_threshold_; // the percent similarity that two bright bodies must share to be considered the same
-    private ReferenceBodyDetectionMethod ref_gen_method_;
-    private float[] args_;
+    private final float[][][] processed_data_;
+    private final float similarity_threshold_; // the percent similarity that two bright bodies must share to be considered the same
+    private final ReferenceBodyDetectionMethod ref_gen_method_;
+    private final float[] args_;
 
     // TODO[Major] Make this not a special enum but instead an enum from the standard locator set
     public enum ReferenceBodyDetectionMethod {

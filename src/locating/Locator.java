@@ -11,14 +11,14 @@ import brightbodies.BrightBodyList;
  * TODO: Include logging functionality
  */
 public abstract class Locator {
-    protected float[][][] data_;
-    protected LocatorInstance[] instances_;
+    final float[][][] data_;
+    LocatorInstance[] instances_;
 
     /**
      * Constructs a Locator object given a cleaned data cube from a preprocessor
      * @param data floating point data cube from a preprocessor
      */
-    public Locator(float[][][] data) {
+    Locator(float[][][] data) {
         data_ = data;
     }
 

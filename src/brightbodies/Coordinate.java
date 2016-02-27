@@ -6,7 +6,8 @@ import java.io.Serializable;
  * Serializable coordinate position
  */
 public class Coordinate implements Serializable{
-    public float x, y;
+    public final float x;
+    public final float y;
 
     /**
      * Constructs a coordinate position

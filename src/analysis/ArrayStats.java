@@ -8,32 +8,33 @@ import java.util.Arrays;
  * TODO: Add more one variable stats
  */
 public class ArrayStats {
-    public float[] array, sorted_array;
-    public int n;
-    public float min, q1, med, q3, max, iqr, range;
-    public float fd_width;
-    public int fd_col_count;
+    private final float[] sorted_array;
+    private final int n;
+    private float min;
+    private float q1;
+    private float q3;
+    private float max;
+    private float med;
 
     /**
      * Constructs an ArrayStats object to track an array
      * @param array the array to track
      */
     public ArrayStats(float[] array) {
-        this.array = array;
         sorted_array = array.clone();
         Arrays.sort(sorted_array);
         n = array.length;
         computeQuartiles();
-        iqr = q3 - q1;
-        range = max - min;
-        fd_width = 2 * iqr * (float) Math.pow(n, -(float) 1 / 3);
-        fd_col_count  = (int) (range / fd_width) + 1;
+        float iqr = q3 - q1;
+        float range = max - min;
+        float fd_width = 2 * iqr * (float) Math.pow(n, -(float) 1 / 3);
+        int fd_col_count = (int) (range / fd_width) + 1;
     }
 
     /**
      * Computes min, q1, med, q3, and max
      */
-    public void computeQuartiles() {
+    private void computeQuartiles() {
         min = sorted_array[0];
         max = sorted_array[n - 1];
 

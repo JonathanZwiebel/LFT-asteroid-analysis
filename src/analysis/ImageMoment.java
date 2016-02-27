@@ -4,7 +4,7 @@ package analysis;
  * Calculates the moment of a grayscale image passed as a floating point array
  *
  */
-public class ImageMoment {
+class ImageMoment {
 
     /**
      * Find the moment of the image with x degree of i and y degree of j

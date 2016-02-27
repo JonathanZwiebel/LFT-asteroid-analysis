@@ -6,7 +6,8 @@ import java.io.Serializable;
  * A cartesian coordinate point
  */
 public class CartesianPoint implements Serializable {
-    public int x, y;
+    public final int x;
+    public final int y;
 
     /**
      * Constructs a CartesianPoint

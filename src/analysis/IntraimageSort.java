@@ -9,8 +9,8 @@ import java.util.TreeMap;
  * Has a static method to through an image and return a CartesianPoint array of the coordinates brightness
  * TODO: Safely remove this
  */
-public class IntraimageSort {
-    public static final float SHIFT_VALUE  = 0.0001f;
+class IntraimageSort {
+    private static final float SHIFT_VALUE  = 0.0001f;
 
     /**
      * Returns the sorted array of PixelPoints by their value in the image
@@ -24,7 +24,7 @@ public class IntraimageSort {
                 addToHashMap(hashmap, image[i][j], new CartesianPoint(i, j));
             }
         }
-        TreeMap treemap = new TreeMap(hashmap);
+        TreeMap treemap = new TreeMap<>(hashmap);
         CartesianPoint[] sortedPixelPoints = new CartesianPoint[image.length * image[0].length];
         for(int i = 0; i < sortedPixelPoints.length; i++) {
             sortedPixelPoints[i] = (CartesianPoint) treemap.pollLastEntry().getValue();
@@ -42,6 +42,7 @@ public class IntraimageSort {
         while(hashmap.containsKey(value)){
             value += SHIFT_VALUE;
         }
+        //noinspection unchecked
         hashmap.put(value, point);
     }
 }

@@ -35,14 +35,15 @@ public class BinaryLocatorInstance extends LocatorInstance {
         int[][] blob_labels = extractBlobLabels(masked);
         int blob_count = getMaxValue(blob_labels);
 
-        ArrayList<CartesianPoint>[] bright_bodies = new ArrayList[blob_count];
+        ArrayList[] bright_bodies = new ArrayList[blob_count];
         for(int i = 0; i < bright_bodies.length; i++) {
-            bright_bodies[i] = new ArrayList<>();
+            bright_bodies[i] = new ArrayList<CartesianPoint>();
         }
         for(int i = 0; i < data_.length; i++) {
             for(int j = 0; j < data_[0].length; j++) {
                 if(blob_labels[i][j] != -1) {
                     // TODO: Fix bug where the position is being echoed
+                    //noinspection unchecked
                     bright_bodies[blob_labels[i][j] - 1].add(new CartesianPoint(j, blob_labels.length - 1 - i));
                 }
             }

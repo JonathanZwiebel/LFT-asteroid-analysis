@@ -14,13 +14,13 @@ public abstract class MobilityFilter {
     public static final int MBB_INDEX = 1;
     public static final int NOISE_INDEX = 2;
 
-    protected BrightBodyList[] bright_body_lists_;
+    final BrightBodyList[] bright_body_lists_;
 
     /**
      * Constructs a MobilityFilter object that will mask the immobile and mobile bright bodies
      * @param bright_body_lists bright body list extracted from locator
      */
-    public MobilityFilter(BrightBodyList[] bright_body_lists) {
+    MobilityFilter(BrightBodyList[] bright_body_lists) {
         bright_body_lists_ = bright_body_lists;
     }
 

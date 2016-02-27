@@ -1,6 +1,5 @@
 package brightbodies;
 
-
 import java.io.Serializable;
 
 import static analysis.BrightBodyMoment.centroid;
@@ -11,10 +10,10 @@ import static analysis.BrightBodyMoment.area;
  * by area and serializable.
  */
 public class BrightBody implements Comparable<BrightBody>, Serializable{
-    public Coordinate centroid;
-    public float area;
-    public CartesianPoint[] body;
-    public float[][] source;
+    private final Coordinate centroid;
+    public final float area;
+    public final CartesianPoint[] body;
+    public final float[][] source;
 
     /**
      * Constructs a bright body given the source image and coordinates
@@ -41,8 +40,7 @@ public class BrightBody implements Comparable<BrightBody>, Serializable{
         }
         return false;
     }
-
-    public int compareTo(BrightBody b) {
+    public int compareTo(@SuppressWarnings("NullableProblems") BrightBody b) {
         return (int) (this.area - b.area);
     }
 
