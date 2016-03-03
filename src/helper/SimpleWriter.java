@@ -1,6 +1,5 @@
 package helper;
 
-import helper.FitsHelper;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 

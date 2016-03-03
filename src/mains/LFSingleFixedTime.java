@@ -3,14 +3,14 @@ package mains;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import filter.MobilityFilter;
+import filter.ReferenceFrameGenerationMethod;
 import filter.ReferenceMobilityFilter;
 import locate.BinaryLocator;
-import locate.BinaryLocator.ThresholdType;
+import locate.BinaryLocatorThresholdType;
 import locate.Locator;
 import nom.tam.fits.Fits;
 import preprocess.K2Preprocessor;
 import preprocess.Preprocessor;
-import filter.ReferenceMobilityFilter.ReferenceBodyDetectionMethod;
 
 import java.io.File;
 
@@ -29,7 +29,7 @@ public final class LFSingleFixedTime {
      * @param args Location, Initial locating threshold, Similarity threshold, Reference locating threshold, Timestamp
      */
     public static void run(String[] args) {
-        assert args[0] == "LF_SINGLE_FIXED_TIME";
+        assert args[0].equals("LF_SINGLE_FIXED_TIME");
 
         // Start data parsing
         int argumentReadLoc = 1;
@@ -38,26 +38,26 @@ public final class LFSingleFixedTime {
         argumentReadLoc++;
 
         float[] detection_args = null;
-        ThresholdType detection_threshold_type = null;
+        BinaryLocatorThresholdType detection_threshold_type = null;
         String detection_threshold_type_string = args[argumentReadLoc];
         argumentReadLoc++;
         switch(detection_threshold_type_string) {
             case "MEAN":
-                detection_threshold_type = ThresholdType.MEAN;
+                detection_threshold_type = BinaryLocatorThresholdType.MEAN;
                 detection_args = new float[]{};
                 break;
             case "ABSOLUTE":
-                detection_threshold_type = ThresholdType.ABSOLUTE;
+                detection_threshold_type = BinaryLocatorThresholdType.ABSOLUTE;
                 detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
             case "MEAN_SHIFTED":
-                detection_threshold_type = ThresholdType.MEAN_SHIFTED;
+                detection_threshold_type = BinaryLocatorThresholdType.MEAN_SHIFTED;
                 detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
             case "MEAN_SCALED":
-                detection_threshold_type = ThresholdType.MEAN_SCALED;
+                detection_threshold_type = BinaryLocatorThresholdType.MEAN_SCALED;
                 detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
@@ -70,26 +70,26 @@ public final class LFSingleFixedTime {
         argumentReadLoc++;
 
         float[] reference_frame_detection_args = null;
-        ReferenceBodyDetectionMethod reference_frame_detection_threshold_type = null;
+        ReferenceFrameGenerationMethod reference_frame_detection_threshold_type = null;
         String reference_frame_detection_threshold_type_string = args[argumentReadLoc];
         argumentReadLoc++;
         switch(reference_frame_detection_threshold_type_string) {
-            case "MEAN":
-                reference_frame_detection_threshold_type = ReferenceBodyDetectionMethod.MEAN;
+            case "BINARY_LOCATOR_MEAN":
+                reference_frame_detection_threshold_type = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN;
                 reference_frame_detection_args = new float[]{};
                 break;
-            case "ABSOLUTE":
-                reference_frame_detection_threshold_type = ReferenceBodyDetectionMethod.ABSOLUTE;
+            case "BINARY_LOCATOR_ABSOLUTE":
+                reference_frame_detection_threshold_type = ReferenceFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE;
                 reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
-            case "MEAN_SHIFTED":
-                reference_frame_detection_threshold_type = ReferenceBodyDetectionMethod.MEAN_SHIFTED;
+            case "BINARY_LOCATOR_MEAN_SHIFTED":
+                reference_frame_detection_threshold_type = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED;
                 reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
-            case "MEAN_SCALED":
-                reference_frame_detection_threshold_type = ReferenceBodyDetectionMethod.MEAN_SCALED;
+            case "BINARY_LOCATOR_MEAN_SCALED":
+                reference_frame_detection_threshold_type = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED;
                 reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;

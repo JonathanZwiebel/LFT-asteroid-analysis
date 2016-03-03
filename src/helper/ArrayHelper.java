@@ -4,7 +4,6 @@ package helper;
  * Static methods to help with arrays
  */
 public final class ArrayHelper {
-
     /**
      * Converts a 2d int array to a 2d float array
      * @param image the int array

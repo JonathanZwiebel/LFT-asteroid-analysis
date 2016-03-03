@@ -8,16 +8,8 @@ import analysis.CubeStats;
  */
 public class BinaryLocator extends Locator {
     public float threshold_;
-    private final ThresholdType threshold_type_;
+    private final BinaryLocatorThresholdType threshold_type_;
     private final float[] args_;
-
-    //Todo: Add more and include blurs
-    public enum ThresholdType {
-        ABSOLUTE,
-        MEAN,
-        MEAN_SHIFTED,
-        MEAN_SCALED
-    }
 
     /**
      * Constructs a BinaryLocator object using floating point data extracted from a preprocessor
@@ -26,7 +18,7 @@ public class BinaryLocator extends Locator {
      * @param threshold_type how the binary filtering will be done
      * @param args argument that may be passed to threshold
      */
-    public BinaryLocator(float[][][] data, ThresholdType threshold_type, float ... args) {
+    public BinaryLocator(float[][][] data, BinaryLocatorThresholdType threshold_type, float ... args) {
         super(data);
 
         threshold_type_ = threshold_type;

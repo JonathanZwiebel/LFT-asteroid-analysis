@@ -5,6 +5,7 @@ import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
 import helper.DataMathematicsHelper;
 import locate.BinaryLocator;
+import locate.BinaryLocatorThresholdType;
 
 /**
  * @author Jonathan Zwiebel
@@ -17,17 +18,8 @@ import locate.BinaryLocator;
 public class ReferenceMobilityFilter extends MobilityFilter {
     private final float[][][] processed_data_;
     private final float similarity_threshold_; // the percent similarity that two bright bodies must share to be considered the same
-    private final ReferenceBodyDetectionMethod ref_gen_method_;
+    private final ReferenceFrameGenerationMethod ref_gen_method_;
     private final float[] args_;
-
-    // TODO[Major] Make this not a special enum but instead an enum from the standard locator set
-    public enum ReferenceBodyDetectionMethod {
-        ABSOLUTE,
-        MEAN,
-        MEAN_SHIFTED,
-        MEAN_SCALED
-    }
-
 
     /**
      * Constructs a ReferenceMobilityFilter object with the bright bodies from a locator and the data from a processor
@@ -37,7 +29,7 @@ public class ReferenceMobilityFilter extends MobilityFilter {
      * @param ref_gen_method how the reference frame will be generated
      * @param args varargs for reference generation method arguments
      */
-    public ReferenceMobilityFilter(BrightBodyList[] bright_body_lists, float[][][] processed_data, float similarity_threshold, ReferenceBodyDetectionMethod ref_gen_method, float... args) {
+    public ReferenceMobilityFilter(BrightBodyList[] bright_body_lists, float[][][] processed_data, float similarity_threshold, ReferenceFrameGenerationMethod ref_gen_method, float... args) {
         super(bright_body_lists);
         processed_data_ = processed_data;
         similarity_threshold_ = similarity_threshold;
@@ -93,17 +85,17 @@ public class ReferenceMobilityFilter extends MobilityFilter {
         BinaryLocator reference_frame_locator = null;
 
         switch(ref_gen_method_) {
-            case ABSOLUTE:
-                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.ABSOLUTE, args_[0]);
+            case BINARY_LOCATOR_ABSOLUTE:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocatorThresholdType.ABSOLUTE, args_[0]);
                 break;
-            case MEAN:
-                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN);
+            case BINARY_LOCATOR_MEAN:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocatorThresholdType.MEAN);
                 break;
-            case MEAN_SHIFTED:
-                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN_SHIFTED, args_[0]);
+            case BINARY_LOCATOR_MEAN_SHIFTED:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocatorThresholdType.MEAN_SHIFTED, args_[0]);
                 break;
-            case MEAN_SCALED:
-                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocator.ThresholdType.MEAN_SCALED, args_[0]);
+            case BINARY_LOCATOR_MEAN_SCALED:
+                reference_frame_locator = new BinaryLocator(reference_frame_cube, BinaryLocatorThresholdType.MEAN_SCALED, args_[0]);
                 break;
             default:
                 System.err.println("Illegal reference frame generation method");

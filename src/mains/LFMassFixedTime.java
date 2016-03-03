@@ -9,7 +9,7 @@ package mains;
  */
 public final class LFMassFixedTime {
     public static void run(String[] args) {
-        assert args[0] == "LF_MASS_FIXED_TIME";
+        assert args[0].equals("LF_MASS_FIXED_TIME");
 
 
     }

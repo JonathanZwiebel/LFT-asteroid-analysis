@@ -41,10 +41,10 @@ public class BrightBody implements Comparable<BrightBody>, Serializable{
         return false;
     }
     public int compareTo(@SuppressWarnings("NullableProblems") BrightBody b) {
-        return (int) (this.area - b.area);
+        return (int) (area - b.area);
     }
 
     public String toString() {
-        return("Size: " + body.length + " | Area: " + area + " | Centroid: " + "(" + centroid.x + " , " + centroid.y + ")");
+        return "Size: " + body.length + " | Area: " + area + " | Centroid: " + "(" + centroid.x + " , " + centroid.y + ")";
     }
 }

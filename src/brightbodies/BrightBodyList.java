@@ -7,7 +7,7 @@ import java.util.Collections;
 /**
  * A serializable and sortable ArrayList of bright bodies
  * */
-public class BrightBodyList extends ArrayList<BrightBody> implements Serializable {
+public class BrightBodyList extends ArrayList<BrightBody> {
 
     public String toString() {
         String ret = "";

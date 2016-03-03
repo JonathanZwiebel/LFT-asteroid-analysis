@@ -5,12 +5,6 @@ package mask;
  * TODO: Make non-static
  */
 public class BlurBooleanMask implements BooleanMask {
-    public enum BlurFilterType {
-        STANDARD,
-        POSITIVE,
-        NEGATIVE
-    }
-
     private final boolean[][] data_;
 
     public BlurBooleanMask(boolean[][] data) {
@@ -22,12 +16,12 @@ public class BlurBooleanMask implements BooleanMask {
         int filter_size = (int) args[0];
 
         // TODO: Fix this sketch by taking objects or strings
-        BlurFilterType filter_type;
+        BlurBooleanType filter_type;
         if((int) args[1] == 0) {
-            filter_type = BlurFilterType.STANDARD;
+            filter_type = BlurBooleanType.STANDARD;
         }
         else {
-            filter_type = BlurFilterType.POSITIVE;
+            filter_type = BlurBooleanType.POSITIVE;
         }
 
         for (int i = 0; i < data_[0].length; i++) {
@@ -61,7 +55,7 @@ public class BlurBooleanMask implements BooleanMask {
                 }
             }
         }
-        return ((2 * hits - 1) / points) > 0.5f;
+        return (2 * hits - 1) / points > 0.5f;
     }
 
     private static boolean isPointValid(int x, int y, int length, int width) {
