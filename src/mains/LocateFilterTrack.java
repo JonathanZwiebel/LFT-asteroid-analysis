@@ -34,14 +34,14 @@ public final class LocateFilterTrack {
             case "GENERATE_ANIMATION":
                 GenerateAnimation.run(args);
                 break;
-            case "LF_SINGLE_FIXED_TIME":
-                LFSingleFixedTime.run(args);
+            case "LF_BIN_REF_SINGLE_FIXED_TIME":
+                LFBinRefSingleFixedTime.run(args);
                 break;
-            case "LF_MASS_FIXED_TIME":
-                LFMassFixedTime.run(args);
+            case "LF_BIN_REF_MASS_FIXED_TIME":
+                LFBinRefMassFixedTime.run(args);
                 break;
             default:
-                System.err.println("Wrong run type");
+                System.err.println("Wrong run type: " + args[0]);
                 System.exit(1);
         }
     }

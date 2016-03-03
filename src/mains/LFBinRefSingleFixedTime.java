@@ -23,7 +23,7 @@ import java.io.File;
  *
  * TODO: Consider the data output in a fifth macro step
  */
-public final class LFSingleFixedTime {
+public final class LFBinRefSingleFixedTime {
     /**
      * Main method to be run for program execution
      * @param args Location, Initial locating threshold, Similarity threshold, Reference locating threshold, Timestamp
@@ -120,6 +120,7 @@ public final class LFSingleFixedTime {
             BrightBodyList[] mobile_bodies = filtered_bodies[MobilityFilter.MBB_INDEX];
             BrightBodyList[] noise_bodies = filtered_bodies[MobilityFilter.NOISE_INDEX];
 
+            // TODO: Consider if it is acceptable for the BinLoc to use an _args style while the RefMobFil has the args hard coded
             printSimpleDetectionStatsTimestamped(mobile_bodies, immobile_bodies, noise_bodies, timestamp);
             printSimpleDetectionDataTimestamped(mobile_bodies, immobile_bodies, noise_bodies, timestamp);
         }
