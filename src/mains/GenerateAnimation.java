@@ -2,7 +2,7 @@ package mains;
 
 import helper.FitsHelper;
 import nom.tam.fits.Fits;
-import analysis.SimpleWriter;
+import helper.SimpleWriter;
 
 /**
  * A top level runnable type that will create an animation from a FITS file for human viewing
@@ -12,7 +12,7 @@ import analysis.SimpleWriter;
  *
  * TODO: Add functionality for files in non-kepler format
  */
-class GenerateAnimation {
+public final class GenerateAnimation {
     public static void run(String[] args) {
         try {
             Fits f = FitsHelper.readFile(args[1]);

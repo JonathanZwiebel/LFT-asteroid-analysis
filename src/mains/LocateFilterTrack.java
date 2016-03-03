@@ -25,7 +25,7 @@ package mains;
  * @author by Jonathan Zwiebel
  * @version February 26 2016 - t0.1.0 Testing initial suite addition
  */
-public class LocateFilterTrack {
+public final class LocateFilterTrack {
     public static void main(String[] args) {
         switch(args[0]) {
             case "HELP":

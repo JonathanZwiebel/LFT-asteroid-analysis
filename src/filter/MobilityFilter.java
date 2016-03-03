@@ -20,7 +20,7 @@ public abstract class MobilityFilter {
      * Constructs a MobilityFilter object that will mask the immobile and mobile bright bodies
      * @param bright_body_lists bright body list extracted from locator
      */
-    MobilityFilter(BrightBodyList[] bright_body_lists) {
+    public MobilityFilter(BrightBodyList[] bright_body_lists) {
         bright_body_lists_ = bright_body_lists;
     }
 

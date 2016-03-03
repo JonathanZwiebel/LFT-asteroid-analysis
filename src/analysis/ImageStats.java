@@ -7,7 +7,7 @@ import java.util.Collections;
  * This class finds various statistics of an image by treating each pixel value as a homogenous data point
  * TODO: Safely remove this class or make it non-instantiatable
  */
-class ImageStats {
+public class ImageStats {
 
     /**
      * An ArrayList of the data in the iamge

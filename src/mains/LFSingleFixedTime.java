@@ -23,7 +23,7 @@ import java.io.File;
  *
  * TODO: Consider the data output in a fifth macro step
  */
-class LFSingleFixedTime {
+public final class LFSingleFixedTime {
     /**
      * Main method to be run for program execution
      * @param args Location, Initial locating threshold, Similarity threshold, Reference locating threshold, Timestamp

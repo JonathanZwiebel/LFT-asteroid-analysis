@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * A helper class meant for the K2 Data to determine if a time stamp has valid data
  */
-class K2ValidificationHelper {
+public final class K2ValidificationHelper {
     private static final String VALIDIFICATION_COL_NAME = "QUALITY";
     private static final int VALID_QUALITY_TOP_EDGE = 16384;
 

@@ -9,7 +9,7 @@ import nom.tam.util.*;
 /**
  * Static methods to help with Data extraction and insertion
  */
-public class FitsHelper {
+public final class FitsHelper {
 	/**
 	 * Reads a FITS file
 	 * @param filename the filename

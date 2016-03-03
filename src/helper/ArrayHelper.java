@@ -3,7 +3,7 @@ package helper;
 /**
  * Static methods to help with arrays
  */
-class ArrayHelper {
+public final class ArrayHelper {
 
     /**
      * Converts a 2d int array to a 2d float array

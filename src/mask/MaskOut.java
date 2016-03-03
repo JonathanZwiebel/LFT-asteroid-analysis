@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author Jonathan Zwiebel
  * @version February 26 2016
  */
-public class MaskOut {
+public final class MaskOut {
     /**
      * Writes a quickly generated BinaryImageMask to a fits file to make analysis of detected patterns easier
      *

@@ -6,6 +6,6 @@ package mask;
  *
  * TODO: Differentiate this from the image mask
  */
-interface BooleanMask {
+public interface BooleanMask {
     boolean[][] mask(float ... args);
 }

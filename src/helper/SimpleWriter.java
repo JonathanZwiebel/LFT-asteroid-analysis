@@ -1,4 +1,4 @@
-package analysis;
+package helper;
 
 import helper.FitsHelper;
 import nom.tam.fits.Fits;
@@ -11,7 +11,7 @@ import java.io.IOException;
  * that can be played in an animation
  * TODO[Major]: Make animation framework because K2 is used always in this case
  */
-public class SimpleWriter {
+public final class SimpleWriter {
     public static void write(Fits fits, String output_filename, String column_name) throws IOException, FitsException {
         float[][][] column = FitsHelper.extractFilteredColumn(fits, column_name);
         FitsHelper.writeDataCube(column, output_filename);

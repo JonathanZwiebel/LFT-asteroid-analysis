@@ -8,9 +8,7 @@ import brightbodies.Coordinate;
  * a given image.
  * TODO: Fix reversed y-axis bug
  */
-public class BrightBodyMoment {
-
-
+public final class BrightBodyMoment {
     /**
      * Calculates the moment of a subset of <code>CartesianPoint</code> within an image with degree i
      * for x and j for y

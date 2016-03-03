@@ -6,7 +6,7 @@ package mains;
  * @author Jonathan Zwiebel
  * @version February 26 2016
  */
-public class Help {
+public final class Help {
     public static void run(String[] args) {
         System.out.println();
         System.out.println("There is currently no help dialog.");

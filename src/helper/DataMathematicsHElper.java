@@ -3,7 +3,7 @@ package helper;
 /**
  * Static methods to help with image subtraction
  */
-public class DataMathematicsHelper {
+public final class DataMathematicsHelper {
 	/**
 	 * Subtracts two images from each other
 	 * @param top the top image

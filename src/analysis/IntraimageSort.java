@@ -9,7 +9,7 @@ import java.util.TreeMap;
  * Has a static method to through an image and return a CartesianPoint array of the coordinates brightness
  * TODO: Safely remove this
  */
-class IntraimageSort {
+public final class IntraimageSort {
     private static final float SHIFT_VALUE  = 0.0001f;
 
     /**
