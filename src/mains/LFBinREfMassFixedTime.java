@@ -1,7 +1,14 @@
 package mains;
 
 import filter.ReferenceFrameGenerationMethod;
+import locate.BinaryLocator;
 import locate.BinaryLocatorThresholdType;
+import locate.Locator;
+import nom.tam.fits.Fits;
+import preprocess.K2Preprocessor;
+import preprocess.Preprocessor;
+
+import java.io.File;
 
 /**
  * A top level runnable type that will perform locate-track within a range of parameters on a given file and output
@@ -151,5 +158,50 @@ public final class LFBinRefMassFixedTime {
 
         int timestamp = Integer.parseInt(args[current_arg]);
         current_arg++;
+
+        try {
+            Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(filename)));
+            float data[][][] = preprocessor.read();
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public final class BinaryLocatorSupplier {
+        private final BinaryLocatorMassType mass_type_;
+        private final float[] args_;
+        private final int count_;
+        private int supplied_ = 0;
+
+        public BinaryLocatorSupplier(BinaryLocatorMassType mass_type, float ... args) {
+            mass_type_ = mass_type;
+            args_ = args;
+            switch(mass_type) {
+                case SINGLE:
+                    count_= 1;
+                    break;
+                case GIVEN_RANGE:
+                    count_ = (int) ((args_[2] - args[1]) / args_[0]);
+                    break;
+                case MEAN_SCALED_RANGE:
+                case MEAN_SHIFTED_RANGE:
+                    count_ = (int) args_[2] + (int) args_[1] + 1; // TODO: Check for roundoff error
+                    break;
+                default:
+                    System.err.println("Illegal mass type given to supplier: " + mass_type_);
+                    System.exit(1);
+            }
+        }
+
+        public boolean empty() {
+            return supplied_ >= count_;
+        }
+
+        public Locator popLocator() {
+            // TODO[ACTIVE]: Supply locator
+            supplied_++;
+        }
     }
 }
