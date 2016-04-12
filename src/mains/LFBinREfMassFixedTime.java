@@ -1,6 +1,9 @@
 package mains;
 
+import brightbodies.BrightBodyList;
+import filter.MobilityFilter;
 import filter.ReferenceFrameGenerationMethod;
+import filter.ReferenceMobilityFilter;
 import locate.BinaryLocator;
 import locate.BinaryLocatorThresholdType;
 import locate.Locator;
@@ -162,14 +165,19 @@ public final class LFBinRefMassFixedTime {
         try {
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(filename)));
             float data[][][] = preprocessor.read();
-
+            BinaryLocatorSupplier loc_supplier = new BinaryLocatorSupplier(data, binaryLocatorMassType, binaryLocatorMassTypeArgs);
+            while(!loc_supplier.empty()) {
+                Locator locator = loc_supplier.popLocator();
+                locator.initialize();
+                BrightBodyList[] bodies = locator.locate();
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    public final class BinaryLocatorSupplier {
+    public static final class BinaryLocatorSupplier {
         private final BinaryLocatorMassType mass_type_;
         private final float[][][] data_;
         private final float[] mass_args_;
@@ -194,7 +202,7 @@ public final class LFBinRefMassFixedTime {
                     break;
                 default:
                     count_ = 0;
-                    System.err.println("Illegal mass type given to supplier: " + mass_type_);
+                    System.err.println("Illegal mass type given to binary locator supplier: " + mass_type_);
                     System.exit(1);
             }
         }
@@ -227,6 +235,71 @@ public final class LFBinRefMassFixedTime {
             }
             supplied_++;
             return locator;
+        }
+    }
+
+    public static final class ReferenceFrameFilterSupplier {
+        private final ReferenceFrameMassType mass_type_;
+        private final BrightBodyList[] bodies_;
+        private final float[][][] data_;
+        private final float similiarty_threshold_;
+        private final float[] mass_args_;
+        private final int count_;
+        private int supplied_;
+
+        public ReferenceFrameFilterSupplier(BrightBodyList[] bodies, float[][][] data, float similiarty_threshold, ReferenceFrameMassType mass_type, float ... mass_args) {
+            supplied_ = 0;
+            bodies_ = bodies;
+            data_ = data;
+            similiarty_threshold_ = similiarty_threshold;
+            mass_type_ = mass_type;
+            mass_args_ = mass_args;
+            switch(mass_type) {
+                case SINGLE:
+                    count_= 1;
+                    break;
+                case GIVEN_RANGE:
+                    count_ = (int) ((mass_args_[2] - mass_args_[1]) / mass_args_[0]) + 1;
+                    break;
+                case MEAN_SCALED_RANGE:
+                case MEAN_SHIFTED_RANGE:
+                    count_ = (int) mass_args_[2] + (int) mass_args_[1] + 1;
+                    break;
+                default:
+                    count_ = 0;
+                    System.err.println("Illegal mass type given to reference frame supplier: " + mass_type_);
+                    System.exit(1);
+            }
+        }
+
+        public boolean empty() {
+            return supplied_ >= count_;
+        }
+
+        public MobilityFilter popFilter() {
+            if (empty()) {
+                System.err.println("No more filters to pop: " + supplied_);
+                return null;
+            }
+            MobilityFilter filter;
+            switch(mass_type_) {
+                case SINGLE:
+                    filter = new ReferenceMobilityFilter(bodies_, data_, similiarty_threshold_, ReferenceFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE, mass_args_[0]);
+                    break;
+                case GIVEN_RANGE:
+                    filter = new ReferenceMobilityFilter(bodies_, data_, similiarty_threshold_, ReferenceFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE, mass_args_[1] + mass_args_[0] * supplied_);
+                    break;
+                case MEAN_SCALED_RANGE:
+                    filter = new ReferenceMobilityFilter(bodies_, data_, similiarty_threshold_, ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED, mass_args_[1] + mass_args_[0] * supplied_);
+                    break;
+                case MEAN_SHIFTED_RANGE:
+                    filter = new ReferenceMobilityFilter(bodies_, data_, similiarty_threshold_, ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED, mass_args_[1] + mass_args_[0] * supplied_);
+                    break;
+                default:
+                    filter =  null;
+            }
+            supplied_++;
+            return filter;
         }
     }
 }
