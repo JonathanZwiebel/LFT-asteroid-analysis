@@ -43,6 +43,7 @@ public final class LFBinRefMassFixedTime {
         current_arg++;
 
         BinaryLocatorMassType binaryLocatorMassType = null;
+        // TODO: Cleanup binaryLocatorMassTypeSingleType variable that is only used when binaryLocatorMassType is SINGLE
         BinaryLocatorThresholdType binaryLocatorMassTypeSingleType = null; // this one is only filled in the SINGLE case
         float[] binaryLocatorMassTypeArgs = null;
         String binaryLocatorMassTypeString = args[current_arg];
@@ -100,7 +101,6 @@ public final class LFBinRefMassFixedTime {
         float similarity_threshold = Float.parseFloat(args[current_arg]);
         current_arg++;
 
-        // TODO[Moderate]: refFrameMassType should be of a different enum then BinaryLocatorMassType
         ReferenceFrameMassType refFrameMassType = null;
         ReferenceFrameGenerationMethod refFrameMassTypeSingleType = null; // this one is only filled in the SINGLE case
         float[] refFrameMassTypeArgs = null;
@@ -171,25 +171,29 @@ public final class LFBinRefMassFixedTime {
 
     public final class BinaryLocatorSupplier {
         private final BinaryLocatorMassType mass_type_;
-        private final float[] args_;
+        private final float[][][] data_;
+        private final float[] mass_args_;
         private final int count_;
-        private int supplied_ = 0;
+        private int supplied_;
 
-        public BinaryLocatorSupplier(BinaryLocatorMassType mass_type, float ... args) {
+        public BinaryLocatorSupplier(float[][][] data, BinaryLocatorMassType mass_type, float ... mass_args) {
+            supplied_ = 0;
             mass_type_ = mass_type;
-            args_ = args;
+            mass_args_ = mass_args;
+            data_ = data;
             switch(mass_type) {
                 case SINGLE:
                     count_= 1;
                     break;
                 case GIVEN_RANGE:
-                    count_ = (int) ((args_[2] - args[1]) / args_[0]);
+                    count_ = (int) ((mass_args_[2] - mass_args_[1]) / mass_args_[0]) + 1;
                     break;
                 case MEAN_SCALED_RANGE:
                 case MEAN_SHIFTED_RANGE:
-                    count_ = (int) args_[2] + (int) args_[1] + 1; // TODO: Check for roundoff error
+                    count_ = (int) mass_args_[2] + (int) mass_args_[1] + 1;
                     break;
                 default:
+                    count_ = 0;
                     System.err.println("Illegal mass type given to supplier: " + mass_type_);
                     System.exit(1);
             }
@@ -200,8 +204,29 @@ public final class LFBinRefMassFixedTime {
         }
 
         public Locator popLocator() {
-            // TODO[ACTIVE]: Supply locator
+            if (empty()) {
+                System.err.println("No more locators to pop: " + supplied_);
+                return null;
+            }
+            Locator locator;
+            switch(mass_type_) {
+                case SINGLE:
+                    locator = new BinaryLocator(data_, BinaryLocatorThresholdType.ABSOLUTE, mass_args_[0]);
+                    break;
+                case GIVEN_RANGE:
+                    locator = new BinaryLocator(data_, BinaryLocatorThresholdType.ABSOLUTE, mass_args_[1] + mass_args_[0] * supplied_);
+                    break;
+                case MEAN_SCALED_RANGE:
+                    locator = new BinaryLocator(data_, BinaryLocatorThresholdType.MEAN_SCALED, mass_args_[1] + mass_args_[0] * supplied_);
+                    break;
+                case MEAN_SHIFTED_RANGE:
+                    locator = new BinaryLocator(data_, BinaryLocatorThresholdType.MEAN_SHIFTED, mass_args_[1] + mass_args_[0] * supplied_);
+                    break;
+                default:
+                    locator =  null;
+            }
             supplied_++;
+            return locator;
         }
     }
 }
