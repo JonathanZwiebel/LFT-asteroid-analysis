@@ -22,14 +22,15 @@ import java.io.File;
  * @version February 26th, 2016
  */
 public final class LFBinRefMassFixedTime {
-    private enum BinaryLocatorMassType {
+    // TODO: Move enums out
+    public enum BinaryLocatorMassType {
         SINGLE, // specify type and arguments that go with it
         GIVEN_RANGE, // specify increment, min, and max
         MEAN_SHIFTED_RANGE, // specify increment, low, and high count
-        MEAN_SCALED_RANGE // specify scalar increment, low, and high count
+        BinaryLocatorMassType, MEAN_SCALED_RANGE // specify scalar increment, low, and high count
     }
 
-    private enum ReferenceFrameMassType {
+    public enum ReferenceFrameMassType {
         SINGLE, // specify type and arguments that go with it
         GIVEN_RANGE, // specify increment, min, and max
         MEAN_SHIFTED_RANGE, // specify increment, low, and high count
