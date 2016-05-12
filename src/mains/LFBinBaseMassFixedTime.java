@@ -233,10 +233,8 @@ public final class LFBinBaseMassFixedTime {
                     locator = new BinaryLocator(data_, BinaryLocatorThresholdType.ABSOLUTE, mass_args_[1] + mass_args_[0] * supplied_);
                     break;
                 case MEAN_SCALED_RANGE:
-                    locator = new BinaryLocator(data_, BinaryLocatorThresholdType.MEAN_SCALED, mass_args_[1] + mass_args_[0] * supplied_);
-                    break;
                 case MEAN_SHIFTED_RANGE:
-                    locator = new BinaryLocator(data_, BinaryLocatorThresholdType.MEAN_SHIFTED, mass_args_[1] + mass_args_[0] * supplied_);
+                    locator = new BinaryLocator(data_, BinaryLocatorThresholdType.MEAN_SCALED, 1.0f + mass_args_[0] * (mass_args_[1] + supplied_));
                     break;
                 default:
                     locator =  null;
@@ -298,10 +296,8 @@ public final class LFBinBaseMassFixedTime {
                     filter = new BaselineMobilityFilter(bodies_, data_, similiarty_threshold_, BaselineFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE, mass_args_[1] + mass_args_[0] * supplied_);
                     break;
                 case MEAN_SCALED_RANGE:
-                    filter = new BaselineMobilityFilter(bodies_, data_, similiarty_threshold_, BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED, mass_args_[1] + mass_args_[0] * supplied_);
-                    break;
                 case MEAN_SHIFTED_RANGE:
-                    filter = new BaselineMobilityFilter(bodies_, data_, similiarty_threshold_, BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED, mass_args_[1] + mass_args_[0] * supplied_);
+                    filter = new BaselineMobilityFilter(bodies_, data_, similiarty_threshold_, BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED, 1.0f + mass_args_[0] * (mass_args_[1] + supplied_));
                     break;
                 default:
                     filter =  null;
