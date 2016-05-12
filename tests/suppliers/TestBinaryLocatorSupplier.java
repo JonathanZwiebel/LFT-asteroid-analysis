@@ -24,7 +24,7 @@ public class TestBinaryLocatorSupplier {
     private static final String DEFAULT_FILE_LOCATION = "data/905.fits";
     private static final BinaryLocatorMassType DEFAULT_MASS_TYPE = BinaryLocatorMassType.MEAN_SCALED_RANGE;
     private static final float[] DEFAULT_MASS_ARGS = {0.1f, -3.0f, 3.0f};
-    private static float[][][] data; // TODO: Only calcualte once
+    private static float[][][] data; // TODO: Only calculate once
 
     @BeforeClass
     public static void beforeOnce() throws FitsException, IOException {
