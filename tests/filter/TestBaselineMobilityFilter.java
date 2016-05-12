@@ -9,7 +9,7 @@ import org.junit.Test;
  *
  * TODO: Implement unit tests that ensure all of the bright bodies are filtered
  */
-public class TestReferenceMobilityFilter {
+public class TestBaselineMobilityFilter {
     @Test
     public void testUnit() {
         Assert.assertTrue("unit tests work", true);

@@ -2,8 +2,8 @@ package mains;
 
 import brightbodies.BrightBodyList;
 import filter.MobilityFilter;
-import filter.ReferenceFrameGenerationMethod;
-import filter.ReferenceMobilityFilter;
+import filter.BaselineFrameGenerationMethod;
+import filter.BaselineMobilityFilter;
 import locate.BinaryLocator;
 import locate.BinaryLocatorThresholdType;
 import locate.Locator;
@@ -21,16 +21,16 @@ import java.io.File;
  * @author Jonathan Zwiebel
  * @version February 26th, 2016
  */
-public final class LFBinRefMassFixedTime {
+public final class LFBinBaseMassFixedTime {
     // TODO: Move enums out
     public enum BinaryLocatorMassType {
         SINGLE, // specify type and arguments that go with it
         GIVEN_RANGE, // specify increment, min, and max
         MEAN_SHIFTED_RANGE, // specify increment, low, and high count
-        BinaryLocatorMassType, MEAN_SCALED_RANGE // specify scalar increment, low, and high count
+        MEAN_SCALED_RANGE // specify scalar increment, low, and high count
     }
 
-    public enum ReferenceFrameMassType {
+    public enum BaselineFrameMassType {
         SINGLE, // specify type and arguments that go with it
         GIVEN_RANGE, // specify increment, min, and max
         MEAN_SHIFTED_RANGE, // specify increment, low, and high count
@@ -105,33 +105,33 @@ public final class LFBinRefMassFixedTime {
         float similarity_threshold = Float.parseFloat(args[current_arg]);
         current_arg++;
 
-        ReferenceFrameMassType refFrameMassType = null;
-        ReferenceFrameGenerationMethod refFrameMassTypeSingleType = null; // this one is only filled in the SINGLE case
+        BaselineFrameMassType refFrameMassType = null;
+        BaselineFrameGenerationMethod refFrameMassTypeSingleType = null; // this one is only filled in the SINGLE case
         float[] refFrameMassTypeArgs = null;
         String refFrameMassTypeString = args[current_arg];
         current_arg++;
         switch(refFrameMassTypeString) {
             case "SINGLE":
-                refFrameMassType = ReferenceFrameMassType.SINGLE;
+                refFrameMassType = BaselineFrameMassType.SINGLE;
                 String refFrameMassTypeSingleTypeString = args[current_arg];
                 current_arg++;
                 switch(refFrameMassTypeSingleTypeString) {
                     case "BINARY_LOCATOR_ABSOLUTE":
-                        refFrameMassTypeSingleType = ReferenceFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE;
+                        refFrameMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE;
                         refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
                         current_arg++;
                         break;
                     case "BINARY_LOCATOR_MEAN":
-                        refFrameMassTypeSingleType = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN;
+                        refFrameMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN;
                         refFrameMassTypeArgs = new float[]{};
                         break;
                     case "BINARY_LOCATOR_MEAN_SHIFTED":
-                        refFrameMassTypeSingleType = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED;
+                        refFrameMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED;
                         refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
                         current_arg++;
                         break;
                     case "BINARY_LOCATOR_MEAN_SCALED":
-                        refFrameMassTypeSingleType = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED;
+                        refFrameMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED;
                         refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
                         current_arg++;
                         break;
@@ -141,17 +141,17 @@ public final class LFBinRefMassFixedTime {
                 }
                 break;
             case "GIVEN_RANGE":
-                refFrameMassType = ReferenceFrameMassType.GIVEN_RANGE;
+                refFrameMassType = BaselineFrameMassType.GIVEN_RANGE;
                 refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
                 current_arg += 3;
                 break;
             case "MEAN_SHIFTED_RANGE":
-                refFrameMassType = ReferenceFrameMassType.MEAN_SHIFTED_RANGE;
+                refFrameMassType = BaselineFrameMassType.MEAN_SHIFTED_RANGE;
                 refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
                 current_arg += 3;
                 break;
             case "MEAN_SCALED_RANGE":
-                refFrameMassType = ReferenceFrameMassType.MEAN_SCALED_RANGE;
+                refFrameMassType = BaselineFrameMassType.MEAN_SCALED_RANGE;
                 refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
                 current_arg += 3;
                 break;
@@ -239,8 +239,8 @@ public final class LFBinRefMassFixedTime {
         }
     }
 
-    public static final class ReferenceFrameFilterSupplier {
-        private final ReferenceFrameMassType mass_type_;
+    public static final class BaselineFrameFilterSupplier {
+        private final BaselineFrameMassType mass_type_;
         private final BrightBodyList[] bodies_;
         private final float[][][] data_;
         private final float similiarty_threshold_;
@@ -248,7 +248,7 @@ public final class LFBinRefMassFixedTime {
         private final int count_;
         private int supplied_;
 
-        public ReferenceFrameFilterSupplier(BrightBodyList[] bodies, float[][][] data, float similiarty_threshold, ReferenceFrameMassType mass_type, float ... mass_args) {
+        public BaselineFrameFilterSupplier(BrightBodyList[] bodies, float[][][] data, float similiarty_threshold, BaselineFrameMassType mass_type, float ... mass_args) {
             supplied_ = 0;
             bodies_ = bodies;
             data_ = data;
@@ -268,7 +268,7 @@ public final class LFBinRefMassFixedTime {
                     break;
                 default:
                     count_ = 0;
-                    System.err.println("Illegal mass type given to reference frame supplier: " + mass_type_);
+                    System.err.println("Illegal mass type given to Baseline frame supplier: " + mass_type_);
                     System.exit(1);
             }
         }
@@ -285,16 +285,16 @@ public final class LFBinRefMassFixedTime {
             MobilityFilter filter;
             switch(mass_type_) {
                 case SINGLE:
-                    filter = new ReferenceMobilityFilter(bodies_, data_, similiarty_threshold_, ReferenceFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE, mass_args_[0]);
+                    filter = new BaselineMobilityFilter(bodies_, data_, similiarty_threshold_, BaselineFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE, mass_args_[0]);
                     break;
                 case GIVEN_RANGE:
-                    filter = new ReferenceMobilityFilter(bodies_, data_, similiarty_threshold_, ReferenceFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE, mass_args_[1] + mass_args_[0] * supplied_);
+                    filter = new BaselineMobilityFilter(bodies_, data_, similiarty_threshold_, BaselineFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE, mass_args_[1] + mass_args_[0] * supplied_);
                     break;
                 case MEAN_SCALED_RANGE:
-                    filter = new ReferenceMobilityFilter(bodies_, data_, similiarty_threshold_, ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED, mass_args_[1] + mass_args_[0] * supplied_);
+                    filter = new BaselineMobilityFilter(bodies_, data_, similiarty_threshold_, BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED, mass_args_[1] + mass_args_[0] * supplied_);
                     break;
                 case MEAN_SHIFTED_RANGE:
-                    filter = new ReferenceMobilityFilter(bodies_, data_, similiarty_threshold_, ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED, mass_args_[1] + mass_args_[0] * supplied_);
+                    filter = new BaselineMobilityFilter(bodies_, data_, similiarty_threshold_, BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED, mass_args_[1] + mass_args_[0] * supplied_);
                     break;
                 default:
                     filter =  null;

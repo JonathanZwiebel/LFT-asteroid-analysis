@@ -2,9 +2,9 @@ package mains;
 
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
+import filter.BaselineFrameGenerationMethod;
+import filter.BaselineMobilityFilter;
 import filter.MobilityFilter;
-import filter.ReferenceFrameGenerationMethod;
-import filter.ReferenceMobilityFilter;
 import locate.BinaryLocator;
 import locate.BinaryLocatorThresholdType;
 import locate.Locator;
@@ -23,10 +23,10 @@ import java.io.File;
  *
  * TODO: Consider the data output in a fifth macro step
  */
-public final class LFBinRefSingleFixedTime {
+public final class LFBinBaseSingleFixedTime {
     /**
      * Main method to be run for program execution
-     * @param args Location, Initial locating threshold, Similarity threshold, Reference locating threshold, Timestamp
+     * @param args Location, Initial locating threshold, Similarity threshold, Baseline locating threshold, Timestamp
      */
     public static void run(String[] args) {
         assert args[0].equals("LF_SINGLE_FIXED_TIME");
@@ -69,32 +69,32 @@ public final class LFBinRefSingleFixedTime {
         float similarity_threshold = Float.parseFloat(args[argumentReadLoc]);
         argumentReadLoc++;
 
-        float[] reference_frame_detection_args = null;
-        ReferenceFrameGenerationMethod reference_frame_detection_threshold_type = null;
-        String reference_frame_detection_threshold_type_string = args[argumentReadLoc];
+        float[] baseline_frame_detection_args = null;
+        BaselineFrameGenerationMethod baseline_frame_detection_threshold_type = null;
+        String baseline_frame_detection_threshold_type_string = args[argumentReadLoc];
         argumentReadLoc++;
-        switch(reference_frame_detection_threshold_type_string) {
+        switch(baseline_frame_detection_threshold_type_string) {
             case "BINARY_LOCATOR_MEAN":
-                reference_frame_detection_threshold_type = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN;
-                reference_frame_detection_args = new float[]{};
+                baseline_frame_detection_threshold_type = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN;
+                baseline_frame_detection_args = new float[]{};
                 break;
             case "BINARY_LOCATOR_ABSOLUTE":
-                reference_frame_detection_threshold_type = ReferenceFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE;
-                reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                baseline_frame_detection_threshold_type = BaselineFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE;
+                baseline_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
             case "BINARY_LOCATOR_MEAN_SHIFTED":
-                reference_frame_detection_threshold_type = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED;
-                reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                baseline_frame_detection_threshold_type = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED;
+                baseline_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
             case "BINARY_LOCATOR_MEAN_SCALED":
-                reference_frame_detection_threshold_type = ReferenceFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED;
-                reference_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
+                baseline_frame_detection_threshold_type = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED;
+                baseline_frame_detection_args = new float[]{Float.parseFloat(args[argumentReadLoc])};
                 argumentReadLoc++;
                 break;
             default:
-                System.out.println("Illegal reference frame detection method");
+                System.out.println("Illegal baseline frame detection method");
                 System.exit(1);
         }
 
@@ -114,13 +114,13 @@ public final class LFBinRefSingleFixedTime {
             BrightBodyList[] bodies = locator.locate();
 
             System.out.println("Filtering");
-            MobilityFilter filter = new ReferenceMobilityFilter(bodies, data, similarity_threshold, reference_frame_detection_threshold_type, reference_frame_detection_args);
+            MobilityFilter filter = new BaselineMobilityFilter(bodies, data, similarity_threshold, baseline_frame_detection_threshold_type, baseline_frame_detection_args);
             BrightBodyList[][] filtered_bodies = filter.filter();
             BrightBodyList[] immobile_bodies = filtered_bodies[MobilityFilter.IBB_INDEX];
             BrightBodyList[] mobile_bodies = filtered_bodies[MobilityFilter.MBB_INDEX];
             BrightBodyList[] noise_bodies = filtered_bodies[MobilityFilter.NOISE_INDEX];
 
-            // TODO: Consider if it is acceptable for the BinLoc to use an _args style while the RefMobFil has the args hard coded
+            // TODO: Consider if it is acceptable for the BinLoc to use an _args style while the BaseMobFil has the args hard coded
             printSimpleDetectionStatsTimestamped(mobile_bodies, immobile_bodies, noise_bodies, timestamp);
             printSimpleDetectionDataTimestamped(mobile_bodies, immobile_bodies, noise_bodies, timestamp);
         }

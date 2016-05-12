@@ -1,7 +1,6 @@
 package suppliers;
 
-import mains.LFBinRefMassFixedTime;
-import mains.LFBinRefMassFixedTime.BinaryLocatorSupplier;
+import mains.LFBinBaseMassFixedTime.BinaryLocatorSupplier;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 import org.junit.Assert;
@@ -10,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import preprocess.K2Preprocessor;
 import preprocess.Preprocessor;
-import mains.LFBinRefMassFixedTime.BinaryLocatorMassType;
+import mains.LFBinBaseMassFixedTime.BinaryLocatorMassType;
 
 import java.io.File;
 import java.io.IOException;
