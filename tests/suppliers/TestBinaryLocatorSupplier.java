@@ -1,5 +1,9 @@
 package suppliers;
 
+import brightbodies.BrightBodyList;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import locate.BinaryLocator;
+import locate.Locator;
 import mains.LFBinBaseMassFixedTime.BinaryLocatorSupplier;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
@@ -44,13 +48,81 @@ public class TestBinaryLocatorSupplier {
     }
 
     @Test
-    public void testMeanScaledSuppliesCorrectNumber() {
+    public void testMeanScaledSuppliesCorrectCount() {
         BinaryLocatorSupplier supplier = new BinaryLocatorSupplier(data, DEFAULT_MASS_TYPE, DEFAULT_MASS_ARGS);
         int count = 0;
         while(!supplier.empty()) {
             count++;
             supplier.popLocator();
         }
-        Assert.assertEquals(7 , count);
+        Assert.assertEquals((int) (DEFAULT_MASS_ARGS[2] - DEFAULT_MASS_ARGS[1] + 1), count);
+    }
+
+    @Test
+    public void testEmptyPollingMethod() {
+        BinaryLocatorSupplier supplier = new BinaryLocatorSupplier(data, DEFAULT_MASS_TYPE, DEFAULT_MASS_ARGS);
+        for(int i = 0; i < (int) (DEFAULT_MASS_ARGS[2] - DEFAULT_MASS_ARGS[1] + 1); i++) {
+            Assert.assertFalse(supplier.empty());
+            supplier.popLocator();
+        }
+        Assert.assertTrue(supplier.empty());
+    }
+
+    @Test
+    public void testSupplierGivesNullWhenEmpty() {
+        BinaryLocatorSupplier supplier = new BinaryLocatorSupplier(data, DEFAULT_MASS_TYPE, DEFAULT_MASS_ARGS);
+        for(int i = 0; i < (int) (DEFAULT_MASS_ARGS[2] - DEFAULT_MASS_ARGS[1] + 1); i++) {
+            supplier.popLocator();
+        }
+        Locator bad_locator = supplier.popLocator();
+        Assert.assertNull(bad_locator);
+    }
+
+    @Test
+    public void testMeanScaledSuppliesValidLocators() {
+        BinaryLocatorSupplier supplier = new BinaryLocatorSupplier(data, DEFAULT_MASS_TYPE, DEFAULT_MASS_ARGS);
+        while(!supplier.empty()) {
+            Locator locator = supplier.popLocator();
+            locator.initialize();
+            BrightBodyList[] bodies = locator.locate();
+            Assert.assertEquals(bodies.length, data.length); // checks length of the locators
+            Assert.assertNotEquals(bodies[0].size(), 0); // tests that there is at least one body found
+            Assert.assertNotEquals(bodies[data.length / 2].size(), 0); // tests that there is at least one body found
+            Assert.assertNotEquals(bodies[data.length - 1].size(), 0); // tests that there is at least one body found
+            Assert.assertTrue(bodies[data.length / 2].get(0).body.length > 5); // test that the first bright body is larger than 5
+            Assert.assertTrue(bodies[data.length / 2].get(0).body.length < 1000); // test that the first bright body is smaller than 1000
+            Assert.assertTrue(bodies[data.length / 2].get(0).area > 10);
+            Assert.assertTrue(bodies[data.length / 2].get(0).area < Integer.MAX_VALUE);
+        }
+    }
+
+    @Test
+    public void testMeanScaledLocatorsHaveCorrectParameters() {
+        float[] EXTREME_MASS_ARGS = {0.4f, -1.0f, 1.0f};
+        BinaryLocatorSupplier supplier = new BinaryLocatorSupplier(data, DEFAULT_MASS_TYPE, EXTREME_MASS_ARGS);
+        Locator first_locator = supplier.popLocator();
+        for(int i = 1; i < (int) (EXTREME_MASS_ARGS[2] - EXTREME_MASS_ARGS[1]); i++) {
+            supplier.popLocator();
+        }
+        Locator second_locator = supplier.popLocator();
+
+        first_locator.initialize();
+        second_locator.initialize();
+        BrightBodyList[] first_bodies = first_locator.locate();
+        BrightBodyList[] second_bodies = second_locator.locate();
+
+        System.out.println("First[0]: " + first_bodies[0].size());
+        System.out.println("Second[0]: " + second_bodies[0].size());
+        System.out.println("First[half]: " + first_bodies[data.length / 2].size());
+        System.out.println("Second[half]: " + second_bodies[data.length / 2].size());
+        System.out.println("First[end]: " + first_bodies[data.length - 2].size());
+        System.out.println("Second[end]: " + second_bodies[data.length - 2].size());
+        Assert.assertTrue(first_bodies[0].size() > second_bodies[0].size());
+        Assert.assertTrue(first_bodies[data.length / 2].size() > second_bodies[data.length / 2].size());
+        Assert.assertTrue(first_bodies[data.length - 2].size() > second_bodies[data.length - 2].size());
+
+        first_bodies[0].sortByArea();
+        second_bodies[0].sortByArea();
+        Assert.assertTrue(second_bodies[0].get(0).area / second_bodies[0].get(0).body.length < first_bodies[0].get(0).area / first_bodies[0].get(0).body.length);
     }
 }

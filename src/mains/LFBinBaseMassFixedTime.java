@@ -234,6 +234,7 @@ public final class LFBinBaseMassFixedTime {
                     break;
                 case MEAN_SCALED_RANGE:
                 case MEAN_SHIFTED_RANGE:
+                    System.out.println("Creating BL with value of: " + (1.0f + mass_args_[0] * (mass_args_[1] + supplied_)));
                     locator = new BinaryLocator(data_, BinaryLocatorThresholdType.MEAN_SCALED, 1.0f + mass_args_[0] * (mass_args_[1] + supplied_));
                     break;
                 default:
