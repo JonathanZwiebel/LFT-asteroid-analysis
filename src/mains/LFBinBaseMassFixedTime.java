@@ -271,7 +271,7 @@ public final class LFBinBaseMassFixedTime {
                     break;
                 case MEAN_SCALED_RANGE:
                 case MEAN_SHIFTED_RANGE:
-                    count_ = (int) mass_args_[2] + (int) mass_args_[1] + 1;
+                    count_ = (int) mass_args_[2] - (int) mass_args_[1] + 1;
                     break;
                 default:
                     count_ = 0;
