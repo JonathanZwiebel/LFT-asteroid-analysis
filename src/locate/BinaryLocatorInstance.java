@@ -1,5 +1,6 @@
 package locate;
 
+import analysis.ImageStats;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
@@ -30,7 +31,27 @@ public class BinaryLocatorInstance extends LocatorInstance {
      */
     public BrightBodyList locate(Locator parent) {
         ImageMask mask = new BinaryImageMask(data_);
-        boolean[][] masked = mask.mask(((BinaryLocator) parent).threshold_);
+
+        float target_threshold_ = 0.0f;
+        boolean[][] masked;
+        switch(((BinaryLocator) parent).threshold_type_) {
+            case ABSOLUTE:
+                target_threshold_ = ((BinaryLocator) parent).threshold_arg_;
+                break;
+            case MEAN:
+                target_threshold_ = ImageStats.mean(data_);
+                break;
+            case MEAN_SHIFTED:
+                target_threshold_ = ImageStats.mean(data_) + ((BinaryLocator) parent).threshold_arg_;
+                break;
+            case MEAN_SCALED:
+                target_threshold_ = ImageStats.mean(data_ ) * ((BinaryLocator) parent).threshold_arg_;
+                break;
+            default:
+                System.out.println("Illegal target threshold method");
+                System.exit(1);
+        }
+        masked = mask.mask(target_threshold_);
 
         int[][] blob_labels = extractBlobLabels(masked);
         int blob_count = getMaxValue(blob_labels);

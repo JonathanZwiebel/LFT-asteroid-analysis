@@ -1,14 +1,12 @@
 package locate;
 
-import analysis.CubeStats;
-
 /**
  * @author Jonathan Zwiebel
  * @version January 26th, 2016
  */
 public class BinaryLocator extends Locator {
-    public float threshold_;
-    private final BinaryLocatorThresholdType threshold_type_;
+    public float threshold_arg_;
+    protected final BinaryLocatorThresholdType threshold_type_;
     private final float[] args_;
 
     /**
@@ -38,16 +36,13 @@ public class BinaryLocator extends Locator {
 
         switch(threshold_type_) {
             case ABSOLUTE:
-                threshold_ = args_[0];
+                threshold_arg_ = args_[0];
                 break;
             case MEAN:
-                threshold_ = CubeStats.mean(data_);
                 break;
             case MEAN_SHIFTED:
-                threshold_ = CubeStats.mean(data_) + args_[0];
-                break;
             case MEAN_SCALED:
-                threshold_ = CubeStats.mean(data_) * args_[0];
+                threshold_arg_ = args_[0];
                 break;
             default:
                 System.out.println("Error: Unrecognized threshold type");
