@@ -143,7 +143,10 @@ public class BaselineMobilityFilter extends MobilityFilter {
                     break;
                 }
             }
-            if(matched) {
+            if(body.body.length <= 1) {
+                sorted_bodies[NOISE_INDEX].add(body);
+            }
+            else if(matched) {
                 sorted_bodies[IBB_INDEX].add(body);
             }
             else {
