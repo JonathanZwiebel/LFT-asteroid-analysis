@@ -37,8 +37,8 @@ public final class LocateFilterTrack {
             case "LF_BIN_BASE_SINGLE_FIXED_TIME":
                 LFBinBaseSingleFixedTime.run(args);
                 break;
-            case "LF_BIN_BASE_MASS_FIXED_TIME":
-                LFBinBaseMassFixedTime.run(args);
+            case "LF_BINARY_BASELINE_MASS":
+                LFBinaryBaselineMass.run(args);
                 break;
             default:
                 System.err.println("Wrong run type: " + args[0]);

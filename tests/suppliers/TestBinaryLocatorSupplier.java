@@ -1,10 +1,8 @@
 package suppliers;
 
 import brightbodies.BrightBodyList;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import locate.BinaryLocator;
 import locate.Locator;
-import mains.LFBinBaseMassFixedTime.BinaryLocatorSupplier;
+import mains.LFBinaryBaselineMass.BinaryLocatorSupplier;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 import org.junit.Assert;
@@ -13,7 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import preprocess.K2Preprocessor;
 import preprocess.Preprocessor;
-import mains.LFBinBaseMassFixedTime.BinaryLocatorMassType;
+import mains.LFBinaryBaselineMass.BinaryLocatorMassType;
 
 import java.io.File;
 import java.io.IOException;

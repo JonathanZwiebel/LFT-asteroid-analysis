@@ -1,26 +1,22 @@
 package suppliers;
 
-import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
-import filter.BaselineMobilityFilter;
 import filter.MobilityFilter;
 import org.junit.Assert;
 import locate.BinaryLocator;
 import locate.BinaryLocatorThresholdType;
-import locate.Locator;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import preprocess.K2Preprocessor;
 import preprocess.Preprocessor;
-import mains.LFBinBaseMassFixedTime.BaselineFrameFilterSupplier;
-import mains.LFBinBaseMassFixedTime.BaselineFrameMassType;
+import mains.LFBinaryBaselineMass.BaselineFrameFilterSupplier;
+import mains.LFBinaryBaselineMass.BaselineFrameMassType;
 
 
 import java.io.File;
 import java.io.IOException;
-import java.util.function.Supplier;
 
 /**
  * This class tests the BaselineFrameFilterSupplier class by attempting to create various BaselineFrameFilters

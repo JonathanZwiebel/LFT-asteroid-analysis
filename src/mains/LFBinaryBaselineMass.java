@@ -21,7 +21,7 @@ import java.io.File;
  * @author Jonathan Zwiebel
  * @version February 26th, 2016
  */
-public final class LFBinBaseMassFixedTime {
+public final class LFBinaryBaselineMass {
     // TODO: Move enums out
     public enum BinaryLocatorMassType {
         SINGLE, // specify type and arguments that go with it
@@ -38,7 +38,7 @@ public final class LFBinBaseMassFixedTime {
     }
 
     public static void run(String[] args) {
-        assert args[0].equals("LF_MASS_FIXED_TIME");
+        assert args[0].equals("LF_BINARY_BASELINE_MASS");
 
         // TODO: Consider making this only accessible by method so every time it is checked, the number actually increments
         int current_arg = 1;
@@ -105,54 +105,54 @@ public final class LFBinBaseMassFixedTime {
         float similarity_threshold = Float.parseFloat(args[current_arg]);
         current_arg++;
 
-        BaselineFrameMassType refFrameMassType = null;
-        BaselineFrameGenerationMethod refFrameMassTypeSingleType = null; // this one is only filled in the SINGLE case
-        float[] refFrameMassTypeArgs = null;
-        String refFrameMassTypeString = args[current_arg];
+        BaselineFrameMassType baselineMassType = null;
+        BaselineFrameGenerationMethod baselineMassTypeSingleType = null; // this one is only filled in the SINGLE case
+        float[] baselineMassTypeArgs = null;
+        String baselineMassTypeString = args[current_arg];
         current_arg++;
-        switch(refFrameMassTypeString) {
+        switch(baselineMassTypeString) {
             case "SINGLE":
-                refFrameMassType = BaselineFrameMassType.SINGLE;
-                String refFrameMassTypeSingleTypeString = args[current_arg];
+                baselineMassType = BaselineFrameMassType.SINGLE;
+                String baselineMassTypeSingleTypeString = args[current_arg];
                 current_arg++;
-                switch(refFrameMassTypeSingleTypeString) {
+                switch(baselineMassTypeSingleTypeString) {
                     case "BINARY_LOCATOR_ABSOLUTE":
-                        refFrameMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE;
-                        refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
+                        baselineMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_ABSOLUTE;
+                        baselineMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
                         current_arg++;
                         break;
                     case "BINARY_LOCATOR_MEAN":
-                        refFrameMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN;
-                        refFrameMassTypeArgs = new float[]{};
+                        baselineMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN;
+                        baselineMassTypeArgs = new float[]{};
                         break;
                     case "BINARY_LOCATOR_MEAN_SHIFTED":
-                        refFrameMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED;
-                        refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
+                        baselineMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED;
+                        baselineMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
                         current_arg++;
                         break;
                     case "BINARY_LOCATOR_MEAN_SCALED":
-                        refFrameMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED;
-                        refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
+                        baselineMassTypeSingleType = BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SCALED;
+                        baselineMassTypeArgs = new float[]{Float.parseFloat(args[current_arg])};
                         current_arg++;
                         break;
                     default:
-                        System.err.println("Illegal binaryLocatorMassTypeSingleType: " + refFrameMassTypeSingleTypeString);
+                        System.err.println("Illegal binaryLocatorMassTypeSingleType: " + baselineMassTypeSingleTypeString);
                         System.exit(1);
                 }
                 break;
             case "GIVEN_RANGE":
-                refFrameMassType = BaselineFrameMassType.GIVEN_RANGE;
-                refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
+                baselineMassType = BaselineFrameMassType.GIVEN_RANGE;
+                baselineMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
                 current_arg += 3;
                 break;
             case "MEAN_SHIFTED_RANGE":
-                refFrameMassType = BaselineFrameMassType.MEAN_SHIFTED_RANGE;
-                refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
+                baselineMassType = BaselineFrameMassType.MEAN_SHIFTED_RANGE;
+                baselineMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
                 current_arg += 3;
                 break;
             case "MEAN_SCALED_RANGE":
-                refFrameMassType = BaselineFrameMassType.MEAN_SCALED_RANGE;
-                refFrameMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
+                baselineMassType = BaselineFrameMassType.MEAN_SCALED_RANGE;
+                baselineMassTypeArgs = new float[]{Float.parseFloat(args[current_arg]), Float.parseFloat(args[current_arg + 1]), Float.parseFloat(args[current_arg + 2])};
                 current_arg += 3;
                 break;
             default:
@@ -160,17 +160,20 @@ public final class LFBinBaseMassFixedTime {
                 System.exit(1);
         }
 
-        int timestamp = Integer.parseInt(args[current_arg]);
-        current_arg++;
-
         try {
             Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(filename)));
             float data[][][] = preprocessor.read();
-            BinaryLocatorSupplier loc_supplier = new BinaryLocatorSupplier(data, binaryLocatorMassType, binaryLocatorMassTypeArgs);
-            while(!loc_supplier.empty()) {
-                Locator locator = loc_supplier.popLocator();
+            BinaryLocatorSupplier locator_supplier = new BinaryLocatorSupplier(data, binaryLocatorMassType, binaryLocatorMassTypeArgs);
+            while(!locator_supplier.empty()) {
+                Locator locator = locator_supplier.popLocator();
                 locator.initialize();
                 BrightBodyList[] bodies = locator.locate();
+                BaselineFrameFilterSupplier filter_supplier = new BaselineFrameFilterSupplier(bodies, data, similarity_threshold, baselineMassType, baselineMassTypeArgs);
+                while(!filter_supplier.empty()) {
+                    MobilityFilter filter = filter_supplier.popFilter();
+                    BrightBodyList[][] sorted_bodies = filter.filter();
+                    System.out.println("Body: " + sorted_bodies.hashCode());
+                }
             }
         }
         catch(Exception e) {
@@ -248,11 +251,11 @@ public final class LFBinBaseMassFixedTime {
         private final int count_;
         private int supplied_;
 
-        public BaselineFrameFilterSupplier(BrightBodyList[] bodies, float[][][] data, float similiarty_threshold, BaselineFrameMassType mass_type, float ... mass_args) {
+        public BaselineFrameFilterSupplier(BrightBodyList[] bodies, float[][][] data, float similarity_threshold, BaselineFrameMassType mass_type, float ... mass_args) {
             supplied_ = 0;
             bodies_ = bodies;
             data_ = data;
-            similiarty_threshold_ = similiarty_threshold;
+            similiarty_threshold_ = similarity_threshold;
             mass_type_ = mass_type;
             mass_args_ = mass_args;
             switch(mass_type) {
