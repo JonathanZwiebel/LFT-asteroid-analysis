@@ -10,8 +10,4 @@ import org.junit.Test;
  * TODO: Write unit tests for the binary locator
  */
 public class TestBinaryLocator {
-    @Test
-    public void testNullDataThrowsException() {
-        Assert.fail("not yet implemented");
-    }
 }

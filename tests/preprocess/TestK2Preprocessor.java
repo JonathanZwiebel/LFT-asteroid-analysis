@@ -46,9 +46,4 @@ public class TestK2Preprocessor {
         Preprocessor test_preprocessor = new K2Preprocessor(new Fits(new File("data\\905.fits")));
         Assert.assertNotNull("K2Preprocessor read returned null", test_preprocessor.read());
     }
-
-    @Test
-    public void testDataReadCorrectly() {
-        Assert.fail("not yet implemented");
-    }
 }

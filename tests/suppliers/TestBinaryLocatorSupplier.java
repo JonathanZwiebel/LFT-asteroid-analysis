@@ -98,10 +98,9 @@ public class TestBinaryLocatorSupplier {
 
     @Test
     public void testMeanScaledLocatorsHaveCorrectParameters() {
-        float[] EXTREME_MASS_ARGS = {0.4f, -1.0f, 1.0f};
-        BinaryLocatorSupplier supplier = new BinaryLocatorSupplier(data, DEFAULT_MASS_TYPE, EXTREME_MASS_ARGS);
+        BinaryLocatorSupplier supplier = new BinaryLocatorSupplier(data, DEFAULT_MASS_TYPE, DEFAULT_MASS_ARGS);
         Locator first_locator = supplier.popLocator();
-        for(int i = 1; i < (int) (EXTREME_MASS_ARGS[2] - EXTREME_MASS_ARGS[1]); i++) {
+        for(int i = 1; i < (int) (DEFAULT_MASS_ARGS[2] - DEFAULT_MASS_ARGS[1]); i++) {
             supplier.popLocator();
         }
         Locator second_locator = supplier.popLocator();
@@ -111,18 +110,30 @@ public class TestBinaryLocatorSupplier {
         BrightBodyList[] first_bodies = first_locator.locate();
         BrightBodyList[] second_bodies = second_locator.locate();
 
-        System.out.println("First[0]: " + first_bodies[0].size());
-        System.out.println("Second[0]: " + second_bodies[0].size());
-        System.out.println("First[half]: " + first_bodies[data.length / 2].size());
-        System.out.println("Second[half]: " + second_bodies[data.length / 2].size());
-        System.out.println("First[end]: " + first_bodies[data.length - 2].size());
-        System.out.println("Second[end]: " + second_bodies[data.length - 2].size());
         Assert.assertTrue(first_bodies[0].size() > second_bodies[0].size());
         Assert.assertTrue(first_bodies[data.length / 2].size() > second_bodies[data.length / 2].size());
         Assert.assertTrue(first_bodies[data.length - 2].size() > second_bodies[data.length - 2].size());
 
         first_bodies[0].sortByArea();
         second_bodies[0].sortByArea();
-        Assert.assertTrue(second_bodies[0].get(0).area / second_bodies[0].get(0).body.length < first_bodies[0].get(0).area / first_bodies[0].get(0).body.length);
+        Assert.assertTrue(second_bodies[0].get(0).area / second_bodies[0].get(0).body.length > first_bodies[0].get(0).area / first_bodies[0].get(0).body.length);
+    }
+
+    @Test
+    public void testSingleRun() throws NullPointerException {
+        BinaryLocatorSupplier supplier = new BinaryLocatorSupplier(data, DEFAULT_MASS_TYPE, DEFAULT_MASS_ARGS);
+        Locator first = supplier.popLocator();
+        first.initialize();
+        BrightBodyList[] bodies_first = first.locate();
+        Assert.assertNotNull(bodies_first);
+
+        for(int i = 1; i < 6; i++) {
+            supplier.popLocator();
+        }
+
+        Locator second = supplier.popLocator();
+        second.initialize();
+        BrightBodyList[] bodies_second = second.locate();
+        Assert.assertNotNull(bodies_second);
     }
 }

@@ -186,24 +186,19 @@ public final class LFBinBaseMassFixedTime {
         private int supplied_;
 
         public BinaryLocatorSupplier(float[][][] data, BinaryLocatorMassType mass_type, float ... mass_args) {
-            System.out.println("BLS Construction Started");
             supplied_ = 0;
             mass_type_ = mass_type;
             mass_args_ = mass_args;
             data_ = data;
             switch(mass_type) {
                 case SINGLE:
-                    System.out.println("BLS Single Case");
                     count_= 1;
                     break;
                 case GIVEN_RANGE:
-                    System.out.println("BLS Given Range Case");
                     count_ = (int) ((mass_args_[2] - mass_args_[1]) / mass_args_[0]) + 1;
                     break;
                 case MEAN_SCALED_RANGE:
-                    System.out.println("BLS Scaled Range Not Shifted Range Case");
                 case MEAN_SHIFTED_RANGE:
-                    System.out.println("BLS Shifted Range Case");
                     count_ = (int) mass_args_[2] - (int) mass_args_[1] + 1;
                     break;
                 default:
@@ -214,12 +209,10 @@ public final class LFBinBaseMassFixedTime {
         }
 
         public boolean empty() {
-            System.out.println("Empty polling with supplied_ of " + supplied_ + " and count_ of " + count_);
             return supplied_ >= count_;
         }
 
         public Locator popLocator() {
-            System.out.println("Popping locator");
             if (empty()) {
                 System.err.println("No more locators to pop: " + supplied_);
                 return null;
@@ -234,7 +227,6 @@ public final class LFBinBaseMassFixedTime {
                     break;
                 case MEAN_SCALED_RANGE:
                 case MEAN_SHIFTED_RANGE:
-                    System.out.println("Creating BL with value of: " + (1.0f + mass_args_[0] * (mass_args_[1] + supplied_)));
                     locator = new BinaryLocator(data_, BinaryLocatorThresholdType.MEAN_SCALED, 1.0f + mass_args_[0] * (mass_args_[1] + supplied_));
                     break;
                 default:
