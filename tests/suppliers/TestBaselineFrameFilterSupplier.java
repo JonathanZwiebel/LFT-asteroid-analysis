@@ -1,5 +1,6 @@
 package suppliers;
 
+import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import filter.BaselineMobilityFilter;
 import filter.MobilityFilter;
@@ -98,5 +99,23 @@ public class TestBaselineFrameFilterSupplier {
         Assert.assertTrue(sorted_bodies[2][0].size() > 0); // there is at least 1 noise in frame 0
         Assert.assertEquals(bodies[0].size(), sorted_bodies[0][0].size() + sorted_bodies[1][0].size() + sorted_bodies[2][0].size()); // all of the bodies got sorted
         // TODO: Add a check to make sure each body has actually been sorted
+    }
+
+    @Test
+    public void testMeanScaledBaselineFrameFiltersHaveCorrectParameters() {
+        BaselineFrameFilterSupplier supplier = new BaselineFrameFilterSupplier(bodies, data, DEFAULT_SIMILARITY_THRESHOLD, DEFAULT_BASELINE_FRAME_MASS_TYPE, DEFAULT_MASS_ARGS);
+        MobilityFilter first = supplier.popFilter();
+        for(int i = (int) DEFAULT_MASS_ARGS[1] + 1; i < (int) DEFAULT_MASS_ARGS[2]; i++){
+            supplier.popFilter();
+        }
+        MobilityFilter second = supplier.popFilter();
+        Assert.assertTrue(supplier.empty());
+
+        BrightBodyList[][] first_sorted_bodies = first.filter();
+        BrightBodyList[][] second_sorted_bodies = second.filter();
+
+        // if all baseline bodies are matched with an immobile then the filter with a lower threshold should
+        // produce more immobiles
+        Assert.assertTrue(first_sorted_bodies[0][0].size() > second_sorted_bodies[0][0].size());
     }
 }
