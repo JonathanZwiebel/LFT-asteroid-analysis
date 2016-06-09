@@ -106,6 +106,7 @@ public final class LFBinaryBaselineMass {
         float similarity_threshold = Float.parseFloat(args[current_arg]);
         current_arg++;
 
+	// TODO: Completely remove the framework for multiple mass types
         BaselineFrameMassType baselineMassType = null;
         BaselineFrameGenerationMethod baselineMassTypeSingleType = null; // this one is only filled in the SINGLE case
         float[] baselineMassTypeArgs = null;
@@ -165,6 +166,21 @@ public final class LFBinaryBaselineMass {
         String data_location = args[current_arg];
         current_arg++;
 
+        int timestamp = Integer.parseInt(args[current_arg]);
+        current_arg++;
+
+        int x_pos = Integer.parseInt(args[current_arg]);
+        current_arg++;
+
+        int y_pos = Integer.parseInt(args[current_arg]);
+        current_arg++;
+
+        int min_size = Integer.parseInt(args[current_arg]);
+        current_arg++;
+
+        int max_size = Integer.parseInt(args[current_arg]);
+        current_arg++;
+
         try {
             File dir = new File(data_location);
             if(!dir.exists()) {
@@ -194,12 +210,6 @@ public final class LFBinaryBaselineMass {
             File information = new File(data_location + "/information.txt");
             Writer information_writer = new FileWriter(information);
             BufferedWriter information_buffered_writer = new BufferedWriter(information_writer);
-
-            int timestamp = 1430;
-            int x_pos = 9;
-            int y_pos = 20;
-            int min_size = 2;
-            int max_size = 20;
 
             information_buffered_writer.write("This folder contains data from a locate-filter test on a single frame " +
                             "from " + filename + ". A range of scalars were used to generate target and baseline " +
@@ -238,7 +248,7 @@ public final class LFBinaryBaselineMass {
                     immobile_buffered_writer.write(sorted_bodies[MobilityFilter.IBB_INDEX][timestamp - 1].size() + ",");
                     noise_buffered_writer.write(sorted_bodies[MobilityFilter.NOISE_INDEX][timestamp - 1].size() + ",");
                     mobile_buffered_writer.write(sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1].size() + ",");
-                    boolean contain = ContainsBody.containsBody(sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1], 9, 20, 2, 20);
+                    boolean contain = ContainsBody.containsBody(sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1], x_pos, y_pos, min_size, max_size);
                     contains_buffered_writer.write(contain + ",");
                     if(contain) {
                         success_buffered_writer.write(1 / (float) sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1].size() + ",");
