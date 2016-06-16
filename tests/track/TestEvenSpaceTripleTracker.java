@@ -1,9 +1,12 @@
 package track;
 
+import brightbodies.BrightBody;
+import brightbodies.BrightBodyEvenSpaceTripleLinkedSet;
 import brightbodies.BrightBodyList;
 import filter.BaselineFrameGenerationMethod;
 import filter.BaselineMobilityFilter;
 import filter.MobilityFilter;
+import junit.framework.Assert;
 import locate.BinaryLocator;
 import locate.BinaryLocatorThresholdType;
 import locate.Locator;
@@ -16,6 +19,9 @@ import preprocess.Preprocessor;
 
 import java.io.File;
 import java.io.IOException;
+
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * This class contains a series of unit tests for the EvenSpaceTripleTracker class. Assumes a BinaryTracker locate step
@@ -47,5 +53,20 @@ public class TestEvenSpaceTripleTracker {
         BrightBodyList[][] sorted_bodies = filter.filter();
 
         mobile_bodies_ = sorted_bodies[BaselineMobilityFilter.MBB_INDEX];
+    }
+
+    @Test
+    public void testEvenSpaceTripleTrackerConstructs() {
+        Tracker tracker = new EvenSpaceTripleTracker(mobile_bodies_);
+        assertNotNull(tracker);
+    }
+
+    @Test
+    public void testTrackReturnsValidData() {
+        Tracker tracker = new EvenSpaceTripleTracker(mobile_bodies_);
+        BrightBodyEvenSpaceTripleLinkedSet[] linkedSets = ((EvenSpaceTripleTracker) tracker).track();
+
+        assertNotNull(linkedSets);
+        assertTrue(linkedSets.length > 0);
     }
 }
