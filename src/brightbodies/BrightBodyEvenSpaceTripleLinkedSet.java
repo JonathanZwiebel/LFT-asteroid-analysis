@@ -8,24 +8,17 @@ package brightbodies;
  * @author Jonathan Zwiebel
  * @version 16 June 2016
  */
-public class LinkedBrightBodyTriple {
-    public BrightBody[] bodies;
-    public int initial_time;
-    public int delta_time;
+public class BrightBodyEvenSpaceTripleLinkedSet extends BrightBodyLinkedSet {
     public int co_determination;
 
     /**
      * Constructs a LinkedB
-     * @param bodies the set of three linked bright bodies
-     * @param initial_time the timestamp of the first asteroid
-     * @param delta_time the difference in time between the asteroids
+     * @param mobile_bodies the set of three linked bright bodies
      * @param co_determination the r^2 value of the three centroids
      */
-    public LinkedBrightBodyTriple(BrightBody[] bodies, int initial_time, int delta_time, int co_determination) {
-        assert bodies.length == 3;
-        this.bodies = bodies;
-        this.initial_time = initial_time;
-        this.delta_time = delta_time;
+    public BrightBodyEvenSpaceTripleLinkedSet(BrightBody[] mobile_bodies, int[] timetstamps, int co_determination) {
+        super(mobile_bodies, timetstamps);
+        assert mobile_bodies.length == 3;
         this.co_determination = co_determination;
     }
 
@@ -35,7 +28,7 @@ public class LinkedBrightBodyTriple {
      * @return the distance between the centroids of the first and second bright bodies
      */
     public double firstDistance() {
-        return Math.sqrt(Math.pow(bodies[1].centroid.x - bodies[0].centroid.x, 2) + Math.pow(bodies[1].centroid.y - bodies[0].centroid.y, 2));
+        return Math.sqrt(Math.pow(mobile_bodies_[1].centroid.x - mobile_bodies_[0].centroid.x, 2) + Math.pow(mobile_bodies_[1].centroid.y - mobile_bodies_[0].centroid.y, 2));
     }
 
     /**
@@ -44,6 +37,6 @@ public class LinkedBrightBodyTriple {
      * @return the distance between the centroids of the second and third bright bodies
      */
     public double secondDistance() {
-        return Math.sqrt(Math.pow(bodies[1].centroid.x - bodies[2].centroid.x, 2) + Math.pow(bodies[1].centroid.y - bodies[2].centroid.y, 2));
+        return Math.sqrt(Math.pow(mobile_bodies_[1].centroid.x - mobile_bodies_[2].centroid.x, 2) + Math.pow(mobile_bodies_[1].centroid.y - mobile_bodies_[2].centroid.y, 2));
     }
 }

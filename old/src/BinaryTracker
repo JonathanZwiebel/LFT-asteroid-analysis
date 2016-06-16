@@ -40,7 +40,7 @@ public class BinaryTracker {
     }
 
     /**
-     * Generates text files for each instance in the tracker
+     * Generates text files for each instance in the track
      * @param text_directory directory to place the .txt files
      * @throws IOException
      * TODO: Make to mass
@@ -54,7 +54,7 @@ public class BinaryTracker {
     }
 
     /**
-     * Generates serialized BinaryTrackerInstances as .ser files for all instances within the tracker
+     * Generates serialized BinaryTrackerInstances as .ser files for all instances within the track
      * @param serialized_directory directory to place the .ser files
      * TODO: Make to mass
      * @throws IOException
@@ -68,7 +68,7 @@ public class BinaryTracker {
     }
 
     /**
-     * Generates CSVs for all instances within the tracker
+     * Generates CSVs for all instances within the track
      * @param csv_directory directory to place the .csv files
      * @throws IOException
      */
