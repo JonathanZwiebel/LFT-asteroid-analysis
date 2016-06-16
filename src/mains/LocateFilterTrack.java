@@ -40,6 +40,9 @@ public final class LocateFilterTrack {
             case "LF_BINARY_BASELINE_MASS":
                 LFBinaryBaselineMass.run(args);
                 break;
+            case "LFT_SINGLE_BASIC":
+                LFTSingleBasic.run(args);
+                break;
             default:
                 System.err.println("Wrong run type: " + args[0]);
                 System.exit(1);

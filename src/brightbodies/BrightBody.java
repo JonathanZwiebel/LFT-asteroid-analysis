@@ -10,7 +10,7 @@ import static analysis.BrightBodyMoment.area;
  * by area and serializable.
  */
 public class BrightBody implements Comparable<BrightBody>, Serializable{
-    private final Coordinate centroid;
+    public final Coordinate centroid;
     public final float area;
     public final CartesianPoint[] body;
     public final float[][] source;
