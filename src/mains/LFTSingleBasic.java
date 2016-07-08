@@ -1,5 +1,7 @@
 package mains;
 
+import brightbodies.BrightBodyEvenSpaceTripleLinkedSet;
+import brightbodies.BrightBodyLinkedSet;
 import brightbodies.BrightBodyList;
 import filter.BaselineFrameGenerationMethod;
 import filter.BaselineMobilityFilter;
@@ -10,6 +12,8 @@ import locate.Locator;
 import nom.tam.fits.Fits;
 import preprocess.K2Preprocessor;
 import preprocess.Preprocessor;
+import track.EvenSpaceTripleTracker;
+import track.Tracker;
 
 import java.io.File;
 
@@ -46,6 +50,8 @@ public class LFTSingleBasic {
             MobilityFilter filter = new BaselineMobilityFilter(bright_bodies, data, similarity_threshold, BaselineFrameGenerationMethod.BINARY_LOCATOR_MEAN_SHIFTED, baseline_threshold_scaling_value);
             BrightBodyList[][] sorted_bodies = filter.filter();
 
+            Tracker tracker = new EvenSpaceTripleTracker(sorted_bodies[BaselineMobilityFilter.MBB_INDEX]);
+            BrightBodyLinkedSet[] linked_sets = tracker.track();
         }
         catch(Exception e) {
             e.printStackTrace();
