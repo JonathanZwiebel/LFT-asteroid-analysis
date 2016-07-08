@@ -1,6 +1,6 @@
 package locate;
 
-import analysis.ImageStats;
+import stats.MeanStats;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
@@ -39,13 +39,13 @@ public class BinaryLocatorInstance extends LocatorInstance {
                 target_threshold_ = ((BinaryLocator) parent).threshold_arg_;
                 break;
             case MEAN:
-                target_threshold_ = ImageStats.mean(data_);
+                target_threshold_ = MeanStats.mean(data_);
                 break;
             case MEAN_SHIFTED:
-                target_threshold_ = ImageStats.mean(data_) + ((BinaryLocator) parent).threshold_arg_;
+                target_threshold_ = MeanStats.mean(data_) + ((BinaryLocator) parent).threshold_arg_;
                 break;
             case MEAN_SCALED:
-                target_threshold_ = ImageStats.mean(data_ ) * ((BinaryLocator) parent).threshold_arg_;
+                target_threshold_ = MeanStats.mean(data_) * ((BinaryLocator) parent).threshold_arg_;
                 break;
             default:
                 System.out.println("Illegal target threshold method");

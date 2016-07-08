@@ -2,8 +2,8 @@ package brightbodies;
 
 import java.io.Serializable;
 
-import static analysis.BrightBodyMoment.centroid;
-import static analysis.BrightBodyMoment.area;
+import static stats.MomentStats.centroid;
+import static stats.MomentStats.area;
 
 /**
  * Represents a bright body with a given set of coordinate values. Can determine and store centroid and area. Comparable
