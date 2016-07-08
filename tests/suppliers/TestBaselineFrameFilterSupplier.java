@@ -1,16 +1,16 @@
 package suppliers;
 
 import brightbodies.BrightBodyList;
-import filter.MobilityFilter;
+import core.filter.MobilityFilter;
 import org.junit.Assert;
-import locate.BinaryLocator;
-import locate.BinaryLocatorThresholdType;
+import core.locate.BinaryLocator;
+import core.locate.BinaryLocatorThresholdType;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import preprocess.K2Preprocessor;
-import preprocess.Preprocessor;
+import core.preprocess.K2Preprocessor;
+import core.preprocess.Preprocessor;
 import mains.LFBinaryBaselineMass.BaselineFrameFilterSupplier;
 import mains.LFBinaryBaselineMass.BaselineFrameMassType;
 

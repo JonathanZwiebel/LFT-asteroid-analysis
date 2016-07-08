@@ -1,21 +1,19 @@
-package track;
+package core.track;
 
-import brightbodies.BrightBody;
 import brightbodies.BrightBodyEvenSpaceTripleLinkedSet;
 import brightbodies.BrightBodyList;
-import filter.BaselineFrameGenerationMethod;
-import filter.BaselineMobilityFilter;
-import filter.MobilityFilter;
-import junit.framework.Assert;
-import locate.BinaryLocator;
-import locate.BinaryLocatorThresholdType;
-import locate.Locator;
+import core.filter.BaselineFrameGenerationMethod;
+import core.filter.BaselineMobilityFilter;
+import core.filter.MobilityFilter;
+import core.locate.BinaryLocator;
+import core.locate.BinaryLocatorThresholdType;
+import core.locate.Locator;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import preprocess.K2Preprocessor;
-import preprocess.Preprocessor;
+import core.preprocess.K2Preprocessor;
+import core.preprocess.Preprocessor;
 
 import java.io.File;
 import java.io.IOException;

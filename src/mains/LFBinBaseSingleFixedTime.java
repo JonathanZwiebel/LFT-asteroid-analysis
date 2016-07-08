@@ -2,15 +2,15 @@ package mains;
 
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
-import filter.BaselineFrameGenerationMethod;
-import filter.BaselineMobilityFilter;
-import filter.MobilityFilter;
-import locate.BinaryLocator;
-import locate.BinaryLocatorThresholdType;
-import locate.Locator;
+import core.filter.BaselineFrameGenerationMethod;
+import core.filter.BaselineMobilityFilter;
+import core.filter.MobilityFilter;
+import core.locate.BinaryLocator;
+import core.locate.BinaryLocatorThresholdType;
+import core.locate.Locator;
 import nom.tam.fits.Fits;
-import preprocess.K2Preprocessor;
-import preprocess.Preprocessor;
+import core.preprocess.K2Preprocessor;
+import core.preprocess.Preprocessor;
 
 import java.io.File;
 

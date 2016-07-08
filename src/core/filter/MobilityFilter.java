@@ -1,4 +1,4 @@
-package filter;
+package core.filter;
 
 import brightbodies.BrightBodyList;
 

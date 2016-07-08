@@ -1,11 +1,11 @@
-package filter;
+package core.filter;
 
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
 import helper.DataMathematicsHelper;
-import locate.BinaryLocator;
-import locate.BinaryLocatorThresholdType;
+import core.locate.BinaryLocator;
+import core.locate.BinaryLocatorThresholdType;
 
 /**
  * @author Jonathan Zwiebel

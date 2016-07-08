@@ -1,4 +1,4 @@
-package locate;
+package core.locate;
 
 import stats.MeanStats;
 import brightbodies.BrightBody;

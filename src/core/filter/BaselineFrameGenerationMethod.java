@@ -1,4 +1,4 @@
-package filter;
+package core.filter;
 
 /**
  * Different ways to generate the baseline frame

@@ -1,4 +1,4 @@
-package preprocess;
+package core.preprocess;
 
 import org.junit.Test;
 

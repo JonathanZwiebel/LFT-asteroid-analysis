@@ -1,4 +1,4 @@
-package preprocess;
+package core.preprocess;
 
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;

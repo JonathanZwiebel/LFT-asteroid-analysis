@@ -1,4 +1,4 @@
-package locate;
+package core.locate;
 
 /**
  * @author Jonathan Zwiebel

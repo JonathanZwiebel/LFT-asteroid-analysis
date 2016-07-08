@@ -1,4 +1,4 @@
-package locate;
+package core.locate;
 
 /**
  * An experimental enum for capturing the type of threshold run on a specific binary locator

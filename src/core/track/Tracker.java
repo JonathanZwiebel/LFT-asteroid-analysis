@@ -1,4 +1,4 @@
-package track;
+package core.track;
 
 import brightbodies.BrightBodyLinkedSet;
 import brightbodies.BrightBodyList;

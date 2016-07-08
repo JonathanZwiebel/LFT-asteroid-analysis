@@ -1,19 +1,18 @@
 package mains;
 
-import brightbodies.BrightBodyEvenSpaceTripleLinkedSet;
 import brightbodies.BrightBodyLinkedSet;
 import brightbodies.BrightBodyList;
-import filter.BaselineFrameGenerationMethod;
-import filter.BaselineMobilityFilter;
-import filter.MobilityFilter;
-import locate.BinaryLocator;
-import locate.BinaryLocatorThresholdType;
-import locate.Locator;
+import core.filter.BaselineFrameGenerationMethod;
+import core.filter.BaselineMobilityFilter;
+import core.filter.MobilityFilter;
+import core.locate.BinaryLocator;
+import core.locate.BinaryLocatorThresholdType;
+import core.locate.Locator;
 import nom.tam.fits.Fits;
-import preprocess.K2Preprocessor;
-import preprocess.Preprocessor;
-import track.EvenSpaceTripleTracker;
-import track.Tracker;
+import core.preprocess.K2Preprocessor;
+import core.preprocess.Preprocessor;
+import core.track.EvenSpaceTripleTracker;
+import core.track.Tracker;
 
 import java.io.File;
 

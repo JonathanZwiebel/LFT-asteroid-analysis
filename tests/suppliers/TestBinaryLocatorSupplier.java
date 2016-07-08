@@ -1,7 +1,7 @@
 package suppliers;
 
 import brightbodies.BrightBodyList;
-import locate.Locator;
+import core.locate.Locator;
 import mains.LFBinaryBaselineMass.BinaryLocatorSupplier;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
@@ -9,8 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import preprocess.K2Preprocessor;
-import preprocess.Preprocessor;
+import core.preprocess.K2Preprocessor;
+import core.preprocess.Preprocessor;
 import mains.LFBinaryBaselineMass.BinaryLocatorMassType;
 
 import java.io.File;
