@@ -1,5 +1,6 @@
 package track;
 
+import brightbodies.BrightBody;
 import brightbodies.BrightBodyEvenSpaceTripleLinkedSet;
 import brightbodies.BrightBodyList;
 import brightbodies.Coordinate;
@@ -36,11 +37,8 @@ public class EvenSpaceTripleTracker extends Tracker {
      * TODO: Remove double calculation of intermediate values within fitness calculation due to overlapping iteration
      */
     public BrightBodyEvenSpaceTripleLinkedSet[] track() {
-        // Counts the number of fitness calculations done (for debugging purposes)
-        int checks = 0;
-
         // A list of all likely sets found
-        @SuppressWarnings("unchecked") ArrayList<BrightBodyEvenSpaceTripleLinkedSet> linked_sets = new ArrayList();
+        @SuppressWarnings("unchecked") ArrayList<BrightBodyEvenSpaceTripleLinkedSet> linked_sets_list = new ArrayList();
 
             // Iterates through all timestamps to contain every set of 3 adjacent frames
             for(int first_timestamp = 0; first_timestamp <= mobile_bodies_.length - 3; first_timestamp++) {
@@ -55,15 +53,19 @@ public class EvenSpaceTripleTracker extends Tracker {
                     for(int second_index = 0; second_index < mobile_bodies_[first_timestamp + 1].size(); second_index++) {
                         for(int third_index = 0; third_index < mobile_bodies_[first_timestamp + 2].size(); third_index++) {
                             float fitness = fitness(mobile_bodies_, first_timestamp, first_index, second_index, third_index);
-                            checks++;
+                            if(fitness >  1) {
+                                BrightBody[] bodies = {mobile_bodies_[first_timestamp].get(first_index), mobile_bodies_[first_timestamp + 1].get(second_index), mobile_bodies_[first_timestamp + 2].get(third_index)};
+                                int[] timestamps = {first_timestamp, first_timestamp + 1, first_timestamp + 2};
+                                linked_sets_list.add(new BrightBodyEvenSpaceTripleLinkedSet(bodies, timestamps));
+                            }
                         }
                     }
                 }
             }
 
         // Returns the completed array of likely asteroids
-        System.out.println("Checks: " + checks);
-        return null;
+        BrightBodyEvenSpaceTripleLinkedSet[] linked_sets = linked_sets_list.toArray(new BrightBodyEvenSpaceTripleLinkedSet[linked_sets_list.size()]);
+        return linked_sets;
     }
 
     /**
@@ -126,11 +128,6 @@ public class EvenSpaceTripleTracker extends Tracker {
         // Kills fitness if the object showed zig-zag behavior with movements in both the positive and negative x or y directions
         if(ab_x_travel_distance * bc_x_travel_distance < 0 || ab_y_travel_distance * bc_y_travel_distance < 0) {
             fitness = 0;
-        }
-
-        // Prints out the coordinates of likely asteroids
-        if(fitness > 1) {
-            System.out.println("Fitness of " + fitness + " found at " + first_timestamp + " with " + coordinates[0] + " and " + coordinates[1] + " and " + coordinates[2]);
         }
 
         // Returns the fitness value

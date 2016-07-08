@@ -52,6 +52,10 @@ public class LFTSingleBasic {
 
             Tracker tracker = new EvenSpaceTripleTracker(sorted_bodies[BaselineMobilityFilter.MBB_INDEX]);
             BrightBodyLinkedSet[] linked_sets = tracker.track();
+
+            for(BrightBodyLinkedSet linked_set : linked_sets) {
+                System.out.println(linked_set);
+            }
         }
         catch(Exception e) {
             e.printStackTrace();

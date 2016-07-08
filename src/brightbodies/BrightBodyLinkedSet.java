@@ -21,4 +21,19 @@ public class BrightBodyLinkedSet {
         mobile_bodies_ = mobile_bodies;
         timestamps_ = timestamps;
     }
+
+    /**
+     * toString() method that prints out the BrightBodies
+     * @return the bright body locations and timestamps in this set
+     */
+    @Override
+    public String toString() {
+        String out = "";
+        out += "LinkedSet of length " + mobile_bodies_.length;
+        for(int i = 0; i < mobile_bodies_.length; i++) {
+            out += "\nAt timestamp " + timestamps_[i] + ": " + mobile_bodies_[i];
+        }
+        out += "\n";
+        return out;
+    }
 }
