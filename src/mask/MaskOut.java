@@ -1,6 +1,6 @@
 package mask;
 
-import helper.FitsHelper;
+import IO.FitsIO;
 import nom.tam.fits.FitsException;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ public final class MaskOut {
     /**
      * Writes a quickly generated BinaryImageMask to a fits file to make analysis of detected patterns easier
      *
-     * @param location location in the filepath to write to
+     * @param location location in the filepath to generateK2Animation to
      * @param data floating point astro-data
      * @param threshold threshold for the BinaryImageMask
      * @throws FitsException
@@ -26,6 +26,6 @@ public final class MaskOut {
     public static void writeBinaryImageMask(String location, float[][] data, float threshold) throws FitsException, IOException {
         BinaryImageMask mask_generator = new BinaryImageMask(data);
         boolean[][] mask = mask_generator.mask(threshold);
-        FitsHelper.write2DImage(mask, location);
+        FitsIO.write2DImage(mask, location);
     }
 }

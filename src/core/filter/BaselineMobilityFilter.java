@@ -3,7 +3,7 @@ package core.filter;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
-import helper.DataMathematicsHelper;
+import helper.MeanImage;
 import core.locate.BinaryLocator;
 import core.locate.BinaryLocatorThresholdType;
 
@@ -68,7 +68,7 @@ public class BaselineMobilityFilter extends MobilityFilter {
      * TODO[Major]: Allow for more types of baseline frames than just mean
      */
     private float[][] generateBaselineFrame() {
-        return DataMathematicsHelper.meanImage(processed_data_);
+        return MeanImage.meanImage(processed_data_);
     }
 
     /**

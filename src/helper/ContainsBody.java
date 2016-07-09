@@ -11,6 +11,7 @@ import brightbodies.CartesianPoint;
  * This class contains static method to determine if a certain BrightBodyList contains a given asteroid
  */
 public final class ContainsBody {
+
     /**
      * Determines if bodies contains a BrightBody with point(x, y) and size between min_size and max_size inclusive
      * @param bodies the list of bodies to search
