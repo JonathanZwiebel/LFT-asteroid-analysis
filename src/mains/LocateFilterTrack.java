@@ -1,6 +1,5 @@
 package mains;
 
-
 /**
  * The MIT License (MIT)
  * Copyright (c) 2016 Jonathan Zwiebel
@@ -20,12 +19,16 @@ package mains;
  *
  *
  * The highest level class that will run the runnable type classes. To use LFT-asteroid-tracking, this class must be
- * run with the first parameter being the run type and subsequent parameters being parameters for the runnable typeit l
+ * run with the first parameter being the run type and subsequent parameters being parameters for the runnable type.
  *
- * @author by Jonathan Zwiebel
- * @version February 26 2016 - t0.1.0 Testing initial suite addition
+ * @author Jonathan Zwiebel
+ * @version 8 July 2016
  */
 public final class LocateFilterTrack {
+    /**
+     * Project main method
+     * @param args main method arguments
+     */
     public static void main(String[] args) {
         switch(args[0]) {
             case "HELP":
