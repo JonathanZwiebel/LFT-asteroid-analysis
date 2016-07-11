@@ -3,23 +3,33 @@ package core.locate;
 import brightbodies.BrightBodyList;
 
 /**
+ * This abstract class will computationally compute the location of BrightBodies for a single frame of a data cube. These
+ * are to be used only in arrays within Locator objects.
+ *
  * @author Jonathan Zwiebel
- * @version November 30th, 2015
+ * @version 11 July 2016
  */
 public abstract class LocatorInstance {
-    final float[][] data_;
+    /**
+     * The slice from the data cube that this LocatorInstance is working over
+     */
+    protected final float[][] data_;
 
     /**
-     * Constructs a LocatorInstance given an image array from the data cube, to be called by a Locator object
-     * @param data one index of a data cube
+     * Constructs a LocatorInstance object given a single slice of a data cube. This is to be called only by the
+     * initialize() method of a Locator object.
+     *
+     * @param data A single slice of a data cube
      */
-    LocatorInstance(float[][] data) {
+    protected LocatorInstance(float[][] data) {
         data_ = data.clone();
     }
 
     /**
-     * Locates all of the BrightBodies in the data array
-     * @return BrightBodyList showing locations of all of the bright bodies
+     * The computational method of the LocatorInstance that finds the BrightBodies in the frame. This method is to be
+     * called only by the locate() method of a Locator object.
+     *
+     * @return BrightBodyList containing all BrightBodies in this frame
      */
-    public abstract BrightBodyList locate(Locator parent);
+    protected abstract BrightBodyList locate(Locator parent);
 }

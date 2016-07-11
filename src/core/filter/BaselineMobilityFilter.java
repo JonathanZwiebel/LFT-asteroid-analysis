@@ -4,8 +4,8 @@ import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
 import brightbodies.CartesianPoint;
 import helper.MeanImage;
-import core.locate.BinaryLocator;
-import core.locate.BinaryLocatorThresholdType;
+import core.locate.binary.BinaryLocator;
+import core.locate.binary.BinaryLocatorThresholdType;
 
 /**
  * @author Jonathan Zwiebel

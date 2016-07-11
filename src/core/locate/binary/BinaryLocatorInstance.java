@@ -1,5 +1,7 @@
-package core.locate;
+package core.locate.binary;
 
+import core.locate.Locator;
+import core.locate.LocatorInstance;
 import stats.MeanStats;
 import brightbodies.BrightBody;
 import brightbodies.BrightBodyList;
@@ -10,22 +12,29 @@ import mask.ImageMask;
 import java.util.ArrayList;
 
 /**
+ * This subclass of LocatorInstance is to be used exclusively with a BinaryLocator object. This class locates the BrightBodies
+ * in each frame using the method described in BinaryLocator.
+ *
  * @author Jonathan Zwiebel
- * @version December 3rd, 2015
+ * @version 11 July 2016
  */
 public class BinaryLocatorInstance extends LocatorInstance {
 
     /**
-     * Constructs a BinaryLocatorInstance that belongs to a BinaryLocator object
-     * @param data one slice of the data in the BinaryLocatorInstance
+     * Constructs a BinaryLocatorInstance that belongs to a BinaryLocator object.
+     *
+     * @param data The frame on which to locate BrightBodies
      */
     public BinaryLocatorInstance(float[][] data) {
         super(data);
     }
 
     /**
-     * Finds all of the pixels above the threshold value
-     * @return List of bright bodies, joined pixels above threshold value
+     * To be called only by a BinaryLocator's locate() method. This method finds the BrightBodies in each frame
+     * by first masking them into a BinaryImage and then iterating over them and connecting adjacent positives into
+     * blobs.
+     *
+     * @return All BrightBodies in this frame
      * TODO[Fix]: Throws a bug when threshold is too low
      * TODO: Mask is thrown away but may want to be accessed
      */
@@ -80,7 +89,7 @@ public class BinaryLocatorInstance extends LocatorInstance {
     }
 
     /**
-     * Extracts a matrix of numerical labels for each coordinate that identifies which bright body it belongs to
+     * Extracts a matrix of numerical labels for each coordinate that identifies which BrightBody it belongs to.
      * @param binary_image original binary image
      * @return integer array of labels
      */
@@ -150,8 +159,8 @@ public class BinaryLocatorInstance extends LocatorInstance {
      * @param i the i value of the calling location
      * @param j the j value of the calling location
      * @param label_matrix the matrix of current labels that is being filled with this call
-     * @param binary_image the nonmutable binary mastk
-     * @param blob_count the current number of blods in the set
+     * @param binary_image the nonmutable binary mask
+     * @param blob_count the current number of blobs in the set
      * TODO: Don't call addToLabelSet if already searched
      */
     private static void addNeighbors(int parent_label, int i, int j, int[][] label_matrix, boolean[][] binary_image, int blob_count) {
