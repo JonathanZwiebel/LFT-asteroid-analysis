@@ -1,4 +1,4 @@
-package IO;
+package fits;
 
 import core.preprocess.K2Preprocessor;
 import core.preprocess.Preprocessor;

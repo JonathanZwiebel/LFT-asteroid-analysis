@@ -1,8 +1,8 @@
 package mains;
 
-import IO.AnimationGenerator;
-import IO.FitsIO;
-import IO.K2AnimationGenerator;
+import fits.AnimationGenerator;
+import fits.FitsIO;
+import fits.K2AnimationGenerator;
 import nom.tam.fits.Fits;
 
 /**

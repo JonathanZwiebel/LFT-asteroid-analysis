@@ -1,4 +1,4 @@
-package IO;
+package fits;
 
 
 import helper.BooleanToFloat;

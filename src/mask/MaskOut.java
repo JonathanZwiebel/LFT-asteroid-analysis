@@ -1,6 +1,6 @@
 package mask;
 
-import IO.FitsIO;
+import fits.FitsIO;
 import nom.tam.fits.FitsException;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package IO;
+package fits;
 
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
