@@ -1,5 +1,7 @@
 package mains;
 
+import java.awt.*;
+
 /**
  * The MIT License (MIT)
  * Copyright (c) 2016 Jonathan Zwiebel
@@ -45,6 +47,12 @@ public final class LocateFilterTrack {
                 break;
             case "LFT_SINGLE_BASIC":
                 LFTSingleBasic.run(args);
+                break;
+            case "PIXEL_ANALYSIS":
+                PixelAnalysis.run(args);
+                break;
+            case "IMAGE_ANALYSIS":
+                ImageAnalysis.run(args);
                 break;
             default:
                 System.err.println("Wrong run type: " + args[0]);
