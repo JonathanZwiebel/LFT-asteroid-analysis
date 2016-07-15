@@ -54,6 +54,9 @@ public final class LocateFilterTrack {
             case "IMAGE_ANALYSIS":
                 ImageAnalysis.run(args);
                 break;
+            case "PIXEL_DIFFERENCE_ANALYSIS":
+                PixelDifferenceAnalysis.run(args);
+                break;
             default:
                 System.err.println("Wrong run type: " + args[0]);
                 System.exit(1);
