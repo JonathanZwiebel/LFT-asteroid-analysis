@@ -57,6 +57,9 @@ public final class LocateFilterTrack {
             case "PIXEL_DIFFERENCE_ANALYSIS":
                 PixelDifferenceAnalysis.run(args);
                 break;
+            case "GENERATE_ASTROMETRY_TEXT_FILE":
+                GenerateAstrometryTextFile.run(args);
+                break;
             default:
                 System.err.println("Wrong run type: " + args[0]);
                 System.exit(1);
