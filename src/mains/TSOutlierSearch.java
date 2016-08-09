@@ -37,15 +37,21 @@ public class TSOutlierSearch {
         String directory_out = args[current_arg];
         current_arg++;
 
-        try {
-            Fits fits = new Fits(new File(file_in));
+        // TODO: More than just squares
+        int size = Integer.parseInt(args[current_arg]);
+        current_arg++;
 
+        int r_runtime = Integer.parseInt(args[current_arg]);
+        current_arg++;
+
+        try {
+        	Fits fits = new Fits(new File(file_in));
             Preprocessor preprocessor = new K2Preprocessor(fits);
             float[][][] data = preprocessor.read();
 
 
-            for(int x = 0; x < data[0].length - 46; x++) {
-                for(int y = 0; y < data[0][0].length - 46; y++){
+            for(int x = 0; x < size; x++) {
+                for(int y = 0; y < size; y++){
                     String raw_file = directory_out + "/" + x + "_" + y + ".csv";
                     FileWriter writer = new FileWriter(new File(raw_file));
                     int x_final = data[0][0].length - 1 - y;
@@ -63,7 +69,7 @@ public class TSOutlierSearch {
                     Runtime.getRuntime().exec("rscript.exe " + rscript + " " + raw_file + " " + first_index + " " + last_index + " " + file_out);
 
                     // Sleep for 4 seconds to allow r script to execute
-                    Thread.sleep(4000);
+                    Thread.sleep(r_runtime);
                 }
             }
         }
