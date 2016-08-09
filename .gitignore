@@ -30,3 +30,6 @@ data/*
 
 # Javadocs #
 javadoc/*
+
+# Vim #
+*.swp
