@@ -44,15 +44,26 @@ public class TSOutlierSearch {
             float[][][] data = preprocessor.read();
 
 
-            for(int x = 0; x < data[0].length; x++) {
-                for(int y = 0; y < data[0][0].length; y++){
-                    FileWriter writer = new FileWriter(new File(directory_out + "/" + x + "_" + y + ".csv"));
+            for(int x = 0; x < data[0].length - 46; x++) {
+                for(int y = 0; y < data[0][0].length - 46; y++){
+                    String raw_file = directory_out + "/" + x + "_" + y + ".csv";
+                    FileWriter writer = new FileWriter(new File(raw_file));
                     int x_final = data[0][0].length - 1 - y;
                     int y_final = x;
                     for(int i = 0; i < data.length; i++) {
                         writer.write(i + "," + data[i][x_final][y_final] + "\n");
                     }
                     writer.close();
+
+                    String file_out = directory_out + "/outliers_" + x + "_" + y + ".csv";
+                    // Included so that console provides feedback
+                    System.out.println("Running rscript for " + x + ", " + y);
+
+                    // Calls the rscript with parameters for the input csv, starting index, ending index, and output file 
+                    Runtime.getRuntime().exec("rscript.exe " + rscript + " " + raw_file + " " + first_index + " " + last_index + " " + file_out);
+
+                    // Sleep for 4 seconds to allow r script to execute
+                    Thread.sleep(4000);
                 }
             }
         }
