@@ -1,7 +1,5 @@
 package mains;
 
-import java.awt.*;
-
 /**
  * The MIT License (MIT)
  * Copyright (c) 2016 Jonathan Zwiebel
@@ -61,7 +59,7 @@ public final class LocateFilterTrack {
                 GenerateAstrometryTextFile.run(args);
                 break;
             case "TS_OUTLIER_SEARCH":
-                TSOutlierSearch.run(args);
+                PixelTSOutliers.run(args);
                 break;
             case "TS_OUTLIER_TEST":
                 TSOutlierTest.run(args);

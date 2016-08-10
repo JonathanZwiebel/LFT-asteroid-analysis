@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * A top level runnable type that uses TSOutlierSearch to generate .csvs with time
+ * A top level runnable type that uses PixelTSOutliers to generate .csvs with time
  * series outliers and then attempts to sort between asteroids, noise, and 
  * fluctuations of the entire dataset
  *
@@ -30,7 +30,7 @@ public class TSOutlierTest {
         //  - 7 Time allocated for each call to the rscript
         String[] search_args = {"TS_OUTLIER_SEARCH", args[1], args[2], args[3], args[4], args[5], args[6], args[7]};
 
-        TSOutlierSearch.run(search_args);
+        PixelTSOutliers.run(search_args);
         
         try {
 

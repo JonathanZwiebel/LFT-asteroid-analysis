@@ -16,7 +16,7 @@ import java.io.FileWriter;
  *
  * TODO: x and y-position reflections may only be valid in the case of square images
  */
-public class TSOutlierSearch {
+public class PixelTSOutliers {
     public static void run(String[] args) {
         assert args[0].equals("TS_OUTLIER_SEARCH");
 
