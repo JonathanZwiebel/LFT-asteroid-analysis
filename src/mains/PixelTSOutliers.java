@@ -18,7 +18,7 @@ import java.io.FileWriter;
  */
 public class PixelTSOutliers {
     public static void run(String[] args) {
-        assert args[0].equals("TS_OUTLIER_SEARCH");
+        assert args[0].equals("PIXEL_TS_OUTLIERS");
 
         int current_arg = 1;
 

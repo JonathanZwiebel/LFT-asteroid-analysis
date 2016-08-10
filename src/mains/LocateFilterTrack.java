@@ -58,11 +58,14 @@ public final class LocateFilterTrack {
             case "GENERATE_ASTROMETRY_TEXT_FILE":
                 GenerateAstrometryTextFile.run(args);
                 break;
-            case "TS_OUTLIER_SEARCH":
+            case "PIXEL_TS_OUTLIERS":
                 PixelTSOutliers.run(args);
                 break;
             case "TS_OUTLIER_TEST":
                 TSOutlierTest.run(args);
+                break;
+            case "TS_OUTLIER_LOCATION":
+                TSOutlierLocation.run(args);
                 break;
             default:
                 System.err.println("Wrong run type: " + args[0]);
