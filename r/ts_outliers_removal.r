@@ -27,7 +27,6 @@ while(!done) {
 	# This is a terrible way to print out the label and know the index
 	# TODO: Figure out how to get the index out of each test$bonf.p[i] value
 	test_times = car::outlierTest(model, label=time)
-	test_indices = car::outlierTest(model)
 
 	# TODO: Figure out in what format these elements are stored
 	name <- names(test_times$bonf.p[1])
@@ -36,10 +35,11 @@ while(!done) {
 	if(!is.na(name) & value < 1) {
 		cat(name, ",", value, "\n", sep="", labels="")
 
-		target_index <- as.integer(names(test_indices$bonf.p[1]))
-		time <- time[-c(target_index)]
-		flux <- flux[-c(target_index)]
-		time_squared <- time_squared[-c(target_index)]
+		target_time <- as.integer(name)
+		index_to_remove <- match(c(target_time), time)
+		time <- time[-c(index_to_remove)]
+		flux <- flux[-c(index_to_remove)]
+		time_squared <- time_squared[-c(index_to_remove)]
 	}
 	else {
 		done = TRUE
