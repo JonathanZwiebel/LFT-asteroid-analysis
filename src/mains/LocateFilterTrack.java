@@ -68,6 +68,8 @@ public final class LocateFilterTrack {
                 case "PIXELS_TO_ITERATIVE_OUTLIERS":
                     PixelsToIterativeOutliers.run(args);
                     break;
+                case "PIXELS_DIR_CSV_GENERATOR":
+                    PixelsDirCSVGenerator.run(args);
                 default:
                     System.err.println("Wrong run type: " + args[0]);
                     System.exit(1);
