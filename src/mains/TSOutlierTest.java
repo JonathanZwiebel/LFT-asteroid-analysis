@@ -14,6 +14,7 @@ import java.util.Map;
  *
  * @author Jonathan Zwiebel
  * @version 9 August 2016
+ * @deprecated
  */
 public class TSOutlierTest {
     public static void run(String[] args) {
@@ -30,7 +31,8 @@ public class TSOutlierTest {
         //  - 7 Time allocated for each call to the rscript
         String[] search_args = {"TS_OUTLIER_SEARCH", args[1], args[2], args[3], args[4], args[5], args[6], args[7]};
 
-        PixelTSOutliers.run(search_args);
+        //TODO: Modify to work with new outlier methods
+        //PixelTSOutliers.run(search_args);
         
         try {
 

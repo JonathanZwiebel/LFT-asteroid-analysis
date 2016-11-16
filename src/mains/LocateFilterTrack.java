@@ -22,7 +22,7 @@ package mains;
  * run with the first parameter being the run type and subsequent parameters being parameters for the runnable type.
  *
  * @author Jonathan Zwiebel
- * @version 8 July 2016
+ * @version 15 November 2016
  */
 public final class LocateFilterTrack {
     /**
@@ -35,8 +35,8 @@ public final class LocateFilterTrack {
                 case "HELP":
                     Help.run(args);
                     break;
-                case "GENERATE_ANIMATION":
-                    GenerateAnimation.run(args);
+                case "GENERATE_K2_ANIMATION":
+                    GenerateK2Animation.run(args);
                     break;
                 case "LF_BIN_BASE_SINGLE_FIXED_TIME":
                     LFBinBaseSingleFixedTime.run(args);
@@ -47,26 +47,23 @@ public final class LocateFilterTrack {
                 case "LFT_SINGLE_BASIC":
                     LFTSingleBasic.run(args);
                     break;
-                case "PIXEL_ANALYSIS":
-                    PixelAnalysis.run(args);
+                case "PIXEL_CSV_GENERATOR":
+                    PixelCSVGenerator.run(args);
                     break;
                 case "IMAGE_ANALYSIS":
                     ImageAnalysis.run(args);
                     break;
-                case "PIXEL_DIFFERENCE_ANALYSIS":
-                    PixelDifferenceAnalysis.run(args);
+                case "PIXEL_CSV_MEDIAN_GENERATOR":
+                    PixelCSVMedianGenerator.run(args);
                     break;
                 case "GENERATE_ASTROMETRY_TEXT_FILE":
                     GenerateAstrometryTextFile.run(args);
                     break;
-                case "PIXEL_TS_OUTLIERS":
-                    PixelTSOutliers.run(args);
-                    break;
                 case "TS_OUTLIER_TEST":
                     TSOutlierTest.run(args);
                     break;
-                case "TS_OUTLIER_LOCATION":
-                    TSOutlierLocation.run(args);
+                case "OUTLIER_CSV_TO_GROUPS":
+                    OutlierCSVToGroups.run(args);
                     break;
                 case "PIXELS_TO_ITERATIVE_OUTLIERS":
                     PixelsToIterativeOutliers.run(args);

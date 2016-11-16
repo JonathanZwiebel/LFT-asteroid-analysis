@@ -38,7 +38,7 @@ public final class LFBinaryBaselineMass {
         MEAN_SCALED_RANGE // specify scalar increment, low, and high count
     }
 
-    public static void run(String[] args) {
+    public static void run(String[] args) throws Exception {
         assert args[0].equals("LF_BINARY_BASELINE_MASS");
 
         // TODO: Consider making this only accessible by method so every time it is checked, the number actually increments
@@ -106,7 +106,7 @@ public final class LFBinaryBaselineMass {
         float similarity_threshold = Float.parseFloat(args[current_arg]);
         current_arg++;
 
-	// TODO: Completely remove the framework for multiple mass types
+        // TODO: Completely remove the framework for multiple mass types
         BaselineFrameMassType baselineMassType = null;
         BaselineFrameGenerationMethod baselineMassTypeSingleType = null; // this one is only filled in the SINGLE case
         float[] baselineMassTypeArgs = null;
@@ -181,97 +181,92 @@ public final class LFBinaryBaselineMass {
         int max_size = Integer.parseInt(args[current_arg]);
         current_arg++;
 
-        try {
-            File dir = new File(data_location);
-            if(!dir.exists()) {
-                assert dir.mkdirs();
-            }
+        File dir = new File(data_location);
+        if(!dir.exists()) {
+            assert dir.mkdirs();
+        }
 
-            File mobile = new File(data_location + "/mobile.csv");
-            Writer mobile_writer = new FileWriter(mobile);
-            BufferedWriter mobile_buffered_writer = new BufferedWriter(mobile_writer);
+        File mobile = new File(data_location + "/mobile.csv");
+        Writer mobile_writer = new FileWriter(mobile);
+        BufferedWriter mobile_buffered_writer = new BufferedWriter(mobile_writer);
 
-            File immobile = new File(data_location + "/immobile.csv");
-            Writer immobile_writer = new FileWriter(immobile);
-            BufferedWriter immobile_buffered_writer = new BufferedWriter(immobile_writer);
+        File immobile = new File(data_location + "/immobile.csv");
+        Writer immobile_writer = new FileWriter(immobile);
+        BufferedWriter immobile_buffered_writer = new BufferedWriter(immobile_writer);
 
-            File noise = new File(data_location + "/noise.csv");
-            Writer noise_writer = new FileWriter(noise);
-            BufferedWriter noise_buffered_writer = new BufferedWriter(noise_writer);
+        File noise = new File(data_location + "/noise.csv");
+        Writer noise_writer = new FileWriter(noise);
+        BufferedWriter noise_buffered_writer = new BufferedWriter(noise_writer);
 
-            File contains = new File(data_location + "/contains.csv");
-            Writer contains_writer = new FileWriter(contains);
-            BufferedWriter contains_buffered_writer = new BufferedWriter(contains_writer);
+        File contains = new File(data_location + "/contains.csv");
+        Writer contains_writer = new FileWriter(contains);
+        BufferedWriter contains_buffered_writer = new BufferedWriter(contains_writer);
 
-            File success = new File(data_location + "/success.csv");
-            Writer success_writer = new FileWriter(success);
-            BufferedWriter success_buffered_writer = new BufferedWriter(success_writer);
+        File success = new File(data_location + "/success.csv");
+        Writer success_writer = new FileWriter(success);
+        BufferedWriter success_buffered_writer = new BufferedWriter(success_writer);
 
-            File information = new File(data_location + "/information.txt");
-            Writer information_writer = new FileWriter(information);
-            BufferedWriter information_buffered_writer = new BufferedWriter(information_writer);
+        File information = new File(data_location + "/information.txt");
+        Writer information_writer = new FileWriter(information);
+        BufferedWriter information_buffered_writer = new BufferedWriter(information_writer);
 
-            information_buffered_writer.write("This folder contains data from a locate-filter test on a single frame " +
-                            "from " + filename + ". A range of scalars were used to generate target and baseline " +
-                            "threshold values relative to the target and baseline mean brightness values. " +
-                            "The target threshold value is used to find the " +
-                            "bright bodies in each frame while the baseline threshold value is used to find the " +
-                            "the bright bodies that can be found over the 'mean image'. " +
-                    "Objects that are found in single frames but not the mean image " +
-                            "are classified as mobile as they were only present for small portions of time and have " +
-                            "had their brightness 'averaged' out over the entire dataset. Objects found in both the " +
-                            "single and mean images are classified as immobile. Objects that are smaller than a given" +
-                            "size are classified as noise. The count of each kind of object for the different target" +
-                            "and baseline threshold values are found in their respective .csv files.");
-            information_buffered_writer.newLine();
-            information_buffered_writer.write("The data that this set was run over was known to contain an asteroid " +
-                            "at position (" + x_pos + ", " + y_pos + ") in frame " + (timestamp - 1) + ". The " +
-                    "asteroid was known to be between " + min_size + " and " + max_size + " pixels large. If the test " +
-                    "classified the object at this position as mobile it was given a success rate equal to the inverse " +
-                    "of the number of total objects classified as mobile. If the asteroid was classified as immobile, " +
-                            "classified as noise, or not found the success rate was given as 0. These values can be found " +
-                            "in success.csv. A formatted file containing the data from success.csv with " +
-                            "two-way excel graphs is included as graphs.xlsx.");
-            information_buffered_writer.close();
+        information_buffered_writer.write("This folder contains data from a locate-filter test on a single frame " +
+                "from " + filename + ". A range of scalars were used to generate target and baseline " +
+                "threshold values relative to the target and baseline mean brightness values. " +
+                "The target threshold value is used to find the " +
+                "bright bodies in each frame while the baseline threshold value is used to find the " +
+                "the bright bodies that can be found over the 'mean image'. " +
+                "Objects that are found in single frames but not the mean image " +
+                "are classified as mobile as they were only present for small portions of time and have " +
+                "had their brightness 'averaged' out over the entire dataset. Objects found in both the " +
+                "single and mean images are classified as immobile. Objects that are smaller than a given" +
+                "size are classified as noise. The count of each kind of object for the different target" +
+                "and baseline threshold values are found in their respective .csv files.");
+        information_buffered_writer.newLine();
+        information_buffered_writer.write("The data that this set was run over was known to contain an asteroid " +
+                "at position (" + x_pos + ", " + y_pos + ") in frame " + (timestamp - 1) + ". The " +
+                "asteroid was known to be between " + min_size + " and " + max_size + " pixels large. If the test " +
+                "classified the object at this position as mobile it was given a success rate equal to the inverse " +
+                "of the number of total objects classified as mobile. If the asteroid was classified as immobile, " +
+                "classified as noise, or not found the success rate was given as 0. These values can be found " +
+                "in success.csv. A formatted file containing the data from success.csv with " +
+                "two-way excel graphs is included as graphs.xlsx.");
+        information_buffered_writer.close();
 
-            Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(filename)));
-            float data[][][] = preprocessor.read();
-            BinaryLocatorSupplier locator_supplier = new BinaryLocatorSupplier(data, binaryLocatorMassType, binaryLocatorMassTypeArgs);
-            while(!locator_supplier.empty()) {
-                Locator locator = locator_supplier.popLocator();
-                locator.initialize();
-                BrightBodyList[] bodies = locator.locate();
-                BaselineFrameFilterSupplier filter_supplier = new BaselineFrameFilterSupplier(bodies, data, similarity_threshold, baselineMassType, baselineMassTypeArgs);
-                while(!filter_supplier.empty()) {
-                    MobilityFilter filter = filter_supplier.popFilter();
-                    BrightBodyList[][] sorted_bodies = filter.filter();
-                    immobile_buffered_writer.write(sorted_bodies[MobilityFilter.IBB_INDEX][timestamp - 1].size() + ",");
-                    noise_buffered_writer.write(sorted_bodies[MobilityFilter.NOISE_INDEX][timestamp - 1].size() + ",");
-                    mobile_buffered_writer.write(sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1].size() + ",");
-                    boolean contain = ContainsBody.containsBody(sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1], x_pos, y_pos, min_size, max_size);
-                    contains_buffered_writer.write(contain + ",");
-                    if(contain) {
-                        success_buffered_writer.write(1 / (float) sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1].size() + ",");
-                    }
-                    else {
-                        success_buffered_writer.write(0 + ",");
-                    }
+        Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(filename)));
+        float data[][][] = preprocessor.read();
+        BinaryLocatorSupplier locator_supplier = new BinaryLocatorSupplier(data, binaryLocatorMassType, binaryLocatorMassTypeArgs);
+        while(!locator_supplier.empty()) {
+            Locator locator = locator_supplier.popLocator();
+            locator.initialize();
+            BrightBodyList[] bodies = locator.locate();
+            BaselineFrameFilterSupplier filter_supplier = new BaselineFrameFilterSupplier(bodies, data, similarity_threshold, baselineMassType, baselineMassTypeArgs);
+            while(!filter_supplier.empty()) {
+                MobilityFilter filter = filter_supplier.popFilter();
+                BrightBodyList[][] sorted_bodies = filter.filter();
+                immobile_buffered_writer.write(sorted_bodies[MobilityFilter.IBB_INDEX][timestamp - 1].size() + ",");
+                noise_buffered_writer.write(sorted_bodies[MobilityFilter.NOISE_INDEX][timestamp - 1].size() + ",");
+                mobile_buffered_writer.write(sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1].size() + ",");
+                boolean contain = ContainsBody.containsBody(sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1], x_pos, y_pos, min_size, max_size);
+                contains_buffered_writer.write(contain + ",");
+                if(contain) {
+                    success_buffered_writer.write(1 / (float) sorted_bodies[MobilityFilter.MBB_INDEX][timestamp - 1].size() + ",");
                 }
-                mobile_buffered_writer.newLine();
-                contains_buffered_writer.newLine();
-                immobile_buffered_writer.newLine();
-                noise_buffered_writer.newLine();
-                success_buffered_writer.newLine();
+                else {
+                    success_buffered_writer.write(0 + ",");
+                }
             }
-            mobile_buffered_writer.close();
-            contains_buffered_writer.close();
-            immobile_buffered_writer.close();
-            noise_buffered_writer.close();
-            success_buffered_writer.close();
+            mobile_buffered_writer.newLine();
+            contains_buffered_writer.newLine();
+            immobile_buffered_writer.newLine();
+            noise_buffered_writer.newLine();
+            success_buffered_writer.newLine();
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        mobile_buffered_writer.close();
+        contains_buffered_writer.close();
+        immobile_buffered_writer.close();
+        noise_buffered_writer.close();
+        success_buffered_writer.close();
     }
 
     public static final class BinaryLocatorSupplier {

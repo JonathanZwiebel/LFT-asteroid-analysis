@@ -28,7 +28,7 @@ public final class LFBinBaseSingleFixedTime {
      * Main method to be run for program execution
      * @param args Location, Initial locating threshold, Similarity threshold, Baseline locating threshold, Timestamp
      */
-    public static void run(String[] args) {
+    public static void run(String[] args) throws Exception {
         assert args[0].equals("LF_SINGLE_FIXED_TIME");
 
         // Start data parsing
@@ -103,30 +103,25 @@ public final class LFBinBaseSingleFixedTime {
 
 
         long start_time = System.currentTimeMillis();
-        try {
-            System.out.println("Preprocessing");
-            Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(data_location)));
-            float[][][] data = preprocessor.read();
+        System.out.println("Preprocessing");
+        Preprocessor preprocessor = new K2Preprocessor(new Fits(new File(data_location)));
+        float[][][] data = preprocessor.read();
 
-            System.out.println("Locating");
-            Locator locator = new BinaryLocator(data, detection_threshold_type, detection_args);
-            locator.initialize();
-            BrightBodyList[] bodies = locator.locate();
+        System.out.println("Locating");
+        Locator locator = new BinaryLocator(data, detection_threshold_type, detection_args);
+        locator.initialize();
+        BrightBodyList[] bodies = locator.locate();
 
-            System.out.println("Filtering");
-            MobilityFilter filter = new BaselineMobilityFilter(bodies, data, similarity_threshold, baseline_frame_detection_threshold_type, baseline_frame_detection_args);
-            BrightBodyList[][] filtered_bodies = filter.filter();
-            BrightBodyList[] immobile_bodies = filtered_bodies[MobilityFilter.IBB_INDEX];
-            BrightBodyList[] mobile_bodies = filtered_bodies[MobilityFilter.MBB_INDEX];
-            BrightBodyList[] noise_bodies = filtered_bodies[MobilityFilter.NOISE_INDEX];
+        System.out.println("Filtering");
+        MobilityFilter filter = new BaselineMobilityFilter(bodies, data, similarity_threshold, baseline_frame_detection_threshold_type, baseline_frame_detection_args);
+        BrightBodyList[][] filtered_bodies = filter.filter();
+        BrightBodyList[] immobile_bodies = filtered_bodies[MobilityFilter.IBB_INDEX];
+        BrightBodyList[] mobile_bodies = filtered_bodies[MobilityFilter.MBB_INDEX];
+        BrightBodyList[] noise_bodies = filtered_bodies[MobilityFilter.NOISE_INDEX];
 
-            // TODO: Consider if it is acceptable for the BinLoc to use an _args style while the BaseMobFil has the args hard coded
-            printSimpleDetectionStatsTimestamped(mobile_bodies, immobile_bodies, noise_bodies, timestamp);
-            printSimpleDetectionDataTimestamped(mobile_bodies, immobile_bodies, noise_bodies, timestamp);
-        }
-        catch(Exception e ) {
-            e.printStackTrace();
-        }
+        // TODO: Consider if it is acceptable for the BinLoc to use an _args style while the BaseMobFil has the args hard coded
+        printSimpleDetectionStatsTimestamped(mobile_bodies, immobile_bodies, noise_bodies, timestamp);
+        printSimpleDetectionDataTimestamped(mobile_bodies, immobile_bodies, noise_bodies, timestamp);
 
         long end_time = System.currentTimeMillis();
         System.out.println("Run time: " + (end_time - start_time) + " milliseconds");

@@ -6,9 +6,11 @@ import core.locate.binary.BinaryLocator;
 import core.locate.binary.BinaryLocatorThresholdType;
 import core.preprocess.K2Preprocessor;
 import nom.tam.fits.Fits;
+import nom.tam.fits.FitsException;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * A top level runnable type for generating text files to be submitted to Astrometry.net for spatial evaluation. The
@@ -19,7 +21,7 @@ import java.io.FileWriter;
  * @version 15 July 2015
  */
 public class GenerateAstrometryTextFile {
-    public static void run(String[] args) {
+    public static void run(String[] args) throws Exception {
         assert args[0].equals("GENERATE_ASTROMETRY_TEXT_FILE");
 
         int current_arg = 1;
@@ -39,35 +41,30 @@ public class GenerateAstrometryTextFile {
         String file_out = args[current_arg];
         current_arg++;
 
-        try {
-            Fits fits = new Fits(new File(file_in));
+        Fits fits = new Fits(new File(file_in));
 
-            K2Preprocessor preprocessor = new K2Preprocessor(fits);
-            float[][][] data = preprocessor.read();
+        K2Preprocessor preprocessor = new K2Preprocessor(fits);
+        float[][][] data = preprocessor.read();
 
-            float[] locator_args = {scalar};
-            BinaryLocator locator = new BinaryLocator(data, BinaryLocatorThresholdType.MEAN_SCALED, locator_args);
-            locator.initialize();
-            BrightBodyList[] bodies = locator.locate();
+        float[] locator_args = {scalar};
+        BinaryLocator locator = new BinaryLocator(data, BinaryLocatorThresholdType.MEAN_SCALED, locator_args);
+        locator.initialize();
+        BrightBodyList[] bodies = locator.locate();
 
-            BrightBodyList frame_bodies = bodies[frame];
-            frame_bodies.sortByArea();
+        BrightBodyList frame_bodies = bodies[frame];
+        frame_bodies.sortByArea();
 
-            FileWriter writer = new FileWriter(new File(file_out));
+        FileWriter writer = new FileWriter(new File(file_out));
 
-            int i = 0;
-            for(BrightBody body : frame_bodies) {
-                if(i == max_object_count) {
-                    break;
-                }
-
-                writer.write(body.centroid.x + "," + body.centroid.y + "\n");
-                i++;
+        int i = 0;
+        for(BrightBody body : frame_bodies) {
+            if(i == max_object_count) {
+                break;
             }
-            writer.close();
+
+            writer.write(body.centroid.x + "," + body.centroid.y + "\n");
+            i++;
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        writer.close();
     }
 }

@@ -7,73 +7,65 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * A top level runnable type for locating asteroids given .csv files with time
- * series outliers over individual pixels. The CSV files should be in the same
- * directory and named outliers_x_y.csv. This class is to be used in
- * conjunction with PixelTSOutliers.java
+ * A top level runnable type that takes in a directory of outlier .csv files and outputs a FTBBF file which contains
+ * groups of adjacent pixels found in the outlier files.
+ * TODO: Modify this to function with new _block naming scheme
  *
  * @author Jonathan Zwiebel
- * @version 14 September 2016
+ * @version 15 November 2016
  */
-public class TSOutlierLocation {
-    public static void run(String[] args) {
-        assert args[0].equals("TS_OUTLIER_LOCATION");
+public class OutlierCSVToGroups {
+    public static void run(String[] args) throws Exception {
+        assert args[0].equals("OUTLIER_CSV_TO_GROUPS");
 
         int current_arg = 1;
 
-        //TODO: More than just squares
         int size = Integer.parseInt(args[current_arg]);
         current_arg++;
 
         String directory = args[current_arg];
         current_arg++;
 
-        try {
-            ArrayList<SpaceTimeCoordinate> hits = new ArrayList<>();
+        ArrayList<SpaceTimeCoordinate> hits = new ArrayList<>();
 
-            for(int i = 0; i < size; i++) {
-                for(int j = 0; j < size; j++) {
-                    String location = directory + "/outliers_" + i + "_" + j + ".csv";
-                    File file = new File(location);
-                    BufferedReader reader = new BufferedReader(new FileReader(file));
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                String location = directory + "/outliers_" + i + "_" + j + ".csv";
+                File file = new File(location);
+                BufferedReader reader = new BufferedReader(new FileReader(file));
 
-                    String line = null;
-                    while((line = reader.readLine()) != null) {
-                        int comma_index = line.indexOf(',');
-                        int timestamp = Integer.parseInt(line.substring(0, comma_index));
-                        hits.add(new SpaceTimeCoordinate(i, j, timestamp));
-                    }
+                String line = null;
+                while((line = reader.readLine()) != null) {
+                    int comma_index = line.indexOf(',');
+                    int timestamp = Integer.parseInt(line.substring(0, comma_index));
+                    hits.add(new SpaceTimeCoordinate(i, j, timestamp));
                 }
             }
-            ArrayList<FixedTimeBrightBodyFactory> factory_list = new ArrayList<>();
-
-            // On termination of this loop body_list contains a list of FTBBFs that contain all pixels and group
-            // adjacent ones with matching times
-            for(int stc_index = 0; stc_index < hits.size(); stc_index++) {
-                SpaceTimeCoordinate stc = hits.get(stc_index);
-                FixedTimeBrightBodyFactory factory = new FixedTimeBrightBodyFactory(stc.t);
-                factory.addPixel(stc.x, stc.y);
-                hits.remove(stc);
-                stc_index--;
-                addAdjacentPixelsToFixedTimeFactory(factory, hits, stc);
-                factory_list.add(factory);
-            }
-
-            Collections.sort(factory_list);
-
-            File out = new File("data\\FTBBFs.txt");
-            FileWriter file_writer = new FileWriter(out);
-            BufferedWriter buffered_writer = new BufferedWriter(file_writer);
-            for(FixedTimeBrightBodyFactory factory : factory_list) {
-                buffered_writer.write(factory.toString());
-            }
-            buffered_writer.close();
-            file_writer.close();
-
         }
-        catch(Exception e) {
-            e.printStackTrace();
+        ArrayList<FixedTimeBrightBodyFactory> factory_list = new ArrayList<>();
+
+        // On termination of this loop body_list contains a list of FTBBFs that contain all pixels and group
+        // adjacent ones with matching times
+        for(int stc_index = 0; stc_index < hits.size(); stc_index++) {
+            SpaceTimeCoordinate stc = hits.get(stc_index);
+            FixedTimeBrightBodyFactory factory = new FixedTimeBrightBodyFactory(stc.t);
+            factory.addPixel(stc.x, stc.y);
+            hits.remove(stc);
+            stc_index--;
+            addAdjacentPixelsToFixedTimeFactory(factory, hits, stc);
+            factory_list.add(factory);
         }
+
+        Collections.sort(factory_list);
+
+        File out = new File("data\\FTBBFs.txt");
+        FileWriter file_writer = new FileWriter(out);
+        BufferedWriter buffered_writer = new BufferedWriter(file_writer);
+        for(FixedTimeBrightBodyFactory factory : factory_list) {
+            buffered_writer.write(factory.toString());
+        }
+        buffered_writer.close();
+        file_writer.close();
     }
 
     /**
