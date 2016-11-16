@@ -12,7 +12,6 @@ first_index <- args[2]
 last_index <- args[3]
 file_out <- args[4]
 file_lock <- args[5]
-lock_id <- args[6]
 
 data = read.csv(file_in, header=FALSE)
 time <- data$V1[first_index:last_index]
@@ -47,5 +46,5 @@ while(!done) {
 }
 
 sink(file_lock)
-cat(lock_id, "\n")
+cat("locked", "\n")
 

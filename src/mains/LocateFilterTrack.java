@@ -30,46 +30,54 @@ public final class LocateFilterTrack {
      * @param args main method arguments
      */
     public static void main(String[] args) {
-        switch(args[0]) {
-            case "HELP":
-                Help.run(args);
-                break;
-            case "GENERATE_ANIMATION":
-                GenerateAnimation.run(args);
-                break;
-            case "LF_BIN_BASE_SINGLE_FIXED_TIME":
-                LFBinBaseSingleFixedTime.run(args);
-                break;
-            case "LF_BINARY_BASELINE_MASS":
-                LFBinaryBaselineMass.run(args);
-                break;
-            case "LFT_SINGLE_BASIC":
-                LFTSingleBasic.run(args);
-                break;
-            case "PIXEL_ANALYSIS":
-                PixelAnalysis.run(args);
-                break;
-            case "IMAGE_ANALYSIS":
-                ImageAnalysis.run(args);
-                break;
-            case "PIXEL_DIFFERENCE_ANALYSIS":
-                PixelDifferenceAnalysis.run(args);
-                break;
-            case "GENERATE_ASTROMETRY_TEXT_FILE":
-                GenerateAstrometryTextFile.run(args);
-                break;
-            case "PIXEL_TS_OUTLIERS":
-                PixelTSOutliers.run(args);
-                break;
-            case "TS_OUTLIER_TEST":
-                TSOutlierTest.run(args);
-                break;
-            case "TS_OUTLIER_LOCATION":
-                TSOutlierLocation.run(args);
-                break;
-            default:
-                System.err.println("Wrong run type: " + args[0]);
-                System.exit(1);
+        try {
+            switch(args[0]) {
+                case "HELP":
+                    Help.run(args);
+                    break;
+                case "GENERATE_ANIMATION":
+                    GenerateAnimation.run(args);
+                    break;
+                case "LF_BIN_BASE_SINGLE_FIXED_TIME":
+                    LFBinBaseSingleFixedTime.run(args);
+                    break;
+                case "LF_BINARY_BASELINE_MASS":
+                    LFBinaryBaselineMass.run(args);
+                    break;
+                case "LFT_SINGLE_BASIC":
+                    LFTSingleBasic.run(args);
+                    break;
+                case "PIXEL_ANALYSIS":
+                    PixelAnalysis.run(args);
+                    break;
+                case "IMAGE_ANALYSIS":
+                    ImageAnalysis.run(args);
+                    break;
+                case "PIXEL_DIFFERENCE_ANALYSIS":
+                    PixelDifferenceAnalysis.run(args);
+                    break;
+                case "GENERATE_ASTROMETRY_TEXT_FILE":
+                    GenerateAstrometryTextFile.run(args);
+                    break;
+                case "PIXEL_TS_OUTLIERS":
+                    PixelTSOutliers.run(args);
+                    break;
+                case "TS_OUTLIER_TEST":
+                    TSOutlierTest.run(args);
+                    break;
+                case "TS_OUTLIER_LOCATION":
+                    TSOutlierLocation.run(args);
+                    break;
+                case "PIXELS_TO_ITERATIVE_OUTLIERS":
+                    PixelsToIterativeOutliers.run(args);
+                    break;
+                default:
+                    System.err.println("Wrong run type: " + args[0]);
+                    System.exit(1);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
         }
     }
 }
