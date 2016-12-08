@@ -8,10 +8,11 @@ import java.io.File;
 import java.io.FileWriter;
 
 /**
- * A top level runnable type that extracts a given pixel .csv from a K2 FITS file
+ * A top level runnable type that extracts a directory of  pixel .csvs from a K2 FITS file
+ * A seperate .csv is generate for each pixel
  *
  * @author Jonathan Zwiebel
- * @version 15 November 2016
+ * @version 8 December 2016
  */
 public class PixelsDirCSVGenerator {
     public static void run(String[] args) throws Exception {
