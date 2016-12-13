@@ -43,6 +43,11 @@ public class FixedTimeBrightBodyFactory implements Comparable<FixedTimeBrightBod
         }
     }
 
+    // Returns the number of coordinates in this factory
+    public int size() {
+        return pixels.size();
+    }
+
     /**
      * If this FTBBF has a higher number of pixel values as other returns a positive value
      * If this FTBBF has the same number of pixel values as other returns zero
@@ -57,7 +62,7 @@ public class FixedTimeBrightBodyFactory implements Comparable<FixedTimeBrightBod
     @Override
     public String toString() {
         String buf = "";
-        buf += "FixedTimeBrightBodyFactory at timestamp " + timestamp_;
+        buf += "FixedTimeBrightBodyFactory at timestamp " + timestamp_ + " of size " + pixels.size();
         for(CartesianPoint p : pixels) {
             buf += "\n" + p;
         }
