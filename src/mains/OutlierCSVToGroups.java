@@ -9,13 +9,29 @@ import java.util.Collections;
 /**
  * A top level runnable type that takes in a directory of outlier .csv files and outputs a FTBBF file which contains
  * groups of adjacent pixels found in the outlier files.
- * TODO: Modify this to function with new _block naming scheme
  *
+ *
+ * Input File Format:
+ *  dir/x_y_blockname.csv
+ * 
+ * Argument Order: 
+ *  0 - "OUTLIER_CSV_TO_GROUPS"
+ *  1 - Directory containing outlier .csv files for individual pixels
+ *  2 - Block name for outlier .csv files
+ *  3 - Filename for output location of .txt file with all FTBBFs (Do not include ".txt")
+ *  4 - Filename for output location of .csv file with FTBBF counts by size (Do not include ".csv")
+ *  
  * @author Jonathan Zwiebel
- * @version 13 December 2016
+ * @version 26 January 2017
  */
 public class OutlierCSVToGroups {
+    public static final float[] CUTOFF_VALUES = {0.0001f, 0.00033f, 0.001f, 0.0033f, 0.01f, 0.033f, 0.1f, 0.33f, 1f};
+
     public static void run(String[] args) throws Exception {
+        // *****************
+        // BEGIN INPUT STAGE
+        // *****************
+
         assert args[0].equals("OUTLIER_CSV_TO_GROUPS");
 
         int current_arg = 1;
@@ -32,11 +48,23 @@ public class OutlierCSVToGroups {
         String file_out = args[current_arg];
         current_arg++;
 
+        // Location to dump csv of counted FTBBF size frequencies
         String size_file_out  = args[current_arg];
         current_arg++;
 
+        // ***************
+        // END INPUT STAGE
+        // ***************
+
+        // ************************
+        // BEGIN DATA LOADING STAGE
+        // ************************
+
         // An array that contains all pixels in a frame (STC) which contained an outlier
-        ArrayList<SpaceTimeCoordinate> hits = new ArrayList<>();
+        ArrayList<SpaceTimeCoordinate> hits[] = new ArrayList[CUTOFF_VALUES.length];
+        for(int i = 0; i < CUTOFF_VALUES.length; i++) {
+            hits[i] = new ArrayList<>();
+        }
 
         // The maximum j-value that contains valid targets
         int jlimit = -1;
@@ -47,12 +75,15 @@ public class OutlierCSVToGroups {
         System.out.println("Starting while loop to iterate through values");
         // TODO: Maybe not a while loop
         while(true) {
-            // TODO[Bug]: If block name is invalid then the code goes into a silent infinite loop, desired state should be quit
             String filename_in = dir_in + "/" + i + "_" + j + "_" + block + ".csv";
 
             // Sets up the i and j values to always get a valid target file
             File file_in = new File(filename_in);
             if(!file_in.exists()) {
+                if(i == 0 && j == 0) {
+                    System.err.println("Illegal block name passed to OutlierCSVToGroups");
+                    System.exit(1);
+                }
                 if(jlimit == -1) {
                     jlimit = j - 1;
                 }
@@ -69,76 +100,116 @@ public class OutlierCSVToGroups {
             BufferedReader reader = new BufferedReader(new FileReader(file));
 
             // Adds all of the outliers from a given outlier file to the STC array list
+            // Checks the p-value against all cutoff values and adds the coordinates depending on if it below a cutoff value
             String line = null;
             while((line = reader.readLine()) != null) {
                 int comma_index = line.indexOf(',');
                 int timestamp = Integer.parseInt(line.substring(0, comma_index));
-                hits.add(new SpaceTimeCoordinate(i, j, timestamp));
+                float adjusted_p_value = Float.parseFloat(line.substring(comma_index + 1));
+                for(int cutoff_index = 0; cutoff_index < CUTOFF_VALUES.length; cutoff_index++) {
+                    if(adjusted_p_value < CUTOFF_VALUES[cutoff_index]) {
+                        hits[cutoff_index].add(new SpaceTimeCoordinate(i, j, timestamp));
+                    }
+                }
             }
 
             ++j;
           System.out.println("Completed outliers extraction from file at " + i + ", " + j);
         }
 
-    // The array list of factories which contain candidates made up of adjacent outliers in one frame
-    // Each FixedTimeBrightBodyFactory has a variable for time an ArrayList of coordinate points
-    // STCs are not used because time is constant amongs a FTBBF
-        ArrayList<FixedTimeBrightBodyFactory> factory_list = new ArrayList<>();
+        // **********************
+        // END DATA LOADING STAGE
+        // **********************
 
-        System.out.println("Starting while loop to create factories from " + hits.size() + " STCs");
-        int count = 1;
-        while(hits.size() > 0) {
-            SpaceTimeCoordinate stc = hits.get(0);
-            FixedTimeBrightBodyFactory factory = new FixedTimeBrightBodyFactory(stc.t);
-            factory.addPixel(stc.x, stc.y);
-            hits.remove(stc);
+        for(int cutoff_index = 0; cutoff_index < CUTOFF_VALUES.length; cutoff_index++) {
+            // **********************
+            // BEGIN PROCESSING STAGE
+            // **********************
 
-             // aAPtFTF function takes the factory created, the set of all outliers, and values for the newest outlier
-            addAdjacentPixelsToFixedTimeFactory(factory, hits, stc);
-            factory_list.add(factory);
-            ++count;
-        }
-        System.out.println("Complete construction of " + count + " factories");
+            // The array list of factories which contain candidates made up of adjacent outliers in one frame
+            ArrayList<FixedTimeBrightBodyFactory> factory_list = new ArrayList<>();
 
-        Collections.sort(factory_list);
-        Collections.reverse(factory_list);
+            System.out.println("Starting while loop to create factories from " + hits[cutoff_index].size() + " STCs at cutoff of " + CUTOFF_VALUES[cutoff_index]);
+            int count = 1;
+            while(hits[cutoff_index].size() > 0) {
+                SpaceTimeCoordinate stc = hits[cutoff_index].get(0);
+                FixedTimeBrightBodyFactory factory = new FixedTimeBrightBodyFactory(stc.t);
+                factory.addPixel(stc.x, stc.y);
+                hits[cutoff_index].remove(stc);
 
-        File out = new File(file_out);
-        FileWriter file_writer = new FileWriter(out);
-        BufferedWriter buffered_writer = new BufferedWriter(file_writer);
-        buffered_writer.write("This file groups adjacent outliers in single frames into targets.\n");
-        buffered_writer.write("Data from this file is taken from " + dir_in + " | Block: " + block);
-        
-        // Assumed that the default value is 0
-        // 0 to 124 is sizes 1 to 125, 125 is size larger than 125
-
-
-        int[] count_at_each_size = new int[126];
-
-        for(FixedTimeBrightBodyFactory factory : factory_list) {
-            buffered_writer.write(factory.toString());
-            if(factory.size() > 125) {
-                ++count_at_each_size[125];
+                 // aAPtFTF function takes the factory created, the set of all outliers, and values for the newest outlier
+                addAdjacentPixelsToFixedTimeFactory(factory, hits[cutoff_index], stc);
+                factory_list.add(factory);
+                ++count;
             }
-            else {
-                ++count_at_each_size[factory.size() - 1];
+            System.out.println("Complete construction of " + count + " factories");
+
+            Collections.sort(factory_list);
+            Collections.reverse(factory_list);
+
+            // ********************
+            // END PROCESSING STAGE
+            // ********************
+
+            // ******************
+            // BEGIN OUTPUT STAGE
+            // ******************
+
+            File out = new File(file_out + "_" + CUTOFF_VALUES[cutoff_index] + ".txt");
+            FileWriter file_writer = new FileWriter(out);
+            BufferedWriter buffered_writer = new BufferedWriter(file_writer);
+            buffered_writer.write("This file groups adjacent outliers in single frames into targets.\n");
+            buffered_writer.write("Data from this file is taken from " + dir_in + " | Block: " + block + "\n");
+            buffered_writer.write("A value of " + CUTOFF_VALUES[cutoff_index] + " was used as adjusted p-value cutoff.\n\n");
+
+            // Assumed that the default value is 0
+            // 0 to 124 is sizes 1 to 125, 125 is size larger than 125
+
+            int MAX_CHECKED_SIZE = 125;
+
+            int[] count_at_each_size = new int[MAX_CHECKED_SIZE + 1];
+            int[] count_at_size_or_larger = new int[MAX_CHECKED_SIZE + 1];
+            ArrayList<Integer> times = new ArrayList();
+
+            for(FixedTimeBrightBodyFactory factory : factory_list) {
+                buffered_writer.write(factory.toString());
+                if(!times.contains(factory.getTimestamp())) {
+                    times.add(factory.getTimestamp());
+                }
+                if(factory.size() > MAX_CHECKED_SIZE) {
+                    ++count_at_each_size[MAX_CHECKED_SIZE];
+                    for(int cum_index = 0; cum_index < MAX_CHECKED_SIZE + 1; cum_index++) {
+                        ++count_at_size_or_larger[cum_index];
+                    }
+                }
+                else {
+                    ++count_at_each_size[factory.size() - 1];
+                    for(int cum_index = 0; cum_index <= factory.size() - 1; cum_index++) {
+                        ++count_at_size_or_larger[cum_index];
+                    }
+                }
             }
+
+            buffered_writer.write("There were " + times.size() + " unique timestamps with asteroids.\n");
+            System.out.println("Factories found at " + times.size() + " unique time stamps.");
+
+            File size_out = new File(size_file_out + "_" + CUTOFF_VALUES[cutoff_index] + ".csv");
+            FileWriter size_file_writer = new FileWriter(size_out);
+            BufferedWriter size_buffered_writer = new BufferedWriter(size_file_writer);
+
+            for(int size_check = 0; size_check < MAX_CHECKED_SIZE; size_check++) {
+                size_buffered_writer.write(size_check + "," + count_at_each_size[size_check] + "," + count_at_size_or_larger[size_check] + "\n");
+            }
+            size_buffered_writer.write((MAX_CHECKED_SIZE + 1) + "+, " + count_at_each_size[MAX_CHECKED_SIZE]);
+
+            size_buffered_writer.close();
+            buffered_writer.close();
+            file_writer.close();
+
+            // ****************
+            // END OUTPUT STAGE
+            // ****************
         }
-
-        File size_out = new File(size_file_out);
-        FileWriter size_file_writer = new FileWriter(size_out);
-        BufferedWriter size_buffered_writer = new BufferedWriter(size_file_writer);
-
-        for(int size_check = 0; size_check < 125; size_check++) {
-            System.out.println("There are " + count_at_each_size[size_check] + " targets of size " + (size_check + 1));
-            size_buffered_writer.write(size_check + ", " + count_at_each_size[size_check] + "\n");
-        }
-        System.out.println("There are " + count_at_each_size[125] + " targets of size 126 or greater");
-        size_buffered_writer.write("126+" + ", " + count_at_each_size[125]);
-
-        size_buffered_writer.close();
-        buffered_writer.close();
-        file_writer.close();
     }
 
     /**
