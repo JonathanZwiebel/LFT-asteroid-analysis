@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Represents a BrightBody in a single frame that is created by adding pixels
  * one at a time for a fixed and known timestamp. This is to be used with 
- * OutlierCSVToGroups to assist in storing temporary bodies. FTBBFs are compared
+ * OutlierCSVSurvey to assist in storing temporary bodies. FTBBFs are compared
  * by the number of elements in them to assist with locating outlier blobs
  * with the highest likelihood.
  *

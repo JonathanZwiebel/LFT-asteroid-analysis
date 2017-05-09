@@ -62,14 +62,15 @@ public final class LocateFilterTrack {
                 case "TS_OUTLIER_TEST":
                     TSOutlierTest.run(args);
                     break;
-                case "OUTLIER_CSV_TO_GROUPS":
-                    OutlierCSVToGroups.run(args);
+                case "OUTLIER_CSV_SURVEY":
+                    OutlierCSVSurvey.run(args);
                     break;
                 case "PIXELS_TO_ITERATIVE_OUTLIERS":
                     PixelsToIterativeOutliers.run(args);
                     break;
                 case "PIXELS_DIR_CSV_GENERATOR":
                     PixelsDirCSVGenerator.run(args);
+                    break;
                 default:
                     System.err.println("Wrong run type: " + args[0]);
                     System.exit(1);

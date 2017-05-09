@@ -12,7 +12,7 @@ import java.io.*;
  */
 public class PixelsToIterativeOutliers {
     public static void run(String[] args) throws IOException, InterruptedException {
-        assert args[0].equals("PIXEL_TO_ITERATIVE_OUTLIERS");
+        assert args[0].equals("PIXELS_TO_ITERATIVE_OUTLIERS");
 
         int current_arg = 1;
 

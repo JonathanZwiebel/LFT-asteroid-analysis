@@ -21,10 +21,12 @@ import java.util.Collections;
  *  3 - Filename for output location of .txt file with all FTBBFs (Do not include ".txt")
  *  4 - Filename for output location of .csv file with FTBBF counts by size (Do not include ".csv")
  *  
+ * TODO: Make this generate object files which can be tracked for adjacency
+ *
  * @author Jonathan Zwiebel
- * @version 26 January 2017
+ * @version 9 May 2017
  */
-public class OutlierCSVToGroups {
+public class OutlierCSVSurvey {
     public static final float[] CUTOFF_VALUES = {0.0001f, 0.00033f, 0.001f, 0.0033f, 0.01f, 0.033f, 0.1f, 0.33f, 1f};
 
     public static void run(String[] args) throws Exception {
@@ -81,7 +83,7 @@ public class OutlierCSVToGroups {
             File file_in = new File(filename_in);
             if(!file_in.exists()) {
                 if(i == 0 && j == 0) {
-                    System.err.println("Illegal block name passed to OutlierCSVToGroups");
+                    System.err.println("Illegal block name passed to OutlierCSVSurvey");
                     System.exit(1);
                 }
                 if(jlimit == -1) {
