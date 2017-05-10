@@ -15,7 +15,7 @@ import java.util.Collections;
  *  dir/x_y_blockname.csv
  * 
  * Argument Order: 
- *  0 - "OUTLIER_CSV_TO_GROUPS"
+ *  0 - "OUTLIER_CSV_SURVEY"
  *  1 - Directory containing outlier .csv files for individual pixels
  *  2 - Block name for outlier .csv files
  *  3 - Filename for output location of .txt file with all FTBBFs (Do not include ".txt")
@@ -34,7 +34,7 @@ public class OutlierCSVSurvey {
         // BEGIN INPUT STAGE
         // *****************
 
-        assert args[0].equals("OUTLIER_CSV_TO_GROUPS");
+        assert args[0].equals("OUTLIER_CSV_SURVEY");
 
         int current_arg = 1;
 
